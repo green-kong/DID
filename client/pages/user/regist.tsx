@@ -92,60 +92,81 @@ const Regist = () => {
     <>
       <Header />
       <RegistStyled>
-        <form onSubmit={submitHandle} className="regist_frm" method="post">
-          <div>ID</div>
-          <input
-            type="text"
-            className="userid"
-            name="userid"
-            placeholder="id"
-            onChange={idOverlap}
-          />
-          <button onClick={idOverlapCheck} className="overlap">
-            ID중복체크
-          </button>
-          <br />
-          {idCheck === '' ? <span>id 중복체크를 해주세요</span> : null}
-          {idCheck === 'true' ? <span>사용가능한 id</span> : null}
-          {idCheck === 'false' ? <span>사용 불가능한 id</span> : null}
-          {idCheck === 'wrongId' ? (
-            <span>알파벳, 숫자로 1~10자만 가능합니다.</span>
-          ) : null}
+        <div className="wrap">
+          <ul className="title">
+            <li>ID</li>
+            <li>비밀번호</li>
+            <li>비밀번호확인</li>
+            <li>이름</li>
+            <li>생년월일</li>
+            <li>성별</li>
+            <li>이메일</li>
+          </ul>
+          <form onSubmit={submitHandle} className="regist_frm" method="post">
+            <input
+              type="text"
+              className="userid"
+              name="userid"
+              placeholder="id"
+              onChange={idOverlap}
+            />
+            <button onClick={idOverlapCheck} className="overlap">
+              ID중복체크
+            </button>
+            <br />
+            {idCheck === '' ? (
+              <span className="false">id 중복체크를 해주세요</span>
+            ) : null}
+            {idCheck === 'true' ? (
+              <span className="true">사용가능한 id</span>
+            ) : null}
+            {idCheck === 'false' ? (
+              <span className="false">사용 불가능한 id</span>
+            ) : null}
+            {idCheck === 'wrongId' ? (
+              <span className="false">알파벳, 숫자로 1~10자만 가능합니다.</span>
+            ) : null}
+            <br />
+            <br />
 
-          <div>비밀번호</div>
-          <input
-            type="password"
-            onChange={pwOverlap}
-            name="userpw"
-            placeholder="pw"
-          />
-          <div>비밀번호 확인</div>
-          <input
-            type="password"
-            onChange={pwOverlap2}
-            className="userpw"
-            name="pwCheck"
-            placeholder="비번확인"
-          />
+            <input
+              type="password"
+              onChange={pwOverlap}
+              name="userpw"
+              placeholder="pw"
+            />
+            <input
+              type="password"
+              onChange={pwOverlap2}
+              className="userpw"
+              name="pwCheck"
+              placeholder="비번확인"
+            />
 
-          <button onClick={pwOverlapCheck} className="pwCheck">
-            비번확인
-          </button>
-          <br />
-          {pwCheck === '' ? <span>비번확인 해주세요</span> : null}
-          {pwCheck === 'true' ? <span>비번 일치합니다.</span> : null}
-          {pwCheck === 'false' ? <span>비번 일치하지않습니다.</span> : null}
+            <button onClick={pwOverlapCheck} className="pwCheck">
+              비번확인
+            </button>
+            <br />
 
-          <div>이름</div>
-          <input type="text" name="name" placeholder="name" />
-          <div>생년월일</div>
-          <input type="text" name="birth" placeholder="birth" />
-          <div>성별</div>
-          <input type="text" name="gender" placeholder="gender" />
-          <div>email</div>
-          <input type="text" name="email" placeholder="email" />
-          <input type="submit" value="회원가입" />
-        </form>
+            {pwCheck === '' ? (
+              <span className="false">비번확인 해주세요</span>
+            ) : null}
+            {pwCheck === 'true' ? (
+              <span className="true">비번 일치합니다.</span>
+            ) : null}
+            {pwCheck === 'false' ? (
+              <span className="false">비번 일치하지않습니다.</span>
+            ) : null}
+            <br />
+            <br />
+
+            <input type="text" name="name" placeholder="name" />
+            <input type="text" name="birth" placeholder="birth" />
+            <input type="text" name="gender" placeholder="gender" />
+            <input type="text" name="email" placeholder="email" />
+            <input type="submit" className="button" value="회원가입" />
+          </form>
+        </div>
       </RegistStyled>
     </>
   );

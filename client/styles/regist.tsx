@@ -1,34 +1,78 @@
 import styled from 'styled-components';
 
 const RegistStyled = styled.div`
-  margin: 0;
-  padding: 0;
-  background: tomato;
+  * {
+    margin: 0;
+    padding: 0;
+  }
 
-  & > .regist_frm {
-    width: 70%;
-    height: 1000px;
-    padding-top: 40px;
+  background: black;
+
+  li {
+    list-style: none;
+  }
+
+  .wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    padding-top: 50px;
+    padding-left: 150px;
     margin: 0 auto;
+  }
+
+  .title {
+    width: 20%;
+    padding-top: 10px;
+
+    & > li {
+      height: 50px;
+      color: white;
+    }
+
+    & > li:nth-child(1) {
+      height: 85px;
+    }
+
+    & > li:nth-child(3) {
+      height: 85px;
+    }
+  }
+
+  .regist_frm {
+    width: 80%;
+    height: 1000px;
 
     & > input {
-      width: 100%;
-      height: 40px;
-      margin-bottom: 10px;
+      width: 50%;
+      height: 30px;
+      border: none;
+      margin-bottom: 20px;
+      padding-left: 10px;
+      background: gray;
+      border-radius: 10px;
     }
 
-    & > .userid,
-    .userpw {
-      width: 80%;
+    & > input:focus {
+      outline: none;
     }
 
-    /* & > input:nth-child(7) {
-      width: 80%;
-    } */
+    & > input::placeholder {
+      color: #efefef;
+    }
 
-    /* & > .overlap {
-      width: 10%;
-    } */
+    & > .button {
+      margin-top: 50px;
+      background: green;
+    }
+
+    .true {
+      color: green;
+    }
+
+    .false {
+      color: red;
+    }
   }
 `;
 

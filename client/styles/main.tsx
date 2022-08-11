@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 const Main = styled.div`
+  * {
+    margin: 0;
+    padding: 0;
+    /* background : green; */
+  }
   height: 1000px;
-  margin: 0;
-  padding: 0;
-  /* background : green; */
 
   & > .content {
     width: 80%;
