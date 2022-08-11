@@ -12,6 +12,10 @@ contract DID is IDID, Ownable {
     // identifier => true/false
     mapping(string => bool) private isRegisteredUser;
 
+    constructor() {
+        user['4eb991b5e6d2f24f1ac9dc98a1be3ed7fdfd7ab53feeb5179f37a2183208217b'] = UserInfo('DH', '930126', 'male', 'dev-kong@gmail.com');
+    }
+
     function registerUser(string memory _identifier, UserInfo memory _userData) public override {
 
         require(!isRegisteredUser[_identifier]);
