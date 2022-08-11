@@ -15,8 +15,13 @@ const Regist = () => {
   const submitHandle = async (e: any) => {
     e.preventDefault();
 
-    if (idCheck !== 'true' || pwCheck !== 'true') {
-      alert('중복체크 뭐 하세요');
+    if (idCheck !== 'true') {
+      alert('아이디 중복체크 하세요');
+      return;
+    }
+
+    if (pwCheck !== 'true') {
+      alert('비밀번호확인 해주세요');
       return;
     }
 
@@ -49,6 +54,11 @@ const Regist = () => {
 
   const idOverlapCheck = async (e: any) => {
     e.preventDefault();
+    if (inputId.match(/^[A-Za-z|0-9|]{1,10}$/gi)?.length === undefined) {
+      setIdCheck('wrongId');
+      return;
+    }
+
     const response = await axios.post('http://localhost:4000/overlap_Check', {
       inputId,
     });
@@ -98,6 +108,9 @@ const Regist = () => {
           {idCheck === '' ? <span>id 중복체크를 해주세요</span> : null}
           {idCheck === 'true' ? <span>사용가능한 id</span> : null}
           {idCheck === 'false' ? <span>사용 불가능한 id</span> : null}
+          {idCheck === 'wrongId' ? (
+            <span>알파벳, 숫자로 1~10자만 가능합니다.</span>
+          ) : null}
 
           <div>비밀번호</div>
           <input
