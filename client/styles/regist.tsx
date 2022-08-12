@@ -7,6 +7,13 @@ const RegistStyled = styled.div`
   }
 
   background: black;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
   li {
     list-style: none;
@@ -28,6 +35,7 @@ const RegistStyled = styled.div`
     & > li {
       height: 50px;
       color: white;
+      font-size: 12px;
     }
 
     & > li:nth-child(1) {
@@ -41,7 +49,16 @@ const RegistStyled = styled.div`
 
   .regist_frm {
     width: 80%;
-    height: 1000px;
+
+    & > .overlap,
+    .pwCheck {
+      width: 80px;
+      height: 25px;
+      border: none;
+      border-radius: 10px;
+      margin-left: 10px;
+      background: gray;
+    }
 
     & > input {
       width: 50%;

@@ -14,7 +14,9 @@ app.use(
 );
 
 app.post("/login", (req, res) => {
-  const userData = req.body;
+  const { id, pw } = req.body;
+  console.log(id, pw);
+  res.json({ a: 1 });
 });
 
 app.post("/overlap_Check", async (req, res) => {

@@ -5,7 +5,6 @@ import Header from '../../components/header';
 import RegistStyled from '../../styles/regist';
 
 const Regist = () => {
-  // const [overlap, setOverlap] = useState(false);
   const [inputId, setInputId] = useState('');
   const [inputPw, setInputPw] = useState('');
   const [inputPw2, setInputPw2] = useState('');
@@ -54,7 +53,7 @@ const Regist = () => {
 
   const idOverlapCheck = async (e: any) => {
     e.preventDefault();
-    if (inputId.match(/^[A-Za-z|0-9|]{1,10}$/gi)?.length === undefined) {
+    if (inputId.match(/^[A-Za-z|0-9|]{4,12}$/gi)?.length === undefined) {
       setIdCheck('wrongId');
       return;
     }
@@ -71,18 +70,30 @@ const Regist = () => {
 
   const pwOverlap = (e: any) => {
     e.preventDefault();
+
     setPwCheck('');
     setInputPw(e.target.value);
   };
 
   const pwOverlap2 = (e: any) => {
     e.preventDefault();
+
     setPwCheck('');
     setInputPw2(e.target.value);
   };
 
   const pwOverlapCheck = (e: any) => {
     e.preventDefault();
+    console.log(inputPw.match(/^[A-Za-z|0-9|~!@#$%^&*-_+=]{4,16}$/gi));
+
+    if (
+      inputPw.match(/^[A-Za-z|0-9|]{4,16}$/gi)?.length === undefined ||
+      inputPw2.match(/^[A-Za-z|0-9|]{4,16}$/gi)?.length === undefined
+    ) {
+      setPwCheck('wrongPw');
+      return;
+    }
+
     if (inputPw === inputPw2) setPwCheck('true');
     else {
       setPwCheck('false');
@@ -94,7 +105,7 @@ const Regist = () => {
       <RegistStyled>
         <div className="wrap">
           <ul className="title">
-            <li>ID</li>
+            <li>ID ( E-mail )</li>
             <li>비밀번호</li>
             <li>비밀번호확인</li>
             <li>이름</li>
@@ -156,6 +167,11 @@ const Regist = () => {
             ) : null}
             {pwCheck === 'false' ? (
               <span className="false">비번 일치하지않습니다.</span>
+            ) : null}
+            {pwCheck === 'wrongPw' ? (
+              <span className="false">
+                4~16자, 알파벳, 숫자, 특수문자(~,!,@,#,$,%,^,&amp;,*)
+              </span>
             ) : null}
             <br />
             <br />

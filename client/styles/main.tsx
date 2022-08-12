@@ -6,11 +6,17 @@ const Main = styled.div`
     padding: 0;
     /* background : green; */
   }
-  height: 1000px;
+  background: black;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
   & > .content {
     width: 80%;
-    height: 600px;
     display: flex;
     justify-content: space-evenly;
     background: aqua;
@@ -21,13 +27,13 @@ const Main = styled.div`
     & > .user {
       display: inline-block;
       width: 45%;
-      height: 100%;
+      height: 400px;
       background: blue;
     }
 
     & > .admin {
       width: 45%;
-      height: 100%;
+      height: 400px;
       background: red;
     }
   }
