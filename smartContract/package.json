@@ -13,6 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.13",
+    "openzeppelin-solidity": "^4.6.0",
     "prettier-plugin-solidity": "^1.0.0-beta.24"
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
   }
 }

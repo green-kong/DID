@@ -1,0 +1,756 @@
+{
+  "contractName": "IDID",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_identifier",
+          "type": "string"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "birth",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gender",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct IDID.UserInfo",
+          "name": "_userData",
+          "type": "tuple"
+        }
+      ],
+      "name": "registerUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_identifier",
+          "type": "string"
+        }
+      ],
+      "name": "withdrawUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_identifier",
+          "type": "string"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "birth",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gender",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct IDID.UserInfo",
+          "name": "_userData",
+          "type": "tuple"
+        }
+      ],
+      "name": "updateUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_identifier",
+          "type": "string"
+        }
+      ],
+      "name": "isRegistered",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_identifier",
+          "type": "string"
+        }
+      ],
+      "name": "getUserInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "birth",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gender",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct IDID.UserInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_identifier\",\"type\":\"string\"}],\"name\":\"getUserInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"birth\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gender\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"internalType\":\"struct IDID.UserInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_identifier\",\"type\":\"string\"}],\"name\":\"isRegistered\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_identifier\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"birth\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gender\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"internalType\":\"struct IDID.UserInfo\",\"name\":\"_userData\",\"type\":\"tuple\"}],\"name\":\"registerUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_identifier\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"birth\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gender\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"internalType\":\"struct IDID.UserInfo\",\"name\":\"_userData\",\"type\":\"tuple\"}],\"name\":\"updateUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_identifier\",\"type\":\"string\"}],\"name\":\"withdrawUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IDID.sol\":\"IDID\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/IDID.sol\":{\"keccak256\":\"0xfd07643f7814b9f9c2d04695643ddc4da22acf1a82cf40718d5057ae147ad171\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8808cddaee7baf34bb04d307e324cd8b2d1d2e610e04e568655974e8a3f3280c\",\"dweb:/ipfs/QmQvjMMbkFYRxEophxKVW2p3yYoGX28R4huuKfUuVffm22\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.15;\n\ninterface IDID {\n\n    struct UserInfo {\n        string name;\n        string birth;\n        string gender;\n        string email;\n    }\n\n    /* Function */\n    function registerUser(string memory _identifier, UserInfo memory _userData) external;\n\n    function withdrawUser(string memory _identifier) external;\n\n    function updateUser(string memory _identifier, UserInfo memory _userData) external;\n\n    function isRegistered(string memory _identifier) external view returns (bool);\n\n    function getUserInfo(string memory _identifier) external view returns (UserInfo memory);\n}",
+  "sourcePath": "/Users/bitkunst/Desktop/workspace/did/smartContract/contracts/IDID.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/IDID.sol",
+    "exportedSymbols": {
+      "IDID": [
+        360
+      ]
+    },
+    "id": 361,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 314,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".15"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:24:3"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IDID",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 360,
+        "linearizedBaseContracts": [
+          360
+        ],
+        "name": "IDID",
+        "nameLocation": "68:4:3",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IDID.UserInfo",
+            "id": 323,
+            "members": [
+              {
+                "constant": false,
+                "id": 316,
+                "mutability": "mutable",
+                "name": "name",
+                "nameLocation": "113:4:3",
+                "nodeType": "VariableDeclaration",
+                "scope": 323,
+                "src": "106:11:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 315,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "106:6:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 318,
+                "mutability": "mutable",
+                "name": "birth",
+                "nameLocation": "134:5:3",
+                "nodeType": "VariableDeclaration",
+                "scope": 323,
+                "src": "127:12:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 317,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "127:6:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 320,
+                "mutability": "mutable",
+                "name": "gender",
+                "nameLocation": "156:6:3",
+                "nodeType": "VariableDeclaration",
+                "scope": 323,
+                "src": "149:13:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 319,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "149:6:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 322,
+                "mutability": "mutable",
+                "name": "email",
+                "nameLocation": "179:5:3",
+                "nodeType": "VariableDeclaration",
+                "scope": 323,
+                "src": "172:12:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 321,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "172:6:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "UserInfo",
+            "nameLocation": "87:8:3",
+            "nodeType": "StructDefinition",
+            "scope": 360,
+            "src": "80:111:3",
+            "visibility": "public"
+          },
+          {
+            "functionSelector": "0311f61d",
+            "id": 331,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerUser",
+            "nameLocation": "225:12:3",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 329,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 325,
+                  "mutability": "mutable",
+                  "name": "_identifier",
+                  "nameLocation": "252:11:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 331,
+                  "src": "238:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 324,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "238:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 328,
+                  "mutability": "mutable",
+                  "name": "_userData",
+                  "nameLocation": "281:9:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 331,
+                  "src": "265:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_UserInfo_$323_memory_ptr",
+                    "typeString": "struct IDID.UserInfo"
+                  },
+                  "typeName": {
+                    "id": 327,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 326,
+                      "name": "UserInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 323,
+                      "src": "265:8:3"
+                    },
+                    "referencedDeclaration": 323,
+                    "src": "265:8:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_UserInfo_$323_storage_ptr",
+                      "typeString": "struct IDID.UserInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "237:54:3"
+            },
+            "returnParameters": {
+              "id": 330,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "300:0:3"
+            },
+            "scope": 360,
+            "src": "216:85:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "20b4d14b",
+            "id": 336,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawUser",
+            "nameLocation": "316:12:3",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 334,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 333,
+                  "mutability": "mutable",
+                  "name": "_identifier",
+                  "nameLocation": "343:11:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 336,
+                  "src": "329:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 332,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "329:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "328:27:3"
+            },
+            "returnParameters": {
+              "id": 335,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "364:0:3"
+            },
+            "scope": 360,
+            "src": "307:58:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c90ae0f2",
+            "id": 344,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateUser",
+            "nameLocation": "380:10:3",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 342,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 338,
+                  "mutability": "mutable",
+                  "name": "_identifier",
+                  "nameLocation": "405:11:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 344,
+                  "src": "391:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 337,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "391:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 341,
+                  "mutability": "mutable",
+                  "name": "_userData",
+                  "nameLocation": "434:9:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 344,
+                  "src": "418:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_UserInfo_$323_memory_ptr",
+                    "typeString": "struct IDID.UserInfo"
+                  },
+                  "typeName": {
+                    "id": 340,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 339,
+                      "name": "UserInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 323,
+                      "src": "418:8:3"
+                    },
+                    "referencedDeclaration": 323,
+                    "src": "418:8:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_UserInfo_$323_storage_ptr",
+                      "typeString": "struct IDID.UserInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "390:54:3"
+            },
+            "returnParameters": {
+              "id": 343,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "453:0:3"
+            },
+            "scope": 360,
+            "src": "371:83:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c822d7f0",
+            "id": 351,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isRegistered",
+            "nameLocation": "469:12:3",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 347,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 346,
+                  "mutability": "mutable",
+                  "name": "_identifier",
+                  "nameLocation": "496:11:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 351,
+                  "src": "482:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 345,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "482:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "481:27:3"
+            },
+            "returnParameters": {
+              "id": 350,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 349,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 351,
+                  "src": "532:4:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 348,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "532:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "531:6:3"
+            },
+            "scope": 360,
+            "src": "460:78:3",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "7c9b7fdd",
+            "id": 359,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getUserInfo",
+            "nameLocation": "553:11:3",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 354,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 353,
+                  "mutability": "mutable",
+                  "name": "_identifier",
+                  "nameLocation": "579:11:3",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 359,
+                  "src": "565:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 352,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "565:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "564:27:3"
+            },
+            "returnParameters": {
+              "id": 358,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 357,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 359,
+                  "src": "615:15:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_UserInfo_$323_memory_ptr",
+                    "typeString": "struct IDID.UserInfo"
+                  },
+                  "typeName": {
+                    "id": 356,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 355,
+                      "name": "UserInfo",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 323,
+                      "src": "615:8:3"
+                    },
+                    "referencedDeclaration": 323,
+                    "src": "615:8:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_UserInfo_$323_storage_ptr",
+                      "typeString": "struct IDID.UserInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "614:17:3"
+            },
+            "scope": 360,
+            "src": "544:88:3",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 361,
+        "src": "58:576:3",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:602:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.15+commit.e14f2714.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.8",
+  "updatedAt": "2022-08-10T07:11:45.686Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
