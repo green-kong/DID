@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/bg.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/signup.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Hedaer Start -->
+    <div id="header">
+      <a href="http://localhost:3000"><h1 id="logo"></h1></a>
+
+      <ul id="nav">
+        <li><a href="로그인">Login</a></li>
+        <li><a href="회원가입">Sign up</a></li>
+      </ul>
+    </div>
+    <!-- Header End -->
+
+    <!-- Content Start -->
+    <div id="content">
+      <div id="content_wrap">
+        <div id="sign_up_title">
+          <div class="sign_up_icon"></div>
+          <p class="sign_up_title_p">Sign up to DID</p>
+        </div>
+        <form action="회원가입" method="post" class="sign_up_frm">
+          <ul>
+            <li>
+              <label for="userId">아이디</label>
+              <input type="text" id="userId" />
+            </li>
+            <li>
+              <label for="userPw">비밀번호</label>
+              <input type="text" id="userPw" />
+            </li>
+            <li>
+              <label for="pwCheck">비밀번호 확인</label>
+              <input type="text" id="pwCheck" />
+            </li>
+            <li>
+              <label for="userName">이름</label>
+              <input type="text" id="userName" />
+            </li>
+            <li>
+              <label for="birth">생년월일</label>
+              <input type="text" id="birth" />
+            </li>
+            <li>
+              <label for="email">이메일</label>
+              <div class="email_container">
+                <input type="email" id="email" />
+                <button type="button">코드전송</button>
+              </div>
+            </li>
+            <li>
+              <label for="email_code">이메일 인증코드</label>
+              <div class="email_container">
+                <input type="text" id="email_code" /><button type="button">
+                  코드확인
+                </button>
+              </div>
+            </li>
+          </ul>
+          <button class="signup_btn" type="submit">회원가입</button>
+        </form>
+      </div>
+    </div>
+    <!-- Content End -->
+
+    <!-- Footer Start -->
+    <div id="footer">
+      <div id="footer_container">
+        <div class="footer_logo"></div>
+        <div class="footer_title">DECENTRALIZED IDENTIFIER</div>
+      </div>
+    </div>
+    <!-- Footer End -->
+  </body>
+</html>
