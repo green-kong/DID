@@ -16,7 +16,7 @@ html {
 body {
   width: 100%;
   height: 100%;
-  background-image: url('http://localhost:3000/images/bg.png');
+  background-image: url('../images/bg.png');
   background-size: cover;
 }
 
