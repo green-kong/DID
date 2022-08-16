@@ -22,7 +22,7 @@ const RegistStyled = styled.div`
   .wrap {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 60%;
     padding-top: 50px;
     padding-left: 150px;
     margin: 0 auto;
@@ -30,12 +30,12 @@ const RegistStyled = styled.div`
 
   .title {
     width: 20%;
-    padding-top: 10px;
+    padding-top: 7px;
 
     & > li {
-      height: 50px;
+      height: 48px;
       color: white;
-      font-size: 12px;
+      font-size: 11px;
     }
 
     & > li:nth-child(1) {
@@ -48,26 +48,31 @@ const RegistStyled = styled.div`
   }
 
   .regist_frm {
-    width: 80%;
+    width: 90%;
 
     & > .overlap,
     .pwCheck {
       width: 80px;
       height: 25px;
       border: none;
-      border-radius: 10px;
+      border-radius: 4px;
       margin-left: 10px;
+      font-size: 12px;
       background: gray;
     }
 
     & > input {
       width: 50%;
-      height: 30px;
+      height: 28px;
+      font-size: 12px;
+      color: white;
       border: none;
       margin-bottom: 20px;
-      padding-left: 10px;
-      background: gray;
-      border-radius: 10px;
+      padding-left: 20px;
+      box-sizing: border-box;
+      background: #424242;
+      border-radius: 4px;
+      box-shadow: 2px 2px gray;
     }
 
     & > input:focus {
@@ -75,20 +80,26 @@ const RegistStyled = styled.div`
     }
 
     & > input::placeholder {
-      color: #efefef;
+      color: #9e9e9e;
     }
 
     & > .button {
-      margin-top: 50px;
-      background: green;
+      margin-top: 30px;
+      padding: 0;
+      color: black;
+      background: #9e9e9e;
     }
 
     .true {
       color: green;
+      font-size: 12px;
+      padding-left: 30px;
     }
 
     .false {
       color: red;
+      font-size: 12px;
+      padding-left: 30px;
     }
   }
 `;
