@@ -117,3 +117,65 @@
   cursor: pointer;
   font-size: 17px;
 }
+
+#modal_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.modal_alert {
+  width: 360px;
+  height: 220px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal_icon {
+  width: 44px;
+  height: 44px;
+  background-image: url('../images/alert_icon.png');
+  background-size: 44px;
+  margin-bottom: 30px;
+}
+
+.modal_description {
+  font-size: 35px;
+}
+
+.modal_btn_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 48px;
+}
+
+.modal_btn_container > button {
+  width: 48%;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quit_cancel_btn {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  background-color: white;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.quit_confirm_btn {
+  border: none;
+  background-color: #f44954;
+  color: white;
+}

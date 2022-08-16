@@ -82,5 +82,33 @@
       </div>
     </div>
     <!-- Footer End -->
+
+    <!-- Modal Start -->
+    <div id="modal_bg">
+      <div class="modal_alert">
+        <div class="modal_title">
+          <div class="modal_icon"></div>
+          <div class="modal_description">탈퇴하시겠습니까?</div>
+        </div>
+        <div class="modal_btn_container">
+          <button class="quit_cancel_btn">취소</button>
+          <button class="quit_confirm_btn">탈퇴</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal End -->
   </body>
+  <script>
+    const quitBtn = document.querySelector('.quit_btn');
+    const modalBg = document.querySelector('#modal_bg');
+    const quitCancelBtn = document.querySelector('.quit_cancel_btn');
+
+    quitBtn.addEventListener('click', (e) => {
+      modalBg.style.display = 'flex';
+    });
+
+    quitCancelBtn.addEventListener('click', (e) => {
+      modalBg.style.display = 'none';
+    });
+  </script>
 </html>
