@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 import Header from '../../components/header';
 import RegistStyled from '../../styles/regist';
 
 const Regist = () => {
-  const [inputId, setInputId] = useState('');
+  // const [inputId, setInputId] = useState('');
   const [inputPw, setInputPw] = useState('');
   const [inputPw2, setInputPw2] = useState('');
   const [idCheck, setIdCheck] = useState('');
@@ -14,12 +14,12 @@ const Regist = () => {
   const [selectEmail, setSelectEmail] = useState('gmail.com');
   const [authNum, setAuthNum] = useState('');
   const [authNum2, setAuthNum2] = useState('');
-  const [emailCheck, setEmailCheck] = useState('false');
+  const [emailCheck, setEmailCheck] = useState('');
 
   const submitHandle = async (e: any) => {
     e.preventDefault();
     if (idCheck !== 'true') {
-      alert('아이디 중복체크 하세요');
+      alert('아이디를 확인해주세요.');
       return;
     }
 
@@ -55,29 +55,21 @@ const Regist = () => {
 
     await axios.post('http://localhost:4000/regist', body);
     alert('가입완료');
-    // Router.push('http://localhost:3000/user/myProfile');
+    Router.push('http://localhost:3000/user/myProfile');
   };
 
-  const idOverlap = (e: any) => {
-    setInputId(e.target.value);
-    setIdCheck('');
-  };
-
-  const idOverlapCheck = async (e: any) => {
-    e.preventDefault();
-    if (inputId.match(/^[A-Za-z|0-9|]{4,12}$/gi)?.length === undefined) {
-      setIdCheck('wrongId');
-      return;
-    }
-
-    const response = await axios.post('http://localhost:4000/overlap_Check', {
-      inputId,
-    });
-    if (response.data.idCheck) {
-      setIdCheck('true');
+  const idOverlap = async (e: any) => {
+    if (e.target.value.length === 0) setIdCheck('');
+    if (e.target.value.match(/^[A-Za-z|0-9|]{4,12}$/gi) !== null) {
+      const response = await axios.post('http://localhost:4000/overlap_Check', {
+        inputId: e.target.value,
+      });
+      if (response.data.idCheck) setIdCheck('true');
+      else setIdCheck('false');
     } else {
       setIdCheck('false');
     }
+    if (e.target.value.length === 0) setIdCheck('');
   };
 
   const pwOverlap = (e: any) => {
@@ -92,23 +84,6 @@ const Regist = () => {
 
     setPwCheck('');
     setInputPw2(e.target.value);
-  };
-
-  const pwOverlapCheck = (e: any) => {
-    e.preventDefault();
-
-    if (
-      inputPw.match(/^[A-Za-z|0-9|]{4,16}$/gi)?.length === undefined ||
-      inputPw2.match(/^[A-Za-z|0-9|]{4,16}$/gi)?.length === undefined
-    ) {
-      setPwCheck('wrongPw');
-      return;
-    }
-
-    if (inputPw === inputPw2) setPwCheck('true');
-    else {
-      setPwCheck('false');
-    }
   };
 
   const emailOverlap = (e: any) => {
@@ -131,15 +106,36 @@ const Regist = () => {
     setEmailCheck('false');
   };
 
-  const authEmail = async () => {
-    if (authNum2 === '') {
-      setEmailCheck('false');
-      return;
-    }
-    if (authNum === authNum2) setEmailCheck('true');
-    else setEmailCheck('false');
-  };
+  useEffect(() => {
+    const pwCheck1 = inputPw.match(/^[A-Za-z|0-9|~!@#$%^&*]{4,16}$/gi)?.length;
+    const pwCheck2 = inputPw2.match(/^[A-Za-z|0-9|~!@#$%^&*]{4,16}$/gi)?.length;
 
+    if (
+      inputPw === inputPw2 &&
+      (pwCheck1 !== undefined || pwCheck2 !== undefined)
+    ) {
+      setPwCheck('true');
+    }
+
+    if (
+      inputPw !== inputPw2 &&
+      (pwCheck1 !== undefined || pwCheck2 !== undefined)
+    ) {
+      setPwCheck('false');
+    }
+
+    if (pwCheck1 === undefined || pwCheck2 === undefined) {
+      setPwCheck('wrongPw');
+    }
+
+    if (authNum.length === 6 && authNum2.length === 6) {
+      if (authNum === authNum2) {
+        setEmailCheck('true');
+      } else {
+        setEmailCheck('false');
+      }
+    }
+  }, [inputPw, inputPw2, authNum, authNum2]);
   return (
     <>
       <Header />
@@ -164,21 +160,15 @@ const Regist = () => {
               onChange={idOverlap}
               maxLength={10}
             />
-            <button type="button" onClick={idOverlapCheck} className="overlap">
-              ID중복체크
-            </button>
             <br />
             {idCheck === '' ? (
-              <span className="false">id 중복체크를 해주세요</span>
+              <span className="false">알파벳과 영어만 가능합니다.</span>
             ) : null}
             {idCheck === 'true' ? (
               <span className="true">사용가능한 id</span>
             ) : null}
             {idCheck === 'false' ? (
               <span className="false">사용 불가능한 id</span>
-            ) : null}
-            {idCheck === 'wrongId' ? (
-              <span className="false">알파벳, 숫자로 4~10자만 가능합니다.</span>
             ) : null}
             <br />
             <br />
@@ -198,9 +188,6 @@ const Regist = () => {
               placeholder="4자리 이상 입력해주세요."
               maxLength={16}
             />
-            <button type="button" onClick={pwOverlapCheck} className="pwCheck">
-              비번확인
-            </button>
             <br />
             {pwCheck === '' ? (
               <span className="false">비번확인 해주세요</span>
@@ -249,9 +236,6 @@ const Regist = () => {
               type="text"
               placeholder="6자리 인증번호를 입력하세요."
             />
-            <button type="button" onClick={authEmail}>
-              인증하기
-            </button>
             <br />
             {emailCheck === '' ? (
               <span className="false">인증번호 입력해주세요.</span>

@@ -20,7 +20,6 @@ app.use(
 
 app.post("/login", (req, res) => {
   const { id, pw } = req.body;
-  console.log(id, pw);
   res.json({ a: 1 });
 });
 
