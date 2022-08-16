@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/bg.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/signup.css" />
     <title>Document</title>
   </head>
   <body>
@@ -24,14 +24,52 @@
 
     <!-- Content Start -->
     <div id="content">
-      <a href="개인회원 링크" class="index_menu">
-        <div class="menu_icon user_menu_icon"></div>
-        <div class="menu_title">개인회원</div>
-      </a>
-      <a href="개발자메뉴 링크" class="index_menu">
-        <div class="menu_icon dev_menu_icon"></div>
-        <div class="menu_title">Developer</div>
-      </a>
+      <div id="content_wrap">
+        <div id="sign_up_title">
+          <div class="sign_up_icon"></div>
+          <p class="sign_up_title_p">Sign up to DID</p>
+        </div>
+        <form action="회원가입" method="post" class="sign_up_frm">
+          <ul>
+            <li>
+              <label for="userId">아이디</label>
+              <input type="text" id="userId" />
+            </li>
+            <li>
+              <label for="userPw">비밀번호</label>
+              <input type="text" id="userPw" />
+            </li>
+            <li>
+              <label for="pwCheck">비밀번호 확인</label>
+              <input type="text" id="pwCheck" />
+            </li>
+            <li>
+              <label for="userName">이름</label>
+              <input type="text" id="userName" />
+            </li>
+            <li>
+              <label for="birth">생년월일</label>
+              <input type="text" id="birth" />
+            </li>
+            <li>
+              <label for="email">이메일</label>
+              <div class="email_container">
+                <input type="email" id="email" />
+                <button type="button">코드전송</button>
+              </div>
+            </li>
+            <li>
+              <label for="email_code">이메일 인증코드</label>
+              <div class="email_container">
+                <input type="text" id="email_code" /><button type="button">
+                  코드확인
+                </button>
+              </div>
+            </li>
+          </ul>
+          <button class="signup_btn" type="submit">회원가입</button>
+        </form>
+      </div>
     </div>
     <!-- Content End -->
 
