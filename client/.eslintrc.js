@@ -49,5 +49,6 @@ module.exports = {
     'prefer-destructuring': 'off',
     'default-case': 'off',
     'no-undef': 'off',
+    'object-curly-newline': 'off',
   },
 };

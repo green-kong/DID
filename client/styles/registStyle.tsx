@@ -108,6 +108,11 @@ export const EmailContainer = styled.div`
   }
 `;
 
+interface ISignUpBtn {
+  bgc?: string;
+  mb?: string;
+}
+
 export const SignUpBtn = styled.button`
   margin-top: 10px;
   width: 100%;
@@ -116,9 +121,9 @@ export const SignUpBtn = styled.button`
   border: none;
   text-align: center;
   line-height: 45px;
-  background-color: #007f94;
+  background-color: ${(props: ISignUpBtn) => props.bgc || '#007f94'};
   color: white;
-  margin-bottom: 30px;
+  margin-bottom: ${(props: ISignUpBtn) => props.mb || '30px'};
   cursor: pointer;
   font-size: 17px;
 `;

@@ -1,46 +1,49 @@
 import styled from 'styled-components';
 
-const Main = styled.div`
-  * {
-    margin: 0;
-    padding: 0;
-  }
+interface IMenuIcon {
+  imageUrl: string;
+}
 
-  position: absolute;
+export const MenuWrap = styled.div`
+  display: flex;
   width: 100%;
-  height: 100%;
-  margin-top: 50px;
-  top: 0;
-  z-index: 2;
+  height: calc(100vh - 100px - 40px);
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  & > .content {
-    width: 80%;
-    display: flex;
-    justify-content: space-evenly;
-    background: aqua;
-    text-align: center;
-    margin: 0 auto;
-    margin-top: 40px;
+export const IndexMenu = styled.div`
+  width: 580px;
+  height: 400px;
+  background-color: #093250;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 8px 4px 20px 2px rgba(0, 0, 0, 0.3);
+  font-size: 30px;
+  color: white;
+  transition: all 140ms ease-in;
+  cursor: pointer;
 
-    & > .user {
-      display: inline-block;
-      width: 45%;
-      height: 400px;
-      background: blue;
-    }
-
-    & > .admin {
-      width: 45%;
-      height: 400px;
-      background: red;
-    }
+  :hover {
+    background-color: #007f94;
   }
 `;
 
-export default Main;
+export const MenuIcon = styled.div`
+  width: 170px;
+  height: 170px;
+  background-size: 170px;
+  margin-bottom: 10px;
+  background-image: url(${(props: IMenuIcon) => props.imageUrl});
 
-// const Responsive = ({ children }: any) => {
-//     return <Main>{children}</Main>;
-// };
+  .user_menu_icon {
+    background-image: url('/user_menu_icon.png');
+  }
 
-// export default Responsive;
+  .dev_menu_icon {
+    background-image: url('/dev_menu_icon.png');
+  }
+`;

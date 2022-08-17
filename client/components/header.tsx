@@ -41,10 +41,14 @@ const Header = () => {
 
         <Nav id="nav">
           <li>
-            <a href="로그인">Login</a>
+            <Link href="/user/login">
+              <a href="로그인">Login</a>
+            </Link>
           </li>
           <li>
-            <a href="회원가입">Sign up</a>
+            <Link href="/user/regist2">
+              <a href="회원가입">Sign up</a>
+            </Link>
           </li>
         </Nav>
       </StyledHeader>
