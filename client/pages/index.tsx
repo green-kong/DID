@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Router from 'next/router';
 import Main from '../styles/main';
-import Header from '../components/header';
 
 const Home: NextPage = () => {
   const user = () => {
@@ -14,7 +13,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Header />
       <Main>
         <div className="welcome">SJ검증페이지임 어서오셈</div>
         <div>우린 이런이런 서비스를 하고있음, 무튼 좋음</div>

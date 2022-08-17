@@ -4,16 +4,14 @@ const Main = styled.div`
   * {
     margin: 0;
     padding: 0;
-    /* background : green; */
   }
-  background: black;
+
   position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  margin-top: 50px;
+  top: 0;
+  z-index: 2;
 
   & > .content {
     width: 80%;

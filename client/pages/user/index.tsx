@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 import UserStyled from '../../styles/user';
-import Header from '../../components/header';
 
 const User = () => {
   const submitHandle = async (e: any) => {
@@ -19,7 +18,6 @@ const User = () => {
 
   return (
     <>
-      <Header />
       <UserStyled>
         <div className="wrap">
           <div className="login">

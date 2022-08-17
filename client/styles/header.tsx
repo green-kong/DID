@@ -5,25 +5,47 @@ const HeaderStyled = styled.div`
     margin: 0;
     padding: 0;
   }
-  background: hotpink;
 
-  height: 30px;
+  ul,
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
 
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 1200px;
+  height: 100px;
+  padding-top: 10px;
+  margin: 0 auto;
 
-  a {
-    text-decoration: none;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    & > .logo {
+      width: 30%;
+      height: 100%;
+      background-image: url('/bg.png');
+    }
+
+    & > .menu {
+      width: 12%;
+      color: white;
+      font-size: 18px;
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+    }
   }
-
-  /* .header {
-    width: 800px;
-    height: 30px;
-  } */
 `;
 
 export default HeaderStyled;

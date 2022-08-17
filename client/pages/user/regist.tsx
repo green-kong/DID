@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
-import Header from '../../components/header';
+import Image from 'next/image';
 import RegistStyled from '../../styles/regist';
 
 const Regist = () => {
@@ -11,7 +11,7 @@ const Regist = () => {
   const [idCheck, setIdCheck] = useState('');
   const [pwCheck, setPwCheck] = useState('');
   const [inputEmail, setInputEmail] = useState('');
-  const [selectEmail, setSelectEmail] = useState('gmail.com');
+  const [selectEmail, setSelectEmail] = useState('@gmail.com');
   const [authNum, setAuthNum] = useState('');
   const [authNum2, setAuthNum2] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
@@ -38,7 +38,6 @@ const Regist = () => {
       userpw: { value: userpw },
       name: { value: name },
       birth: { value: birth },
-      gender: { value: gender },
       email: { value: email },
       selectMail: { value: selectMail },
     } = e.target;
@@ -48,7 +47,6 @@ const Regist = () => {
       userpw,
       name,
       birth,
-      gender,
       email,
       selectMail,
     };
@@ -81,7 +79,6 @@ const Regist = () => {
 
   const pwOverlap2 = (e: any) => {
     e.preventDefault();
-
     setPwCheck('');
     setInputPw2(e.target.value);
   };
@@ -94,7 +91,7 @@ const Regist = () => {
   };
 
   const sendAuthNum = async () => {
-    const userEmail = inputEmail + '@' + selectEmail;
+    const userEmail = inputEmail + selectEmail;
     const response = await axios.post('http://localhost:4000/sendAuthNum', {
       userEmail,
     });
@@ -138,20 +135,23 @@ const Regist = () => {
   }, [inputPw, inputPw2, authNum, authNum2]);
   return (
     <>
-      <Header />
       <RegistStyled>
         <div className="wrap">
-          <ul className="title">
-            <li>ID</li>
-            <li>비밀번호</li>
-            <li>비밀번호확인</li>
-            <li>이름</li>
-            <li>생년월일</li>
-            <li>성별</li>
-            <li>이메일</li>
-            <li>인증번호</li>
-          </ul>
           <form onSubmit={submitHandle} className="regist_frm" method="post">
+            <div className="frm_header">
+              <div className="frm_header_img">
+                <Image
+                  alt="로고"
+                  src="/regist_mark.png"
+                  width={50}
+                  height={50}
+                />
+              </div>
+              <div className="frm_header_text">
+                <span>Sign up to DID</span>
+              </div>
+            </div>
+            <div className="title">아이디</div>
             <input
               type="text"
               className="userid"
@@ -172,6 +172,7 @@ const Regist = () => {
             ) : null}
             <br />
             <br />
+            <div className="title">비밀번호</div>
             <input
               type="password"
               onChange={pwOverlap}
@@ -180,6 +181,7 @@ const Regist = () => {
               maxLength={16}
             />
             <br />
+            <div className="title">비밀번호 확인</div>
             <input
               type="password"
               onChange={pwOverlap2}
@@ -205,32 +207,34 @@ const Regist = () => {
             ) : null}
             <br />
             <br />
+            <div className="title">이름</div>
             <input type="text" name="name" placeholder="name" />
             <br />
+            <div className="title">생년월일</div>
             <input type="text" name="birth" placeholder="birth" />
             <br />
-            <input type="text" name="gender" placeholder="gender" />
-            <br />
+            <div className="title">이메일</div>
             <input
               onChange={emailOverlap}
+              className="email"
               type="text"
               name="email"
               placeholder="email"
             />
-            <span>@</span>
             <select
               onChange={selectMail}
               name="selectMail"
               className="selectMail"
             >
-              <option>gmail.com</option>
-              <option>naver.com</option>
-              <option>kakao.com</option>
+              <option>@gmail.com</option>
+              <option>@naver.com</option>
+              <option>@kakao.com</option>
             </select>
             <button type="button" onClick={sendAuthNum}>
-              인증번호받기
+              코드전송
             </button>
             <br />
+            <div className="title">이메일 인증코드</div>
             <input
               onChange={inputAuthNum}
               type="text"

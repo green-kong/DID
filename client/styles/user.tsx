@@ -6,12 +6,9 @@ const UserStyled = styled.div`
     padding: 0;
   }
 
-  background: black;
+  /* background: black; */
   position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
 

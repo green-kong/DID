@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Header from '../../components/header';
 import MyProfileStyled from '../../styles/myProfile';
 
 const MyProfile = () => {
@@ -34,11 +33,10 @@ const MyProfile = () => {
   }, []);
 
   // if (profile.result.length === 0) return;
-  if (profile.length === 0) return;
+  // if (profile.length === 0) return;
   // console.log(profile);
   return (
     <>
-      <Header />
       <MyProfileStyled>
         <div className="wrap">
           <div className="header">내 프로필보기 페이지다~</div>

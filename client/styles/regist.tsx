@@ -6,49 +6,51 @@ const RegistStyled = styled.div`
     padding: 0;
   }
 
-  background: black;
   position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  margin: 0 auto;
+  top: 120px;
+  z-index: 2;
 
   li {
     list-style: none;
   }
 
   .wrap {
-    display: flex;
-    justify-content: space-between;
-    width: 60%;
-    padding-top: 50px;
-    padding-left: 150px;
+    width: 100%;
     margin: 0 auto;
   }
 
-  .title {
-    width: 20%;
-    padding-top: 7px;
-
-    & > li {
-      height: 48px;
-      color: white;
-      font-size: 11px;
-    }
-
-    & > li:nth-child(1) {
-      height: 85px;
-    }
-
-    & > li:nth-child(3) {
-      height: 85px;
-    }
-  }
-
   .regist_frm {
-    width: 90%;
+    width: 330px;
+    box-sizing: border-box;
+    margin: 0 auto;
+
+    .frm_header {
+      margin-bottom: 40px;
+
+      & > .frm_header_img {
+        text-align: center;
+      }
+
+      & > .frm_header_text {
+        text-align: center;
+        color: white;
+        font-size: 30px;
+        font-weight: 600;
+      }
+    }
+
+    /* .select {
+      background: red;
+    } */
+
+    .title {
+      color: white;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
 
     & > .overlap,
     .pwCheck {
@@ -62,17 +64,18 @@ const RegistStyled = styled.div`
     }
 
     & > input {
-      width: 50%;
-      height: 28px;
-      font-size: 12px;
-      color: white;
-      border: none;
-      margin-bottom: 20px;
-      padding-left: 20px;
+      width: 100%;
+      height: 50px;
       box-sizing: border-box;
-      background: #424242;
-      border-radius: 4px;
-      box-shadow: 2px 2px gray;
+      border: 2px solid #a6a19e;
+      border-radius: 5px;
+      font-size: 16px;
+      padding: 7px;
+      margin-bottom: 15px;
+    }
+
+    & > .email {
+      width: 40%;
     }
 
     & > input:focus {
@@ -84,10 +87,17 @@ const RegistStyled = styled.div`
     }
 
     & > .button {
-      margin-top: 30px;
-      padding: 0;
-      color: black;
-      background: #9e9e9e;
+      margin-top: 10px;
+      width: 100%;
+      height: 45px;
+      border-radius: 5px;
+      border: none;
+      text-align: center;
+      background-color: #007f94;
+      color: white;
+      margin-bottom: 30px;
+      cursor: pointer;
+      font-size: 17px;
     }
 
     .true {
