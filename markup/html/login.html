@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/bg.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/loginFrm.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <div id="header">
+      <a href="http://localhost:3000"><h1 id="logo"></h1></a>
+
+      <ul id="nav">
+        <li><a href="로그인">Login</a></li>
+        <li><a href="회원가입">Sign up</a></li>
+      </ul>
+    </div>
+    <!-- Header End -->
+    <!-- Content -->
+    <div id="content">
+      <div class="content_title">
+        <div class="title_icon"></div>
+        <p class="title">Login to DID</p>
+      </div>
+      <form
+        id="loginFrm"
+        action="http://localhost:3000/authorizor/auth"
+        method="POST"
+      >
+        <ul>
+          <li>
+            <input class="id" name="userId" type="text" placeholder="Id" />
+          </li>
+          <li>
+            <input
+              class="pw"
+              name="userPw"
+              type="password"
+              placeholder="Password"
+            />
+          </li>
+          <button class="login_btn" type="submit">Log in</button>
+          <div class="border"></div>
+          <a href="회원가입" class="sign_up_btn">Sign up</a>
+        </ul>
+      </form>
+    </div>
+    <!-- Content End -->
+
+    <!-- Footer start -->
+    <div id="footer">
+      <div id="footer_container">
+        <div class="footer_logo"></div>
+        <div class="footer_title">DECENTRALIZED IDENTIFIER</div>
+      </div>
+    </div>
+    <!-- Footer End -->
+  </body>
+</html>
