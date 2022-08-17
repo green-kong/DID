@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/bg.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
-    <link rel="stylesheet" href="../css/addApp.css" />
+    <link rel="stylesheet" href="../css/appInfo.css" />
     <title>Document</title>
   </head>
   <body>
@@ -27,17 +27,17 @@
       <div id="content_wrap">
         <div id="sign_up_title">
           <div class="sign_up_icon"></div>
-          <p class="sign_up_title_p">Add Application</p>
+          <p class="sign_up_title_p">Application Information</p>
         </div>
         <form action="addApp" method="post" class="add_app_frm">
           <ul>
             <li>
               <label for="app_name">이름</label>
-              <input type="text" id="app_name" />
+              <input type="text" id="app_name" value="당근" />
             </li>
             <li>
               <label for="app_desc">설명</label>
-              <textarea type="text" id="app_desc"></textarea>
+              <textarea type="text" id="app_desc">바니바니 당근당근</textarea>
             </li>
             <li>
               <label for="app_logo">로고</label>
@@ -50,19 +50,26 @@
             <li>
               <label>이미지 미리보기</label>
               <div class="img_preview_container">
-                <img class="img_preview" />
+                <img
+                  id="img_preview"
+                  src="../images/carrot_market.png"
+                  height="100px"
+                  width="auto"
+                />
               </div>
             </li>
             <li>
               <label for="host">사이트 주소</label>
-              <input type="text" id="host" />
+              <input type="text" id="host" value="http://localhost:3000" />
             </li>
             <li>
               <label for="redirect_uri">redirect URI</label>
-              <input type="email" id="redirect_uri" />
+              <input type="email" id="redirect_uri"
+              value=http://localhost:3000/redirect/>
             </li>
           </ul>
-          <button class="signup_btn" type="submit">등록</button>
+          <button class="signup_btn" type="submit">정보수정</button>
+          <button class="signup_btn delete_btn" type="button">삭제</button>
         </form>
       </div>
     </div>
