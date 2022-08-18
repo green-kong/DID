@@ -6,12 +6,9 @@ const UserStyled = styled.div`
     padding: 0;
   }
 
-  background: black;
+  /* background: black; */
   position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
 
@@ -33,59 +30,29 @@ const UserStyled = styled.div`
   .login_frm {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
     box-sizing: border-box;
-
-    & > .btn {
-      width: 20%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      margin-top: 30px;
-
-      & > .login_btn {
-        border: none;
-        border-radius: 10px;
-        background: gray;
-        height: 65%;
-      }
-
-      & > .regist_btn {
-        border: none;
-        border-radius: 10px;
-        background: gray;
-        height: 25%;
-      }
-    }
 
     & > .idpw {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       width: 80%;
-      height: 150px;
+      height: 120px;
       box-sizing: border-box;
       margin: 0 auto;
-
-      & > .id {
-        height: 30%;
-        color: white;
-      }
-
-      & > .pw {
-        height: 30%;
-        color: white;
-      }
 
       & > input {
         width: 80%;
         height: 30px;
+        font-size: 12px;
+        color: white;
         border: none;
         margin-bottom: 20px;
         padding-left: 10px;
-        background: gray;
-        border-radius: 10px;
+        background: #424242;
+        border-radius: 4px;
         margin: 0 auto;
       }
 
@@ -94,7 +61,38 @@ const UserStyled = styled.div`
       }
 
       & > input::placeholder {
-        color: black;
+        color: #9e9e9e;
+      }
+
+      & > .id,
+      .pw {
+        height: 32px;
+        font-size: 12px;
+        color: white;
+      }
+    }
+
+    & > .btn {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      & > .login_btn {
+        border: none;
+        font-size: 12px;
+        border-radius: 4px;
+        background: gray;
+        height: 55%;
+      }
+
+      & > .regist_btn {
+        border: none;
+        font-size: 12px;
+        border-radius: 4px;
+        background: gray;
+        height: 25%;
       }
     }
   }

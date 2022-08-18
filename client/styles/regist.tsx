@@ -6,68 +6,76 @@ const RegistStyled = styled.div`
     padding: 0;
   }
 
-  background: black;
   position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  margin: 0 auto;
+  top: 120px;
+  z-index: 2;
 
   li {
     list-style: none;
   }
 
   .wrap {
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
-    padding-top: 50px;
-    padding-left: 150px;
+    width: 100%;
     margin: 0 auto;
   }
 
-  .title {
-    width: 20%;
-    padding-top: 10px;
-
-    & > li {
-      height: 50px;
-      color: white;
-      font-size: 12px;
-    }
-
-    & > li:nth-child(1) {
-      height: 85px;
-    }
-
-    & > li:nth-child(3) {
-      height: 85px;
-    }
-  }
-
   .regist_frm {
-    width: 80%;
+    width: 330px;
+    box-sizing: border-box;
+    margin: 0 auto;
+
+    .frm_header {
+      margin-bottom: 40px;
+
+      & > .frm_header_img {
+        text-align: center;
+      }
+
+      & > .frm_header_text {
+        text-align: center;
+        color: white;
+        font-size: 30px;
+        font-weight: 600;
+      }
+    }
+
+    /* .select {
+      background: red;
+    } */
+
+    .title {
+      color: white;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
 
     & > .overlap,
     .pwCheck {
       width: 80px;
       height: 25px;
       border: none;
-      border-radius: 10px;
+      border-radius: 4px;
       margin-left: 10px;
+      font-size: 12px;
       background: gray;
     }
 
     & > input {
-      width: 50%;
-      height: 30px;
-      border: none;
-      margin-bottom: 20px;
-      padding-left: 10px;
-      background: gray;
-      border-radius: 10px;
+      width: 100%;
+      height: 50px;
+      box-sizing: border-box;
+      border: 2px solid #a6a19e;
+      border-radius: 5px;
+      font-size: 16px;
+      padding: 7px;
+      margin-bottom: 15px;
+    }
+
+    & > .email {
+      width: 40%;
     }
 
     & > input:focus {
@@ -75,20 +83,33 @@ const RegistStyled = styled.div`
     }
 
     & > input::placeholder {
-      color: #efefef;
+      color: #9e9e9e;
     }
 
     & > .button {
-      margin-top: 50px;
-      background: green;
+      margin-top: 10px;
+      width: 100%;
+      height: 45px;
+      border-radius: 5px;
+      border: none;
+      text-align: center;
+      background-color: #007f94;
+      color: white;
+      margin-bottom: 30px;
+      cursor: pointer;
+      font-size: 17px;
     }
 
     .true {
       color: green;
+      font-size: 12px;
+      padding-left: 30px;
     }
 
     .false {
       color: red;
+      font-size: 12px;
+      padding-left: 30px;
     }
   }
 `;

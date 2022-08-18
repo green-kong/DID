@@ -1,21 +1,58 @@
-import Router from 'next/router';
-import HeaderStyled from '../styles/header';
+import Link from 'next/link';
+import styled from 'styled-components';
+
+const StyledHeader = styled.div`
+  width: 1200px;
+  height: 100px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+`;
+
+const Logo = styled.h1`
+  width: 80px;
+  height: 80px;
+  background-image: url('/logo.png');
+  background-size: 80px;
+`;
+
+const Nav = styled.ul`
+  display: flex;
+  font-size: 18px;
+
+  & > li {
+    margin-right: 22px;
+  }
+
+  & > li:last-child {
+    margin-right: 0;
+  }
+`;
 
 const Header = () => {
-  const home = () => {
-    Router.push('/');
-  };
-
   return (
-    <HeaderStyled>
-      <div className="header">
-        <div className="logo">
-          <a href={'#'} onClick={home}>
-            SJ
-          </a>
-        </div>
-      </div>
-    </HeaderStyled>
+    <>
+      <StyledHeader id="header">
+        <Link href="http://localhost:3000">
+          <Logo id="logo"></Logo>
+        </Link>
+
+        <Nav id="nav">
+          <li>
+            <Link href="/user/login">
+              <a href="로그인">Login</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/user/regist2">
+              <a href="회원가입">Sign up</a>
+            </Link>
+          </li>
+        </Nav>
+      </StyledHeader>
+    </>
   );
 };
 

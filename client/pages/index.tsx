@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Router from 'next/router';
-import Main from '../styles/main';
-import Header from '../components/header';
+import { IndexMenu, MenuIcon, MenuWrap } from '../styles/main';
 
 const Home: NextPage = () => {
   const user = () => {
@@ -9,26 +8,20 @@ const Home: NextPage = () => {
   };
 
   const admin = () => {
-    Router.push('/admin');
+    Router.push('/dev/appList');
   };
 
   return (
-    <>
-      <Header />
-      <Main>
-        <div className="welcome">SJ검증페이지임 어서오셈</div>
-        <div>우린 이런이런 서비스를 하고있음, 무튼 좋음</div>
-        <div>유저인지 관리자인지 고르셈</div>
-        <div className="content">
-          <div className="user" onClick={user}>
-            User
-          </div>
-          <div className="admin" onClick={admin}>
-            Admin
-          </div>
-        </div>
-      </Main>
-    </>
+    <MenuWrap>
+      <IndexMenu onClick={user}>
+        <MenuIcon imageUrl="/user_menu_icon.png" />
+        <p>개인회원</p>
+      </IndexMenu>
+      <IndexMenu onClick={admin}>
+        <MenuIcon imageUrl="/dev_menu_icon.png" />
+        <p>Developer</p>
+      </IndexMenu>
+    </MenuWrap>
   );
 };
 
