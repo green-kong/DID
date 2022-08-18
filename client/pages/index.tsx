@@ -4,6 +4,8 @@ import { IndexMenu, MenuIcon, MenuWrap } from '../styles/main';
 
 const Home: NextPage = () => {
   const user = () => {
+    // 로그인이 되어있으면 Router.push('/user/connections');
+    // 안되어 있으면 Router.push('/user/login');
     Router.push('/user');
   };
 

@@ -69,11 +69,11 @@ app.post("/sendAuthNum", async (req, res) => {
 });
 
 app.post("/regist", async (req, res) => {
-  const { userid, userpw, pwCheck, name, birth, email, selectMail } = req.body;
+  const { userId, userPw, userName, birth, email, selectMail } = req.body;
   const userMail = email + selectMail;
 
-  // const sql = `INSERT INTO USER(USERID) VALUES('${userid}')`;
-  // await pool.execute(sql);
+  const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
+  await pool.execute(sql);
   res.json({ regist: true });
 });
 

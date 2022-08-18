@@ -1,16 +1,61 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import MyProfileStyled from '../../styles/myProfile';
 import {
   SignUpTitle,
   SignUpFrm,
   EmailContainer,
   SignUpBtn,
 } from '../../styles/registStyle';
+import Modal from '../../components/Modal';
 
 const MyProfile = () => {
+  const [pwCheckModal, setPwCheckModal] = useState(true);
   // const [profile, setProfile] = useState([]);
+  const [rejoinModal, setRejoinModal] = useState<boolean>(false);
+  const [resignModal, setResignModal] = useState(false);
+  const [userInfo, setUserInfo] = useState('');
+
+  const closePwCheckModalCancel = () => {
+    // 캔슬하면 홈으로 이동
+    setPwCheckModal(false);
+    console.log('클로즈비번체크모달 캔슬');
+  };
+
+  const closePwCheckModalSubmit = () => {
+    //백에서 비번받아가고 쿠키에서 아이디값받고
+    //그 두개 합쳐서 해쉬만든다음 컨트랙트상태변수에서 찾아서 있으면
+    //user/myProfile로 이동함.
+    console.log('클로즈비번체크모달 서밋');
+    setPwCheckModal(false);
+  };
+
+  const openRejoinModal = () => {
+    setRejoinModal(true);
+  };
+
+  const closeRejoinModalCancel = () => {
+    setRejoinModal(false);
+  };
+
+  const closeRejoinModalSubmit = () => {
+    // 또 비번확인창 나오면서 비번치고 맞으면 /user/regist로 이동
+    console.log('리조인모달 서밋');
+    setRejoinModal(false);
+  };
+
+  const openResignModal = () => {
+    setResignModal(true);
+  };
+
+  const closeResignModalCancel = () => {
+    setResignModal(false);
+  };
+
+  const closeResignModalSubmit = () => {
+    // 비번창 나오고 확인되면 alert('회원탈퇴됐슴다') 띄우고 메인으로
+    console.log('회원탈퇴 완료했습니다.');
+  };
 
   // const viewProfile = async () => {
   //   const response = await axios.post(
@@ -35,90 +80,72 @@ const MyProfile = () => {
   //   );
   // };
 
-  // useEffect(() => {
-  //   viewProfile();
-  // }, []);
-
-  // if (profile.result.length === 0) return;
-  // if (profile.length === 0) return;
-  // console.log(profile);
   return (
     <>
       <SignUpTitle>
         <Image src="/chain_icon.png" width={50} height={50} alt="아이콘" />
-        <p>Sign up to DID</p>
+        <p>My Profile View</p>
       </SignUpTitle>
       <SignUpFrm action="회원가입" method="post">
         <ul>
           <li>
             <label htmlFor="userId">아이디</label>
-            <input type="text" id="userId" />
-          </li>
-          <li>
-            <label htmlFor="userPw">비밀번호</label>
-            <input type="password" id="userPw" />
-          </li>
-          <li>
-            <label htmlFor="pwCheck">비밀번호 확인</label>
-            <input type="password" id="pwCheck" />
-            {/* {pwCheck === '' ? (
-              <span className="false">비번확인 해주세요</span>
-            ) : null}
-            {pwCheck === 'true' ? (
-              <span className="true">비번 일치합니다.</span>
-            ) : null}
-            {pwCheck === 'false' ? (
-              <span className="false">비번 일치하지않습니다.</span>
-            ) : null}
-            {pwCheck === 'wrongPw' ? (
-              <span className="false">
-                4~16자, 알파벳, 숫자, 특수문자(~,!,@,#,$,%,^,&amp;,*)
-              </span>
-            ) : null} */}
+            <input type="text" name="userId" />
           </li>
           <li>
             <label htmlFor="userName">이름</label>
-            <input type="text" id="userName" />
+            <input type="text" name="userName" />
           </li>
           <li>
             <label htmlFor="birth">생년월일</label>
-            <input type="text" id="birth" />
+            <input type="text" name="birth" />
           </li>
           <li>
             <label htmlFor="email">이메일</label>
-            <EmailContainer>
-              <input type="email" id="email" />
-              <select name="selectMail">
-                <option>@gmail.com</option>
-                <option>@naver.com</option>
-                <option>@kakao.com</option>
-              </select>
-              <button type="button">코드전송</button>
+            <EmailContainer w="100%">
+              <input type="text" name="email" />
             </EmailContainer>
           </li>
-          <li>
-            <label htmlFor="email_code">이메일 인증코드</label>
-            <EmailContainer>
-              <input className="email_code" type="text" id="email_code" />
-            </EmailContainer>
-          </li>
-          {/* {emailCheck === '' ? (
-            <span className="false">인증번호 입력해주세요.</span>
-          ) : null}
-          {emailCheck === 'true' ? (
-            <span className="true">인증되었습니다.</span>
-          ) : null}
-          {emailCheck === 'false' ? (
-            <span className="false">인증번호가 다릅니다.</span>
-          ) : null} */}
         </ul>
-        <SignUpBtn mb="10px" type="submit">
-          정보수정
+        <SignUpBtn
+          bgc="#007f94"
+          onClick={openRejoinModal}
+          mb="10px"
+          type="button"
+        >
+          재등록
         </SignUpBtn>
-        <SignUpBtn bgc="#D84D56" type="button">
+        <SignUpBtn bgc="#D84D56" type="button" onClick={openResignModal}>
           회원탈퇴
         </SignUpBtn>
       </SignUpFrm>
+      {pwCheckModal && (
+        <Modal
+          modal={{
+            cancel: closePwCheckModalCancel,
+            submit: closePwCheckModalSubmit,
+          }}
+          msg="비밀번호 입력"
+        />
+      )}
+      {rejoinModal && (
+        <Modal
+          modal={{
+            cancel: closeRejoinModalCancel,
+            submit: closeRejoinModalSubmit,
+          }}
+          msg="비밀번호 입력"
+        />
+      )}
+      {resignModal && (
+        <Modal
+          modal={{
+            cancel: closeResignModalCancel,
+            submit: closeResignModalSubmit,
+          }}
+          msg="비밀번호 입력"
+        />
+      )}
     </>
   );
 };

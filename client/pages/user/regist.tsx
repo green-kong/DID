@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Router from 'next/router';
 import Image from 'next/image';
-import RegistStyled from '../../styles/regist';
+import {
+  SignUpTitle,
+  SignUpFrm,
+  EmailContainer,
+  SignUpBtn,
+} from '../../styles/registStyle';
 
 const Regist = () => {
-  // const [inputId, setInputId] = useState('');
   const [inputPw, setInputPw] = useState('');
   const [inputPw2, setInputPw2] = useState('');
   const [idCheck, setIdCheck] = useState('');
@@ -15,6 +18,8 @@ const Regist = () => {
   const [authNum, setAuthNum] = useState('');
   const [authNum2, setAuthNum2] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
+  const [sendEmail, setSendEmail] = useState(false);
+  const [mailLength, setMailLength] = useState(false);
 
   const submitHandle = async (e: any) => {
     e.preventDefault();
@@ -34,18 +39,18 @@ const Regist = () => {
     }
 
     const {
-      userid: { value: userid },
-      userpw: { value: userpw },
-      name: { value: name },
+      userId: { value: userId },
+      userPw: { value: userPw },
+      userName: { value: userName },
       birth: { value: birth },
       email: { value: email },
       selectMail: { value: selectMail },
     } = e.target;
 
     const body = {
-      userid,
-      userpw,
-      name,
+      userId,
+      userPw,
+      userName,
       birth,
       email,
       selectMail,
@@ -53,7 +58,7 @@ const Regist = () => {
 
     await axios.post('http://localhost:4000/regist', body);
     alert('가입완료');
-    Router.push('http://localhost:3000/user/myProfile');
+    // Router.push('http://localhost:3000/user/myProfile');
   };
 
   const idOverlap = async (e: any) => {
@@ -84,18 +89,26 @@ const Regist = () => {
   };
 
   const emailOverlap = (e: any) => {
-    setInputEmail(e.target.value);
+    if (e.target.value.length === 0) {
+      setMailLength(false);
+    } else {
+      setMailLength(true);
+      setInputEmail(e.target.value);
+    }
   };
   const selectMail = (e: any) => {
     setSelectEmail(e.target.value);
   };
 
   const sendAuthNum = async () => {
-    const userEmail = inputEmail + selectEmail;
-    const response = await axios.post('http://localhost:4000/sendAuthNum', {
-      userEmail,
-    });
-    setAuthNum(response.data.authNum);
+    if (mailLength) {
+      const userEmail = inputEmail + selectEmail;
+      const response = await axios.post('http://localhost:4000/sendAuthNum', {
+        userEmail,
+      });
+      setAuthNum(response.data.authNum);
+      setSendEmail(true);
+    }
   };
 
   const inputAuthNum = (e: any) => {
@@ -135,32 +148,15 @@ const Regist = () => {
   }, [inputPw, inputPw2, authNum, authNum2]);
   return (
     <>
-      <RegistStyled>
-        <div className="wrap">
-          <form onSubmit={submitHandle} className="regist_frm" method="post">
-            <div className="frm_header">
-              <div className="frm_header_img">
-                <Image
-                  alt="로고"
-                  src="/regist_mark.png"
-                  width={50}
-                  height={50}
-                />
-              </div>
-              <div className="frm_header_text">
-                <span>Sign up to DID</span>
-              </div>
-            </div>
-            <div className="title">아이디</div>
-            <input
-              type="text"
-              className="userid"
-              name="userid"
-              placeholder="4자 이상 입력하세요."
-              onChange={idOverlap}
-              maxLength={10}
-            />
-            <br />
+      <SignUpTitle>
+        <Image src="/chain_icon.png" width={50} height={50} alt="아이콘" />
+        <p>Sign up to DID</p>
+      </SignUpTitle>
+      <SignUpFrm action="회원가입" method="post" onSubmit={submitHandle}>
+        <ul>
+          <li>
+            <label htmlFor="userId">아이디</label>
+            <input type="text" name="userId" onChange={idOverlap} />
             {idCheck === '' ? (
               <span className="false">알파벳과 영어만 가능합니다.</span>
             ) : null}
@@ -170,27 +166,14 @@ const Regist = () => {
             {idCheck === 'false' ? (
               <span className="false">사용 불가능한 id</span>
             ) : null}
-            <br />
-            <br />
-            <div className="title">비밀번호</div>
-            <input
-              type="password"
-              onChange={pwOverlap}
-              name="userpw"
-              placeholder="4자리 이상 입력해주세요."
-              maxLength={16}
-            />
-            <br />
-            <div className="title">비밀번호 확인</div>
-            <input
-              type="password"
-              onChange={pwOverlap2}
-              className="userpw"
-              name="pwCheck"
-              placeholder="4자리 이상 입력해주세요."
-              maxLength={16}
-            />
-            <br />
+          </li>
+          <li>
+            <label htmlFor="userPw">비밀번호</label>
+            <input type="password" name="userPw" onChange={pwOverlap} />
+          </li>
+          <li>
+            <label htmlFor="pwCheck">비밀번호 확인</label>
+            <input type="password" name="pwCheck" onChange={pwOverlap2} />
             {pwCheck === '' ? (
               <span className="false">비번확인 해주세요</span>
             ) : null}
@@ -205,56 +188,65 @@ const Regist = () => {
                 4~16자, 알파벳, 숫자, 특수문자(~,!,@,#,$,%,^,&amp;,*)
               </span>
             ) : null}
-            <br />
-            <br />
-            <div className="title">이름</div>
-            <input type="text" name="name" placeholder="name" />
-            <br />
-            <div className="title">생년월일</div>
-            <input type="text" name="birth" placeholder="birth" />
-            <br />
-            <div className="title">이메일</div>
-            <input
-              onChange={emailOverlap}
-              className="email"
-              type="text"
-              name="email"
-              placeholder="email"
-            />
-            <select
-              onChange={selectMail}
-              name="selectMail"
-              className="selectMail"
-            >
-              <option>@gmail.com</option>
-              <option>@naver.com</option>
-              <option>@kakao.com</option>
-            </select>
-            <button type="button" onClick={sendAuthNum}>
-              코드전송
-            </button>
-            <br />
-            <div className="title">이메일 인증코드</div>
-            <input
-              onChange={inputAuthNum}
-              type="text"
-              placeholder="6자리 인증번호를 입력하세요."
-            />
-            <br />
-            {emailCheck === '' ? (
-              <span className="false">인증번호 입력해주세요.</span>
-            ) : null}
-            {emailCheck === 'true' ? (
-              <span className="true">인증되었습니다.</span>
-            ) : null}
-            {emailCheck === 'false' ? (
-              <span className="false">인증번호가 다릅니다.</span>
-            ) : null}
-            <br />
-            <input type="submit" className="button" value="회원가입" />
-          </form>
-        </div>
-      </RegistStyled>
+          </li>
+          <li>
+            <label htmlFor="userName">이름</label>
+            <input type="text" name="userName" />
+          </li>
+          <li>
+            <label htmlFor="birth">생년월일</label>
+            <input type="text" name="birth" />
+          </li>
+          <li>
+            <label htmlFor="email">이메일</label>
+            <EmailContainer>
+              <input
+                type="text"
+                name="email"
+                minLength={4}
+                maxLength={20}
+                onChange={emailOverlap}
+              />
+              <select name="selectMail" onChange={selectMail}>
+                <option>@gmail.com</option>
+                <option>@naver.com</option>
+                <option>@kakao.com</option>
+              </select>
+              <button type="button" onClick={sendAuthNum}>
+                코드전송
+              </button>
+            </EmailContainer>
+          </li>
+          <li>
+            {sendEmail ? (
+              <span className="true">인증코드 전송되었습니다.</span>
+            ) : (
+              <span className="false">코드전송 해주세요.</span>
+            )}
+          </li>
+          <li>
+            <label htmlFor="email_code">이메일 인증코드</label>
+            <EmailContainer>
+              <input
+                className="email_code"
+                type="text"
+                name="email_code"
+                onChange={inputAuthNum}
+              />
+            </EmailContainer>
+          </li>
+          {emailCheck === '' ? (
+            <span className="false">인증번호 입력해주세요.</span>
+          ) : null}
+          {emailCheck === 'true' ? (
+            <span className="true">인증되었습니다.</span>
+          ) : null}
+          {emailCheck === 'false' ? (
+            <span className="false">인증번호가 다릅니다.</span>
+          ) : null}
+        </ul>
+        <SignUpBtn type="submit">회원가입</SignUpBtn>
+      </SignUpFrm>
     </>
   );
 };

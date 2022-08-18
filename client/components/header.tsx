@@ -1,44 +1,25 @@
 import Link from 'next/link';
-import styled from 'styled-components';
-
-const StyledHeader = styled.div`
-  width: 1200px;
-  height: 100px;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-`;
-
-const Logo = styled.h1`
-  width: 80px;
-  height: 80px;
-  background-image: url('/logo.png');
-  background-size: 80px;
-`;
-
-const Nav = styled.ul`
-  display: flex;
-  font-size: 18px;
-
-  & > li {
-    margin-right: 22px;
-  }
-
-  & > li:last-child {
-    margin-right: 0;
-  }
-`;
+import { useState } from 'react';
+import { Logo, Nav, StyledHeader } from '../styles/header';
+import QuitModal from './Modal';
 
 const Header = () => {
+  // const [modal, setModal] = useState<boolean>(false);
+
+  // const openModal = () => {
+  //   setModal(true);
+  // };
+
+  // const closeModal = () => {
+  //   setModal(false);
+  // };
+
   return (
     <>
       <StyledHeader id="header">
         <Link href="http://localhost:3000">
           <Logo id="logo"></Logo>
         </Link>
-
         <Nav id="nav">
           <li>
             <Link href="/user/login">
@@ -46,11 +27,20 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link href="/user/regist2">
+            <Link href="/user/regist">
               <a href="회원가입">Sign up</a>
             </Link>
           </li>
+          {/* <li onClick={openModal}>My profile</li> */}
+          <li>
+            <Link href="/user/myProfile">
+              <a href="프로필보기">My profile</a>
+            </Link>
+          </li>
         </Nav>
+        {/* {modal && (
+          <QuitModal msg="정보열람을 위해 비번을 ㄲ" closeModal={closeModal} />
+        )} */}
       </StyledHeader>
     </>
   );
