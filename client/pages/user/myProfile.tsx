@@ -8,8 +8,15 @@ import {
   EmailContainer,
   SignUpBtn,
 } from '../../styles/registStyle';
+// eslint-disable-next-line import/no-named-as-default
+import QuitModal from '../../components/quitModal';
 
 const MyProfile = () => {
+  const [modal, setModal] = useState<boolean>(false);
+
+  const closeQuitModal = () => {
+    setModal(false);
+  };
   // const [profile, setProfile] = useState([]);
 
   // const viewProfile = async () => {
@@ -115,10 +122,18 @@ const MyProfile = () => {
         <SignUpBtn mb="10px" type="submit">
           정보수정
         </SignUpBtn>
-        <SignUpBtn bgc="#D84D56" type="button">
+        <SignUpBtn
+          bgc="#D84D56"
+          type="button"
+          onClick={() => {
+            setModal(true);
+          }}
+        >
           회원탈퇴
         </SignUpBtn>
       </SignUpFrm>
+
+      {modal && <QuitModal closeQuitModal={closeQuitModal} />}
     </>
   );
 };
