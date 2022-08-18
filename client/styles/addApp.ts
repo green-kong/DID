@@ -46,6 +46,11 @@ export const AddAppFrm = styled.form`
       border: 2px solid dodgerblue;
       outline: none;
     }
+
+    & > span {
+      margin-top: 5px;
+      color: red;
+    }
   }
 `;
 
@@ -55,7 +60,7 @@ export const UploadInputCon = styled.div`
   justify-content: space-between;
 `;
 
-export const FileName = styled.input`
+export const FileNameInput = styled.input`
   width: 82%;
   height: 50px;
   box-sizing: border-box;
@@ -79,7 +84,7 @@ export const FileSearchBtn = styled.label`
   align-items: center;
 `;
 
-export const AppLogo = styled.input`
+export const ImgInput = styled.input`
   display: none;
 `;
 
@@ -92,4 +97,7 @@ export const ImagePreviewCon = styled.div`
   font-size: 16px;
   padding: 7px;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
