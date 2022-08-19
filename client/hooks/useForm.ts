@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import FormData from 'form-data';
+import Router from 'next/router';
 
 import { IAppInfo } from '../types/appInfo';
 import validation from '../utils/validation';
@@ -44,9 +45,16 @@ const useForm = (
       if (Object.keys(errors).length) return;
 
       formData.append('file', imgFile);
-      formData.append('data', values);
+      formData.append('name', values.name);
+      formData.append('desc', values.desc);
+      formData.append('host', values.host);
+      formData.append('redirect', values.redirectURI);
 
-      await addAppRequest(formData);
+      const response = await addAppRequest(formData);
+      console.log(response);
+      if (response) {
+        Router.push('/dev/appList');
+      }
     })();
   }, [errors]);
 
