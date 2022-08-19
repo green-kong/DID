@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import {
   ModalBg,
   ModalAlert,
@@ -10,13 +11,25 @@ import {
 } from '../styles/Modal';
 
 interface IQuitModal {
-  // closeModal?: () => void;
-  modal?: { cancel: () => void; submit: () => void };
+  modal?: {
+    cancel: () => void;
+    submit: () => void;
+    setUserPw?:
+      | Dispatch<SetStateAction<boolean>>
+      | Dispatch<SetStateAction<string>>;
+  };
   msg?: string;
   link?: string;
 }
 
 const Modal = (props: IQuitModal) => {
+  const inputChange = (e: any) => {
+    const setUserPw = props.modal?.setUserPw as Dispatch<
+      SetStateAction<boolean>
+    >;
+    setUserPw(e.target.value);
+  };
+
   return (
     <>
       <ModalBg>
@@ -24,7 +37,11 @@ const Modal = (props: IQuitModal) => {
           <ModalContent>
             <ModalIcon></ModalIcon>
             <ModalDesc>{props.msg}</ModalDesc>
-            <ModalInput className="pwInput" type="password" />
+            <ModalInput
+              onChange={inputChange}
+              className="pwInput"
+              type="password"
+            />
           </ModalContent>
           <ModalBtnCon>
             <ModalBtn onClick={props.modal?.cancel}>취소</ModalBtn>

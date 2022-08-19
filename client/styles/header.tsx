@@ -21,6 +21,10 @@ export const Nav = styled.ul`
   display: flex;
   font-size: 18px;
 
+  span {
+    cursor: pointer;
+  }
+
   & > li {
     margin-right: 22px;
   }

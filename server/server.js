@@ -1,13 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const axios = require("axios");
 const { pool } = require("./db");
 const nodemailer = require("nodemailer");
-require("dotenv").config();
-
-// const Web3 = require('web3')
-// const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:9000'))
+const contract = require("./contract/DID.json");
+const getDeployed = require("./web3.js");
+const generateHash = require("./util/hashGenerator.js");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,9 +17,13 @@ app.use(
   })
 );
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { id, pw } = req.body;
-  res.json({ a: 1 });
+
+  // id pw 해쉬만든다음 컨트랙트 상태변수에 있는지 조회
+  // 있으면 true, 없으면 false
+
+  res.json({ loginCheck: true });
 });
 
 app.post("/overlap_Check", async (req, res) => {
@@ -69,11 +72,27 @@ app.post("/sendAuthNum", async (req, res) => {
 });
 
 app.post("/regist", async (req, res) => {
-  const { userId, userPw, userName, birth, email, selectMail } = req.body;
-  const userMail = email + selectMail;
+  const { userId, userPw, userEmail, selectMail, ...rest } = req.body;
+  const email = userEmail + selectMail;
+  const deployed = (await getDeployed()).contract;
+  const CONTRACT_DEPLOYER = process.env.CONTRACT_DEPLOYER;
 
-  const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
-  await pool.execute(sql);
+  const hash = generateHash(userId, userPw);
+  const userInfo = {
+    ...rest,
+    email,
+  };
+
+  await deployed.methods
+    .registerUser(hash, userInfo)
+    .send({ from: CONTRACT_DEPLOYER });
+  // const a = await deployed.methods.isRegistered(hash).call();
+  // console.log(a);
+
+  // console.log(userId, userPw, userName, birth, userMail);
+
+  // const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
+  // await pool.execute(sql);
   res.json({ regist: true });
 });
 
@@ -81,6 +100,28 @@ app.post("/viewProfile", async (req, res) => {
   const sql = `Select * from user where userid='asdf'`;
   const [result] = await pool.execute(sql);
   res.json({ result });
+});
+
+app.post("/userInfoCheck", async (req, res) => {
+  const { userId, userPw } = req.body;
+  // name, birth, emali 컨트랙트에서 가져오기
+  const name = "오승주";
+  const birth = "930429";
+  const email = "seungju121@naver.com";
+  const userInfo = { userId, name, birth, email };
+
+  // 쿠키에서 구한 아이디와 비번 해쉬한값을 컨트랙트에 있는지 조회함,
+  // 있으면 true, 없으면 false res.json  ㄱ ㄱ
+  res.json({ pwCheck: true, userInfo });
+});
+
+app.post("/userResign", async (req, res) => {
+  const { userId } = req.body;
+
+  // const sql = `DELETE FROM user where userid=${userId}`;
+  // await pool.execute(sql);
+
+  res.json({ pwCheck: true });
 });
 
 app.listen(4000, () => {

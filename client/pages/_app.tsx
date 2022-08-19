@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import type { AppProps } from 'next/app';
+// import { CookiesProvider } from 'react-cookie';
 import Header from '../components/header';
 import '../styles/global.css';
 import Footer from '../components/footer';
@@ -20,6 +21,7 @@ const ContentWrap = styled.div`
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      {/* <CookiesProvider> */}
       <Wrap>
         <Header />
         <ContentWrap>
@@ -28,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Footer />
       </Wrap>
       <Background />
+      {/* </CookiesProvider> */}
     </>
   );
 }

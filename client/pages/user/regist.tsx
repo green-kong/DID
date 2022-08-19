@@ -23,36 +23,36 @@ const Regist = () => {
 
   const submitHandle = async (e: any) => {
     e.preventDefault();
-    if (idCheck !== 'true') {
-      alert('아이디를 확인해주세요.');
-      return;
-    }
+    // if (idCheck !== 'true') {
+    //   alert('아이디를 확인해주세요.');
+    //   return;
+    // }
 
-    if (pwCheck !== 'true') {
-      alert('비밀번호확인 해주세요');
-      return;
-    }
+    // if (pwCheck !== 'true') {
+    //   alert('비밀번호확인 해주세요');
+    //   return;
+    // }
 
-    if (emailCheck !== 'true') {
-      alert('이메일 인증을 해주세요.');
-      return;
-    }
+    // if (emailCheck !== 'true') {
+    //   alert('이메일 인증을 해주세요.');
+    //   return;
+    // }
 
     const {
       userId: { value: userId },
       userPw: { value: userPw },
-      userName: { value: userName },
+      userName: { value: name },
       birth: { value: birth },
-      email: { value: email },
+      email: { value: userEmail },
       selectMail: { value: selectMail },
     } = e.target;
 
     const body = {
       userId,
       userPw,
-      userName,
+      name,
       birth,
-      email,
+      userEmail,
       selectMail,
     };
 

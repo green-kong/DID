@@ -1,18 +1,24 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import Router from 'next/router';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Logo, Nav, StyledHeader } from '../styles/header';
-import QuitModal from './Modal';
 
 const Header = () => {
-  // const [modal, setModal] = useState<boolean>(false);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [isCookie, setIsCookie] = useState<boolean>();
 
-  // const openModal = () => {
-  //   setModal(true);
-  // };
+  const logout = () => {
+    removeCookie('DID_Token');
+    alert('로그아웃 되었습니다.');
+    Router.push('/');
+  };
 
-  // const closeModal = () => {
-  //   setModal(false);
-  // };
+  useEffect(() => {
+    if (cookies.DID_Token === undefined) {
+      setIsCookie(false);
+    } else setIsCookie(true);
+  }, [cookies.DID_Token]);
 
   return (
     <>
@@ -21,26 +27,32 @@ const Header = () => {
           <Logo id="logo"></Logo>
         </Link>
         <Nav id="nav">
-          <li>
-            <Link href="/user/login">
-              <a href="로그인">Login</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/user/regist">
-              <a href="회원가입">Sign up</a>
-            </Link>
-          </li>
-          {/* <li onClick={openModal}>My profile</li> */}
-          <li>
-            <Link href="/user/myProfile">
-              <a href="프로필보기">My profile</a>
-            </Link>
-          </li>
+          {isCookie === true ? (
+            <>
+              <li>
+                <Link href="/user/myProfile">
+                  <a href="프로필보기">My profile</a>
+                </Link>
+              </li>
+              <li>
+                <span onClick={logout}>로그아웃</span>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link href="/user/login">
+                  <a href="로그인">Login</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/user/regist">
+                  <a href="회원가입">Sign up</a>
+                </Link>
+              </li>
+            </>
+          )}
         </Nav>
-        {/* {modal && (
-          <QuitModal msg="정보열람을 위해 비번을 ㄲ" closeModal={closeModal} />
-        )} */}
       </StyledHeader>
     </>
   );
