@@ -15,7 +15,7 @@ const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
     <>
       {appListData.map((v) => {
         return (
-          <ConnectedDiv key={v._id}>
+          <ConnectedDiv key={v.idx}>
             <ConnectionImg>
               <Image
                 src="/carrot_market.png"
@@ -27,8 +27,8 @@ const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
             </ConnectionImg>
             <ConnectionInfo>
               <p className="connection_name">{v.name}</p>
-              <p className="connection_desc">{v.desc}</p>
-              <button className="disconnect_btn">연결끊기</button>
+              <p className="connection_desc">{v.appDesc}</p>
+              <button className="disconnect_btn">삭제</button>
             </ConnectionInfo>
           </ConnectedDiv>
         );

@@ -1,6 +1,6 @@
 export interface IAppListData {
-  _id: number;
+  idx: number;
   name: string;
-  desc: string;
+  appDesc: string;
   imgUrl: string;
 }

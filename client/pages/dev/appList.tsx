@@ -18,10 +18,6 @@ const AppList = () => {
 
     (async () => {
       const appList = await getAppList(1);
-      // const appList: IAppListData[] = [
-      //   { _id: 1, name: 'asdf', desc: 'adfaf', imgUrl: 'aasdf' },
-      //   { _id: 2, name: 'aasdfsdf', desc: 'adfafasdfads', imgUrl: 'aasdf' },
-      // ];
       setAppListData(appList);
     })();
   }, []);
