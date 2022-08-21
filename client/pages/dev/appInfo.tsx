@@ -1,8 +1,9 @@
+import { useRouter } from 'next/router';
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import {
   AddAppFrm,
-  AppLogo,
-  FileName,
+  ImgInput,
+  FileNameInput,
   FileSearchBtn,
   ImagePreviewCon,
   UploadInputCon,
@@ -10,6 +11,8 @@ import {
 import { SignUpBtn } from '../../styles/registStyle';
 
 const AddApp = () => {
+  const router = useRouter();
+  console.log(router.query);
   return (
     <div id="content_wrap">
       <ContentTitle>
@@ -29,10 +32,10 @@ const AddApp = () => {
           <li>
             <label htmlFor="app_logo">로고</label>
             <UploadInputCon>
-              <FileName type="text" />
+              <FileNameInput type="text" />
               <FileSearchBtn htmlFor="app_logo">파일 찾기</FileSearchBtn>
             </UploadInputCon>
-            <AppLogo type="file" id="app_logo" />
+            <ImgInput type="file" id="app_logo" />
           </li>
           <li>
             <label>이미지 미리보기</label>
