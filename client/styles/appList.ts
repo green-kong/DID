@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const AddAppBtn = styled.button`
+const AddAppBtn = styled.a`
   width: 30%;
   height: 240px;
   background-color: #007f94;
