@@ -1,5 +1,8 @@
-const { pool } = require('../../db.js');
 const uuid = require('uuid');
+
+const { pool } = require('../../db.js');
+const service = require('./dev.service.js');
+
 const addApp = async (req, res) => {
   const { name, desc, host, redirect } = req.body;
   const APIkey = uuid.v4().split('-').join('');
@@ -24,4 +27,15 @@ const addApp = async (req, res) => {
   }
 };
 
-module.exports = { addApp };
+const appList = async (req, res) => {
+  const { _id: u_id } = req.body;
+  const result = await service.appList(u_id);
+  if (!result) {
+    res.sendStatus(500).send(false);
+    return;
+  }
+
+  res.json(result);
+};
+
+module.exports = { addApp, appList };

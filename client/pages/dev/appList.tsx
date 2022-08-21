@@ -1,16 +1,27 @@
-import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
-import {
-  ConnectionsWrap,
-  ConnectedDiv,
-  ConnectionImg,
-  ConnectionInfo,
-} from '../../styles/connections';
+import { ConnectionsWrap } from '../../styles/connections';
 
 import AddAppBtn from '../../styles/appList';
+import getAppList from '../../api/dev/appList';
+import { IAppListData } from '../../types/appList';
+import AppListsComponent from '../../components/appLists';
 
-const appList = () => {
+const AppList = () => {
+  const [appListData, setAppListData] = useState<IAppListData[]>([]);
+
+  useEffect(() => {
+    // TODO(승짱) 로그인 기능 구현 완료되면 로그인 여부랑 유저정보 전역상태로 집어넣어야 될듯 함
+    // 일단은 그냥 구현함
+
+    (async () => {
+      const appList = await getAppList(1);
+      setAppListData(appList);
+    })();
+  }, []);
+
   return (
     <>
       <ContentTitle>
@@ -19,104 +30,16 @@ const appList = () => {
       </ContentTitle>
 
       <ConnectionsWrap>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-
-        <AddAppBtn>
-          <div className="plus_icon">+</div>
-          <div className="plus_text">앱 연결하기</div>
-        </AddAppBtn>
+        <AppListsComponent appListData={appListData} />
+        <Link href="/dev/addApp">
+          <AddAppBtn>
+            <div className="plus_icon">+</div>
+            <div className="plus_text">앱 연결하기</div>
+          </AddAppBtn>
+        </Link>
       </ConnectionsWrap>
     </>
   );
 };
 
-export default appList;
+export default AppList;
