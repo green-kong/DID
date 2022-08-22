@@ -38,4 +38,15 @@ const appList = async (req, res) => {
   res.json(result);
 };
 
-module.exports = { addApp, appList };
+const appInfo = async (req, res) => {
+  const { idx } = req.body;
+  const appInfo = await service.getAppInfo(idx);
+  if (!appInfo) {
+    res.sendStatus(500).send(false);
+    return;
+  }
+
+  res.json(appInfo);
+};
+
+module.exports = { addApp, appList, appInfo };

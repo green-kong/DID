@@ -10,4 +10,6 @@ router.post('/addApp', upload.single('file'), controller.addApp);
 
 router.post('/appList', controller.appList);
 
+router.post('/appInfo', controller.appInfo);
+
 module.exports = router;

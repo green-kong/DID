@@ -17,4 +17,23 @@ const appList = async (u_id) => {
   }
 };
 
-module.exports = { appList };
+/**
+ * received idx for param return application info
+ * @param {string} idx
+ */
+const getAppInfo = async (idx) => {
+  try {
+    const sql = `SELECT name,APIkey,host,redirectURI,appDesc,imgUrl FROM application
+                JOIN appDesc ON application.idx=appDesc.a_idx
+                JOIN appImg ON application.idx=appImg.a_idx
+                WHERE application.idx="${idx}"`;
+    const [[result]] = await pool.query(sql);
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+module.exports = { appList, getAppInfo };
