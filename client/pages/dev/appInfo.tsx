@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import {
   AddAppFrm,
@@ -9,10 +11,32 @@ import {
   UploadInputCon,
 } from '../../styles/addApp';
 import { SignUpBtn } from '../../styles/registStyle';
+import getAppInfo from '../../api/dev/appInfo';
+
+interface IAppDetailInfo {
+  idx: number;
+  name: string;
+  desc: string | undefined | null;
+  host: string;
+  redirectUri: string;
+  imgUrl: string | undefined | null;
+}
 
 const AddApp = () => {
+  const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
   const router = useRouter();
-  console.log(router.query);
+
+  useEffect(() => {
+    (async () => {
+      const { idx } = router.query;
+      if (typeof idx === 'string') {
+        const data = await getAppInfo({ idx });
+        setAppInfo(data);
+      }
+    })();
+  }, []);
+
+  if (!appInfo) return false;
   return (
     <div id="content_wrap">
       <ContentTitle>
@@ -23,11 +47,11 @@ const AddApp = () => {
         <ul>
           <li>
             <label htmlFor="app_name">이름</label>
-            <input type="text" />
+            <input type="text" value={appInfo.name} />
           </li>
           <li>
             <label htmlFor="app_desc">설명</label>
-            <textarea id="app_desc"></textarea>
+            <textarea id="app_desc">{appInfo.desc}</textarea>
           </li>
           <li>
             <label htmlFor="app_logo">로고</label>
@@ -39,7 +63,17 @@ const AddApp = () => {
           </li>
           <li>
             <label>이미지 미리보기</label>
-            <ImagePreviewCon></ImagePreviewCon>
+            <ImagePreviewCon>
+              {appInfo.imgUrl && (
+                <Image
+                  src={appInfo.imgUrl}
+                  width={100}
+                  height={100}
+                  alt="앱로고"
+                  objectFit="contain"
+                ></Image>
+              )}
+            </ImagePreviewCon>
           </li>
           <li>
             <label htmlFor="host">사이트 주소</label>

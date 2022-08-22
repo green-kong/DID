@@ -28,7 +28,11 @@ const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
     <>
       {appListData.map((v) => {
         return (
-          <ConnectedDiv onClick={test(v.idx)} key={v.idx}>
+          <ConnectedDiv
+            onClick={test(v.idx)}
+            style={{ cursor: 'pointer' }}
+            key={v.idx}
+          >
             <ConnectionImg>
               <Image
                 src="/carrot_market.png"
