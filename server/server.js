@@ -4,12 +4,14 @@ const app = express();
 const cors = require("cors");
 const { pool } = require("./db");
 const nodemailer = require("nodemailer");
-const contract = require("./contract/DID.json");
 const getDeployed = require("./web3.js");
 const generateHash = require("./util/hashGenerator.js");
+const crypto = require("crypto");
+const fs = require("fs");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("./public"));
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -19,11 +21,43 @@ app.use(
 
 app.post("/login", async (req, res) => {
   const { id, pw } = req.body;
+  // const hash = generateHash(id, pw); 이 해쉬를 비교
+  // const deployed = await getDeployed();
+  // const address = process.env.ADDRESS;
+  // const a = await deployed.contract.methods
+  //   .getUserInfo(hash)
+  //   .call({ from: address });
+  // console.log(a);
+
+  const header = {
+    alg: "sha256",
+    typ: "jwt",
+  };
+
+  const payload = {
+    id,
+  };
+
+  const encodingHeader = Buffer.from(JSON.stringify(header))
+    .toString("base64")
+    .replace(/=/g, "");
+
+  const encodeingPayload = Buffer.from(JSON.stringify(payload))
+    .toString("base64")
+    .replace(/=/g, "");
+
+  const signature = crypto
+    .createHmac("sha256", Buffer.from("greenPea"))
+    .update(`${encodingHeader},${encodeingPayload}`)
+    .digest("base64")
+    .replace(/=/g, "");
+
+  const jwt = `${encodingHeader}.${encodeingPayload}.${signature}`;
 
   // id pw 해쉬만든다음 컨트랙트 상태변수에 있는지 조회
   // 있으면 true, 없으면 false
 
-  res.json({ loginCheck: true });
+  res.json({ loginCheck: true, token: jwt });
 });
 
 app.post("/overlap_Check", async (req, res) => {
@@ -59,6 +93,7 @@ app.post("/sendAuthNum", async (req, res) => {
     to: userEmail, // 받는사람 이메일
     subject: "DID 테스트입니다.", // 메일 제목
     text: authNum, // 메일 내용
+    html: fs.readFileSync("./public/sendAuthNum.html").toString(),
   };
   transporter.sendMail(mailOptions, (error, info) => {
     // 이메일 발송
@@ -74,22 +109,20 @@ app.post("/sendAuthNum", async (req, res) => {
 app.post("/regist", async (req, res) => {
   const { userId, userPw, userEmail, selectMail, ...rest } = req.body;
   const email = userEmail + selectMail;
-  const deployed = (await getDeployed()).contract;
-  const CONTRACT_DEPLOYER = process.env.CONTRACT_DEPLOYER;
+  const deployed = await getDeployed();
 
   const hash = generateHash(userId, userPw);
   const userInfo = {
     ...rest,
     email,
+    gender: "askdjfljakf",
   };
 
-  await deployed.methods
-    .registerUser(hash, userInfo)
-    .send({ from: CONTRACT_DEPLOYER });
-  // const a = await deployed.methods.isRegistered(hash).call();
-  // console.log(a);
+  const address = process.env.ADDRESS;
 
-  // console.log(userId, userPw, userName, birth, userMail);
+  const receipt = await deployed.contract.methods
+    .registerUser(hash, userInfo)
+    .send({ from: address });
 
   // const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
   // await pool.execute(sql);

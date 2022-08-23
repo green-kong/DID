@@ -18,8 +18,9 @@ const Login = () => {
       id,
       pw,
     });
+    const { token } = response.data;
     if (response.data.loginCheck === true) {
-      setCookie('DID_Token', 'seungju');
+      setCookie('DID_Token', token);
       Router.push('/user/connections');
     } else if (response.data.loginCheck === false) {
       alert('회원정보가 다릅니다.');
