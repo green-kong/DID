@@ -58,4 +58,15 @@ const updateApp = async (req, res) => {
   }
 };
 
-module.exports = { addApp, appList, appInfo, updateApp };
+const delApp = async (req, res) => {
+  const { idx } = req.body;
+
+  const result = await service.delApp(idx);
+  if (result) {
+    res.send(true);
+  } else {
+    res.sendStatus(500).send(false);
+  }
+};
+
+module.exports = { addApp, appList, appInfo, updateApp, delApp };

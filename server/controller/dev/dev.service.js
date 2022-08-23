@@ -66,4 +66,36 @@ const updateApp = async (body, file) => {
   }
 };
 
-module.exports = { appList, getAppInfo, updateApp };
+/**
+ * received idx delete app information from DB and returns boolean
+ * @param {string} idx
+ */
+const delApp = async (idx) => {
+  try {
+    const sql = `DELETE FROM application WHERE idx="${idx}"`;
+    await pool.query(sql);
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+
+  try {
+    const sql = `DELETE FROM appDesc WHERE a_idx=${idx}`;
+    await pool.query(sql);
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+
+  try {
+    const sql = `DELETE FROM appImg WHERE a_idx="${idx}"`;
+    await pool.query(sql);
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+
+  return true;
+};
+
+module.exports = { appList, getAppInfo, updateApp, delApp };
