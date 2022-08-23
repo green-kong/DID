@@ -14,4 +14,6 @@ router.post('/appInfo', controller.appInfo);
 
 router.post('/updateApp', upload.single('file'), controller.updateApp);
 
+router.post('/delApp', controller.delApp);
+
 module.exports = router;

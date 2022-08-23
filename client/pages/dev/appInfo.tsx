@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import Image from 'next/image';
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import {
@@ -15,6 +15,7 @@ import getAppInfo from '../../api/dev/appInfo';
 import { IAppInfo } from '../../types/appInfo';
 import useImgUpload from '../../hooks/useImgUpload';
 import useForm from '../../hooks/useForm';
+import delApp from '../../api/dev/delApp';
 
 interface IAppDetailInfo {
   idx: number;
@@ -36,6 +37,19 @@ const AddApp = () => {
     imgFile,
     'updateApp',
   );
+
+  const handleDelBtnClick = async () => {
+    const { idx } = router.query;
+    if (!idx) return;
+
+    const result = await delApp(idx);
+    if (!result) {
+      alert('잠시후에 다시 시도해주세요');
+      return;
+    }
+
+    router.push('/dev/appList');
+  };
 
   useEffect(() => {
     (async () => {
@@ -140,7 +154,12 @@ const AddApp = () => {
             <input type="text" value={appInfo.APIkey || ''} readOnly />
           </li>
         </ul>
-        <SignUpBtn type="submit">수정</SignUpBtn>
+        <SignUpBtn type="submit" mb="10px">
+          수정
+        </SignUpBtn>
+        <SignUpBtn type="button" bgc="#D84D56" onClick={handleDelBtnClick}>
+          삭제
+        </SignUpBtn>
       </AddAppFrm>
     </div>
   );
