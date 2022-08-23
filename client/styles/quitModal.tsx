@@ -5,7 +5,7 @@ export const ModalBg = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
@@ -57,4 +57,15 @@ export const ModalBtn = styled.button`
   border: ${(props: IModalBtn) => props.border || 'rbga(0, 0, 0, 0.6)'};
   background-color: ${(props: IModalBtn) => props.bgc || 'white'};
   color: ${(props: IModalBtn) => props.color || 'rbga(0, 0, 0, 0.6)'};
+`;
+
+export const ModalInput = styled.input`
+  width: 100%;
+  height: 30px;
+  box-sizing: border-box;
+  border: 2px solid #a6a19e;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 7px;
+  margin-top: 8px;
 `;
