@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 import { useCookies } from 'react-cookie';
+import { Global } from '../_app';
 import { ContentTitle, Title, TitleIcon } from '../../styles/title';
 
 import { Border, LoginBtn, LoginFrm, SignUpBtn } from '../../styles/login';
@@ -10,7 +11,9 @@ import { Border, LoginBtn, LoginFrm, SignUpBtn } from '../../styles/login';
 const Login = () => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, setCookie] = useCookies();
+
+  const { setUserToken } = useContext(Global);
 
   const loginHandler = async (e: any) => {
     e.preventDefault();
@@ -20,6 +23,8 @@ const Login = () => {
     });
     const { token } = response.data;
     if (response.data.loginCheck === true) {
+      if (setUserToken === undefined) return;
+      setUserToken(token);
       setCookie('DID_Token', token);
       Router.push('/user/connections');
     } else if (response.data.loginCheck === false) {
@@ -34,6 +39,10 @@ const Login = () => {
   const inputPw = (e: any) => {
     setPw(e.target.value);
   };
+
+  // useEffect(() => {
+  //   console.log('asdfasf', userToken);
+  // }, [userToken]);
 
   return (
     <>
