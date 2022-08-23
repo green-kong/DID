@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import {

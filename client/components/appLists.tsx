@@ -24,6 +24,7 @@ const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
       '/dev/appInfo',
     );
   };
+
   return (
     <>
       {appListData.map((v) => {
