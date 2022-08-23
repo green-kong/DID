@@ -28,7 +28,6 @@ const getAppInfo = async (idx) => {
                 LEFT JOIN appImg ON application.idx=appImg.a_idx
                 WHERE application.idx="${idx}"`;
     const [[result]] = await pool.query(sql);
-    console.log(result);
     return result;
   } catch (error) {
     console.log(error);
@@ -36,4 +35,35 @@ const getAppInfo = async (idx) => {
   }
 };
 
-module.exports = { appList, getAppInfo };
+/**
+ * received req.body & req.file return boolean(update result)
+ * @param {req.body} body
+ * @param {req.file} file
+ */
+const updateApp = async (body, file) => {
+  const { idx, name, desc, host, redirect } = body;
+  try {
+    const sql = `UPDATE application 
+                LEFT JOIN appDesc
+                ON application.idx=appDesc.a_idx
+                SET name="${name}", appDesc="${desc}", host="${host}", redirectURI="${redirect}"
+                WHERE application.idx="${idx}"`;
+    await pool.query(sql);
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+
+  if (!file) return true;
+
+  try {
+    const sql = `UPDATE appImg SET imgUrl="${file.filename}"`;
+    await pool.query(sql);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+module.exports = { appList, getAppInfo, updateApp };
