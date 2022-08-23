@@ -21,7 +21,7 @@ const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
         pathname: '/dev/appInfo',
         query: { idx },
       },
-      '/appInfo',
+      '/dev/appInfo',
     );
   };
   return (

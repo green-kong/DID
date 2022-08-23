@@ -50,5 +50,6 @@ module.exports = {
     'default-case': 'off',
     'no-undef': 'off',
     'object-curly-newline': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 };

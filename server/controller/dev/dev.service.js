@@ -4,9 +4,9 @@ const appList = async (u_id) => {
   try {
     const sql = `SELECT application.idx, name, appDesc.appDesc, appImg.imgUrl
     FROM application 
-    JOIN appDesc
+    LEFT JOIN appDesc
     ON application.idx=appDesc.a_idx
-    JOIN appImg
+    LEFT JOIN appImg
     ON application.idx=appImg.a_idx
     WHERE u_idx="${u_id}"`;
     const [result] = await pool.query(sql);
@@ -24,8 +24,8 @@ const appList = async (u_id) => {
 const getAppInfo = async (idx) => {
   try {
     const sql = `SELECT name,APIkey,host,redirectURI,appDesc,imgUrl FROM application
-                JOIN appDesc ON application.idx=appDesc.a_idx
-                JOIN appImg ON application.idx=appImg.a_idx
+                LEFT JOIN appDesc ON application.idx=appDesc.a_idx
+                LEFT JOIN appImg ON application.idx=appImg.a_idx
                 WHERE application.idx="${idx}"`;
     const [[result]] = await pool.query(sql);
     console.log(result);

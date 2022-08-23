@@ -12,19 +12,30 @@ import {
 } from '../../styles/addApp';
 import { SignUpBtn } from '../../styles/registStyle';
 import getAppInfo from '../../api/dev/appInfo';
+import { IAppInfo } from '../../types/appInfo';
+import useImgUpload from '../../hooks/useImgUpload';
+import useForm from '../../hooks/useForm';
 
 interface IAppDetailInfo {
   idx: number;
   name: string;
-  desc: string | undefined | null;
+  appDesc: string | undefined | null;
   host: string;
-  redirectUri: string;
+  redirectURI: string;
   imgUrl: string | undefined | null;
+  APIkey: string;
 }
 
 const AddApp = () => {
-  const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
   const router = useRouter();
+  const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
+  const src = `http://localhost:4000/${appInfo?.imgUrl}`;
+  const { imgChangeHandler, fileName, imgSrc, imgFile } = useImgUpload();
+  const { values, handleChange, handleSubmit, errors, reset } = useForm(
+    {},
+    imgFile,
+    'updateApp',
+  );
 
   useEffect(() => {
     (async () => {
@@ -36,37 +47,66 @@ const AddApp = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!appInfo) return;
+    const initial: IAppInfo = {
+      idx: router.query.idx as string,
+      name: appInfo.name,
+      desc: appInfo.appDesc as string,
+      host: appInfo.host,
+      redirectURI: appInfo.redirectURI,
+    };
+    reset(initial);
+  }, [appInfo]);
+
   if (!appInfo) return false;
   return (
     <div id="content_wrap">
       <ContentTitle>
         <TitleIcon imageUrl="/folder_icon.png"></TitleIcon>
-        <Title>Add application</Title>
+        <Title>App information</Title>
       </ContentTitle>
-      <AddAppFrm action="addApp" method="post">
+      <AddAppFrm action="addApp" method="post" onSubmit={handleSubmit}>
         <ul>
           <li>
             <label htmlFor="app_name">이름</label>
-            <input type="text" value={appInfo.name} />
+            <input
+              type="text"
+              value={values.name || ''}
+              onChange={handleChange}
+              name="name"
+            />
+            {errors.name && <span>{errors.name}</span>}
           </li>
           <li>
             <label htmlFor="app_desc">설명</label>
-            <textarea id="app_desc">{appInfo.desc}</textarea>
+            <textarea
+              id="app_desc"
+              name="desc"
+              onChange={handleChange}
+              value={values.desc || ''}
+            ></textarea>
+            {errors.desc && <span>{errors.desc}</span>}
           </li>
           <li>
             <label htmlFor="app_logo">로고</label>
             <UploadInputCon>
-              <FileNameInput type="text" />
+              <FileNameInput
+                type="text"
+                readOnly
+                value={fileName || (appInfo.imgUrl as string)}
+              />
               <FileSearchBtn htmlFor="app_logo">파일 찾기</FileSearchBtn>
             </UploadInputCon>
-            <ImgInput type="file" id="app_logo" />
+            <ImgInput type="file" id="app_logo" onChange={imgChangeHandler} />
           </li>
           <li>
             <label>이미지 미리보기</label>
             <ImagePreviewCon>
               {appInfo.imgUrl && (
                 <Image
-                  src={appInfo.imgUrl}
+                  loader={() => src}
+                  src={imgSrc || src}
                   width={100}
                   height={100}
                   alt="앱로고"
@@ -77,14 +117,30 @@ const AddApp = () => {
           </li>
           <li>
             <label htmlFor="host">사이트 주소</label>
-            <input type="text" id="host" />
+            <input
+              type="text"
+              name="host"
+              value={values.host || ''}
+              onChange={handleChange}
+            />
+            {errors.host && <span>{errors.host}</span>}
           </li>
           <li>
             <label htmlFor="redirect_uri">redirect URI</label>
-            <input type="email" id="redirect_uri" />
+            <input
+              type="text"
+              name="redirectURI"
+              value={values.redirectURI || ''}
+              onChange={handleChange}
+            />
+            {errors.redirectURI && <span>{errors.redirectURI}</span>}
+          </li>
+          <li>
+            <label htmlFor="redirect_uri">API key</label>
+            <input type="text" value={appInfo.APIkey || ''} readOnly />
           </li>
         </ul>
-        <SignUpBtn type="submit">등록</SignUpBtn>
+        <SignUpBtn type="submit">수정</SignUpBtn>
       </AddAppFrm>
     </div>
   );
