@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Router from 'next/router';
+import React from 'react';
 import {
   ConnectedDiv,
   ConnectionImg,
@@ -11,11 +13,26 @@ interface AppListsComponentProps {
 }
 
 const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
+  const test = (idx: number) => (e: React.MouseEvent<HTMLDivElement>) => {
+    const isDelBtn = (e.target as Element).classList.contains('disconnect_btn');
+    if (isDelBtn) return;
+    Router.push(
+      {
+        pathname: '/dev/appInfo',
+        query: { idx },
+      },
+      '/dev/appInfo',
+    );
+  };
   return (
     <>
       {appListData.map((v) => {
         return (
-          <ConnectedDiv key={v.idx}>
+          <ConnectedDiv
+            onClick={test(v.idx)}
+            style={{ cursor: 'pointer' }}
+            key={v.idx}
+          >
             <ConnectionImg>
               <Image
                 src="/carrot_market.png"
