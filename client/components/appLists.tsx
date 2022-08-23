@@ -35,7 +35,14 @@ const AppListsComponent = ({ appListData }: AppListsComponentProps) => {
           >
             <ConnectionImg>
               <Image
-                src="/carrot_market.png"
+                loader={() => {
+                  return v.imgUrl
+                    ? `http://localhost:4000/${v.imgUrl}`
+                    : '/no_img.png';
+                }}
+                src={
+                  v.imgUrl ? `http://localhost:4000/${v.imgUrl}` : '/no_img.png'
+                }
                 alt="어플로고"
                 width={100}
                 height={100}
