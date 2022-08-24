@@ -4,7 +4,7 @@ import { IndexMenu, MenuIcon, MenuWrap } from '../styles/main';
 
 const Home: NextPage = () => {
   const user = () => {
-    Router.push('/user');
+    Router.push('/user/connections');
   };
 
   const admin = () => {

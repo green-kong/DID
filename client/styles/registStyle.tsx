@@ -63,12 +63,16 @@ export const SignUpFrm = styled.form`
   }
 `;
 
+interface IEmailContainer {
+  w?: string;
+}
+
 export const EmailContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
   & > input {
-    width: 40%;
+    width: ${(props: IEmailContainer) => props.w || '40%'};
     height: 50px;
     box-sizing: border-box;
     border: 2px solid #a6a19e;

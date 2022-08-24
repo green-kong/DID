@@ -1,6 +1,8 @@
-import React from 'react';
 import Image from 'next/image';
-
+import { useContext, useEffect } from 'react';
+import Router from 'next/router';
+import axios from 'axios';
+import { Global } from '../_app';
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import {
   ConnectionsWrap,
@@ -10,6 +12,27 @@ import {
 } from '../../styles/connections';
 
 const Connections = () => {
+  const { isLogin, userData } = useContext(Global);
+
+  useEffect(() => {
+    if (isLogin === false) {
+      alert('로그인하고 이용하세요.');
+      Router.push('/user/login');
+    }
+
+    if (isLogin === true) {
+      Router.push('/user/connections');
+      console.log('이즈로그인 트루');
+    }
+    // (async () => {
+    //   const response = await axios.post(
+    //     'http://localhost:4000/connectionsInfo',
+    //     { userData },
+    //   );
+    //   // console.log(response.data);
+    // })();
+  }, [isLogin]);
+
   return (
     <>
       <ContentTitle>

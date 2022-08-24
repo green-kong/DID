@@ -2,11 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-
   images: {
     domains: ['localhost'],
   },
-
+  
   async redirects() {
     return [
       {
@@ -14,8 +13,14 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/user/connections',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };
+
 
 module.exports = nextConfig;

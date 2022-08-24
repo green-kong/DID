@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+#wrap {
+  width: 500px;
+  margin: 0 auto;
+}
+
+h2,
+div {
+  text-align: center;
+}
+
+#title {
+  margin: 15px 0;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: rgb(93, 78, 78);
+}
+
+#asdf {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#num {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(227, 158, 158);
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px;
+  text-align: center;
+  padding: 10px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  color: white;
+}
