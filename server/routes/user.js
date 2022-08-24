@@ -3,50 +3,35 @@ const router = express.Router();
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 const { pool } = require("../db.js");
 const getDeployed = require("../web3.js");
 const generateHash = require("../util/hashGenerator.js");
 
 router.post("/login", async (req, res) => {
   const { id, pw } = req.body;
-  // const hash = generateHash(id, pw); 이 해쉬를 비교
-  // const deployed = await getDeployed();
-  // const address = process.env.ADDRESS;
-  // const a = await deployed.contract.methods
-  //   .getUserInfo(hash)
-  //   .call({ from: address });
-  // console.log(a);
+  const hash = generateHash(id, pw);
+  const deployed = await getDeployed();
+  const address = process.env.ADDRESS;
+  const loginCheck = await deployed.contract.methods
+    .isRegistered(hash)
+    .call({ from: address });
 
-  const header = {
-    alg: "sha256",
-    typ: "jwt",
-  };
-  // payload에 인덱스 추가
+  if (loginCheck) {
+    const sql = `SELECT * FROM user WHERE userId='${id}'`;
+    const [[result]] = await pool.execute(sql);
+    const { idx, userId } = result;
+    const userInfo = { idx, userId };
+    const secretKey = "helpless";
+    const options = { expiresIn: "7d" };
 
-  const payload = {
-    id,
-  };
-
-  const encodingHeader = Buffer.from(JSON.stringify(header))
-    .toString("base64")
-    .replace(/=/g, "");
-
-  const encodeingPayload = Buffer.from(JSON.stringify(payload))
-    .toString("base64")
-    .replace(/=/g, "");
-
-  const signature = crypto
-    .createHmac("sha256", Buffer.from("greenPea"))
-    .update(`${encodingHeader},${encodeingPayload}`)
-    .digest("base64")
-    .replace(/=/g, "");
-
-  const jwt = `${encodingHeader}.${encodeingPayload}.${signature}`;
-
-  // id pw 해쉬만든다음 컨트랙트 상태변수에 있는지 조회
-  // 있으면 true, 없으면 false
-
-  res.json({ loginCheck: true, token: jwt });
+    jwt.sign(userInfo, secretKey, options, (err, token) => {
+      if (err) console.log(err);
+      else res.json({ loginCheck: true, token });
+    });
+  } else {
+    res.json({ loginCheck: false });
+  }
 });
 
 router.post("/overlap_Check", async (req, res) => {
@@ -58,7 +43,6 @@ router.post("/overlap_Check", async (req, res) => {
 });
 
 router.post("/sendAuthNum", async (req, res) => {
-  // const { inputEmail } = req.body;
   const { userEmail } = req.body;
 
   const generateRandom = (min, max) => {
@@ -107,22 +91,33 @@ router.post("/regist", async (req, res) => {
   const userInfo = {
     ...rest,
     email,
-    gender: "askdjfljakf",
+    gender: "남자다 이색기야",
   };
 
   const address = process.env.ADDRESS;
 
-  const receipt = await deployed.contract.methods
+  await deployed.contract.methods
     .registerUser(hash, userInfo)
     .send({ from: address });
 
-  // const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
-  // await pool.execute(sql);
+  // const a = await deployed.contract.methods
+  //   .isRegistered(hash)
+  //   .call({ from: address });
+  // console.log(a);
+
+  const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
+  await pool.execute(sql);
   res.json({ regist: true });
 });
 
 router.post("/viewProfile", async (req, res) => {
   const sql = `Select * from user where userid='asdf'`;
+
+  // const asdf = await deployed.contract.methods
+  //   .getUserInfo(hash)
+  //   .call({ from: address });
+  // console.log(asdf);
+
   const [result] = await pool.execute(sql);
   res.json({ result });
 });
@@ -150,7 +145,7 @@ router.post("/userResign", async (req, res) => {
 });
 
 router.post("/sendToken", (req, res) => {
-  // console.log(req.body);
+  // console.log("ㄲㄲㄱ", req.body);
 
   try {
     // todo : jwt 디코딩해서 json으로 보내기
@@ -163,7 +158,7 @@ router.post("/sendToken", (req, res) => {
 });
 
 router.post("/connectionsInfo", (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   // 여기서 유저가 커넥ㅌ되어있는 페이지 보여주기
   // 연결끊기까지 ?!
   res.json({ a: 333 });

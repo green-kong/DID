@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import type { AppProps } from 'next/app';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import React, {
   createContext,
   Dispatch,
@@ -8,6 +9,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+// eslint-disable-next-line import/no-cycle
 import Header from '../components/header';
 import '../styles/global.css';
 import Footer from '../components/footer';
@@ -44,6 +46,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const [userToken, setUserToken] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [userData, setUserData] = useState<IUserData>({});
+  const [cookies] = useCookies();
 
   const globalState = {
     userToken,
@@ -69,6 +72,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       }
     })();
   }, [userToken]);
+
+  useEffect(() => {
+    const { DID_Token: token } = cookies;
+    if (token) {
+      setUserToken(token);
+    }
+  }, []);
 
   return (
     <>

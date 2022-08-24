@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
+import Router from 'next/router';
 import {
   SignUpTitle,
   SignUpFrm,
@@ -23,20 +24,20 @@ const Regist = () => {
 
   const submitHandle = async (e: any) => {
     e.preventDefault();
-    // if (idCheck !== 'true') {
-    //   alert('아이디를 확인해주세요.');
-    //   return;
-    // }
+    if (idCheck !== 'true') {
+      alert('아이디를 확인해주세요.');
+      return;
+    }
 
-    // if (pwCheck !== 'true') {
-    //   alert('비밀번호확인 해주세요');
-    //   return;
-    // }
+    if (pwCheck !== 'true') {
+      alert('비밀번호확인 해주세요');
+      return;
+    }
 
-    // if (emailCheck !== 'true') {
-    //   alert('이메일 인증을 해주세요.');
-    //   return;
-    // }
+    if (emailCheck !== 'true') {
+      alert('이메일 인증을 해주세요.');
+      return;
+    }
 
     const {
       userId: { value: userId },
@@ -58,7 +59,7 @@ const Regist = () => {
 
     await axios.post('http://localhost:4000/regist', body);
     alert('가입완료');
-    // Router.push('http://localhost:3000/user/myProfile');
+    Router.push('http://localhost:3000/user/myProfile');
   };
 
   const idOverlap = async (e: any) => {
@@ -106,7 +107,9 @@ const Regist = () => {
       const response = await axios.post('http://localhost:4000/sendAuthNum', {
         userEmail,
       });
-      setAuthNum(response.data.authNum);
+      const authString = response.data.authNum.join('');
+
+      setAuthNum(authString);
       setSendEmail(true);
     }
   };

@@ -1,24 +1,23 @@
 import Link from 'next/link';
 import Router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useCookies } from 'react-cookie';
+// eslint-disable-next-line import/no-cycle
+import { Global } from '../pages/_app';
 import { Logo, Nav, StyledHeader } from '../styles/header';
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
-  const [isCookie, setIsCookie] = useState<boolean>();
+  const [, , removeCookie] = useCookies();
+
+  const { isLogin, setIsLogin } = useContext(Global);
 
   const logout = () => {
     removeCookie('DID_Token');
+    if (setIsLogin === undefined) return;
+    setIsLogin(false);
     alert('로그아웃 되었습니다.');
     Router.push('/');
   };
-
-  useEffect(() => {
-    if (cookies.DID_Token === undefined) {
-      setIsCookie(false);
-    } else setIsCookie(true);
-  }, [cookies.DID_Token]);
 
   return (
     <>
@@ -27,7 +26,7 @@ const Header = () => {
           <Logo id="logo"></Logo>
         </Link>
         <Nav id="nav">
-          {isCookie === true ? (
+          {isLogin ? (
             <>
               <li>
                 <Link href="/user/myProfile">

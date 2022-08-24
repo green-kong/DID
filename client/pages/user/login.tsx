@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 import { useCookies } from 'react-cookie';
@@ -13,36 +13,40 @@ const Login = () => {
   const [pw, setPw] = useState<string>('');
   const [, setCookie] = useCookies();
 
-  const { setUserToken } = useContext(Global);
+  const { isLogin, setIsLogin, setUserToken } = useContext(Global);
 
-  const loginHandler = async (e: any) => {
+  const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await axios.post('http://localhost:4000/login', {
       id,
       pw,
     });
-    const { token } = response.data;
-    if (response.data.loginCheck === true) {
-      if (setUserToken === undefined) return;
+    const { token, loginCheck } = response.data;
+    if (loginCheck === true) {
+      if (setUserToken === undefined || setIsLogin === undefined) return;
       setUserToken(token);
+      setIsLogin(true);
       setCookie('DID_Token', token);
-      Router.push('/user/connections');
-    } else if (response.data.loginCheck === false) {
+      // Router.push('/user/connections');
+    } else if (loginCheck === false) {
       alert('회원정보가 다릅니다.');
     }
   };
 
-  const inputId = (e: any) => {
+  const inputId = (e: ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
 
-  const inputPw = (e: any) => {
+  const inputPw = (e: ChangeEvent<HTMLInputElement>) => {
     setPw(e.target.value);
   };
 
-  // useEffect(() => {
-  //   console.log('asdfasf', userToken);
-  // }, [userToken]);
+  useEffect(() => {
+    if (isLogin === false) return;
+    else {
+      Router.push('/');
+    }
+  }, [isLogin]);
 
   return (
     <>
