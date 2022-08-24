@@ -13,11 +13,11 @@ import React, {
 import Header from '../components/header';
 import '../styles/global.css';
 import Footer from '../components/footer';
-import Background from '../components/background';
 
 const Wrap = styled.div`
   position: relative;
   z-index: 2;
+  background: linear-gradient(180deg, #071832 0%, #103c73 100%);
 `;
 
 const ContentWrap = styled.div`
@@ -90,7 +90,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           </ContentWrap>
           <Footer />
         </Wrap>
-        <Background />
       </Global.Provider>
     </>
   );

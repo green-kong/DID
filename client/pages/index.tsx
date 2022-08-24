@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   };
 
   const admin = () => {
-    Router.push('/admin');
+    Router.push('/dev/appList');
   };
 
   return (

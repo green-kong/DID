@@ -114,7 +114,6 @@ const MyProfile = () => {
 
   // if (userInfo.length === 0) return <></>;
   // console.log(userInfo[0]);
-
   return (
     <>
       <SignUpTitle>
@@ -204,6 +203,7 @@ const MyProfile = () => {
           msg="비밀번호 입력"
         />
       )}
+      
     </>
   );
 };

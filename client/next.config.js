@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['localhost'],
+  },
+  
   async redirects() {
     return [
       {
@@ -17,5 +21,6 @@ const nextConfig = {
     ];
   },
 };
+
 
 module.exports = nextConfig;
