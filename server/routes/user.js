@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
     const [[result]] = await pool.execute(sql);
     const { idx, userId } = result;
     const userInfo = { idx, userId };
-    const secretKey = 'helpless';
+    const secretKey = process.env.SALT;
     const options = { expiresIn: '7d' };
 
     jwt.sign(userInfo, secretKey, options, (err, token) => {
@@ -124,7 +124,18 @@ router.post('/viewProfile', async (req, res) => {
 
 router.post('/userInfoCheck', async (req, res) => {
   const { userId, userPw } = req.body;
-  // name, birth, emali 컨트랙트에서 가져오기
+
+  const deployed = await getDeployed();
+  const hash = generateHash(userId, userPw);
+  const address = process.env.ADDRESS;
+
+  console.log(userId, userPw);
+
+  // const a = await deployed.contract.methods
+  //   .isRegistered(hash)
+  //   .call({ from: address });
+  // console.log(a);
+
   const name = '오승주';
   const birth = '930429';
   const email = 'seungju121@naver.com';
@@ -145,16 +156,19 @@ router.post('/userResign', async (req, res) => {
 });
 
 router.post('/sendToken', (req, res) => {
-  // console.log("ㄲㄲㄱ", req.body);
+  const { userToken: token } = req.body;
+  const secretKey = process.env.SALT;
 
-  try {
-    // todo : jwt 디코딩해서 json으로 보내기
-    const result = { idx: 1, userId: 'seungju' };
-    res.json(result);
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500).send(false);
-  }
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      console.log('에러에요');
+      res.sendStatus(500).send(false);
+    } else {
+      const { idx, userId } = decoded;
+      const result = { idx, userId };
+      res.json(result);
+    }
+  });
 });
 
 router.post('/connectionsInfo', (req, res) => {

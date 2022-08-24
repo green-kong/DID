@@ -46,7 +46,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const [userToken, setUserToken] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [userData, setUserData] = useState<IUserData>({});
-  const [cookies] = useCookies();
+  const [cookies, , removeCookie] = useCookies();
 
   const globalState = {
     userToken,
@@ -69,6 +69,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       } catch (e) {
         console.log(e);
         setIsLogin(false);
+        removeCookie('DID_Token');
+        setUserToken('');
       }
     })();
   }, [userToken]);

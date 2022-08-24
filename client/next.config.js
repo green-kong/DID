@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
-  
+
   async redirects() {
     return [
       {
@@ -18,9 +18,13 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/user/myProfile',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };
-
 
 module.exports = nextConfig;

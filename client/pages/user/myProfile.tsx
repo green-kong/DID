@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 import { useCookies } from 'react-cookie';
@@ -10,6 +10,7 @@ import {
   SignUpBtn,
 } from '../../styles/registStyle';
 import Modal from '../../components/Modal';
+import { Global } from '../_app';
 
 interface IUserInfo {
   userId: string;
@@ -27,20 +28,21 @@ const MyProfile = () => {
   const [userInfo, setUserInfo] = useState<IUserInfo | undefined>();
 
   const [cookies, setCookie, removeCookie] = useCookies();
+
+  const { userData, isLogin, setIsLogin, setUserToken } = useContext(Global);
+
   const userId = cookies.token;
 
   const closePwCheckModalCancel = () => {
-    console.log('클로즈비번체크모달 캔슬');
     Router.push('/');
     setPwCheckModal(false);
   };
 
   const closePwCheckModalSubmit = async () => {
     const response = await axios.post('http://localhost:4000/userInfoCheck', {
-      userId,
+      userId: userData?.userId,
       userPw,
     });
-
     if (response.data.pwCheck === true) {
       setPwCheckModal(false);
       setUserInfo(response.data.userInfo);
@@ -51,8 +53,7 @@ const MyProfile = () => {
       // 비번틀린거 알려주자.
     }
 
-    setPwCheckModal(false);
-    console.log('클로즈비번체크모달 서밋');
+    // setPwCheckModal(false);
   };
 
   const openRejoinModal = () => {
