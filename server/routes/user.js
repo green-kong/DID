@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const crypto = require("crypto");
-const nodemailer = require("nodemailer");
-const fs = require("fs");
-const jwt = require("jsonwebtoken");
-const { pool } = require("../db.js");
-const getDeployed = require("../web3.js");
-const generateHash = require("../util/hashGenerator.js");
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const { pool } = require('../db.js');
+const getDeployed = require('../web3.js');
+const generateHash = require('../util/hashGenerator.js');
 
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   const { id, pw } = req.body;
   const hash = generateHash(id, pw);
   const deployed = await getDeployed();
@@ -22,8 +22,8 @@ router.post("/login", async (req, res) => {
     const [[result]] = await pool.execute(sql);
     const { idx, userId } = result;
     const userInfo = { idx, userId };
-    const secretKey = "helpless";
-    const options = { expiresIn: "7d" };
+    const secretKey = 'helpless';
+    const options = { expiresIn: '7d' };
 
     jwt.sign(userInfo, secretKey, options, (err, token) => {
       if (err) console.log(err);
@@ -34,7 +34,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/overlap_Check", async (req, res) => {
+router.post('/overlap_Check', async (req, res) => {
   const { inputId } = req.body;
   const sql = `Select * from user where userid='${inputId}'`;
   const [result] = await pool.execute(sql);
@@ -42,7 +42,7 @@ router.post("/overlap_Check", async (req, res) => {
   else res.json({ idCheck: false });
 });
 
-router.post("/sendAuthNum", async (req, res) => {
+router.post('/sendAuthNum', async (req, res) => {
   const { userEmail } = req.body;
 
   const generateRandom = (min, max) => {
@@ -50,8 +50,8 @@ router.post("/sendAuthNum", async (req, res) => {
     return String(ranNum);
   };
 
-  const authNum = generateRandom(111111, 999999).split("");
-  let html = fs.readFileSync("./public/sendAuthNum.html").toString();
+  const authNum = generateRandom(111111, 999999).split('');
+  let html = fs.readFileSync('./public/sendAuthNum.html').toString();
   for (let i = 0; i < authNum.length; i++) {
     html = html.replace(`{{text${i}}}`, authNum[i]);
   }
@@ -68,7 +68,7 @@ router.post("/sendAuthNum", async (req, res) => {
     // 받는사람 메일 설정입니다.
     from: process.env.Auth_USER, // 발송 메일 주소
     to: userEmail, // 받는사람 이메일
-    subject: "[DID] 인증번호를 확인해주세요.", // 메일 제목
+    subject: '[DID] 인증번호를 확인해주세요.', // 메일 제목
     html,
   };
   transporter.sendMail(mailOptions, (error, info) => {
@@ -76,13 +76,13 @@ router.post("/sendAuthNum", async (req, res) => {
     if (error) {
       console.log(error); // 실패(에러)
     } else {
-      console.log("이메일 전송함: " + info.response); // 성공
+      console.log('이메일 전송함: ' + info.response); // 성공
     }
   });
   res.json({ authNum });
 });
 
-router.post("/regist", async (req, res) => {
+router.post('/regist', async (req, res) => {
   const { userId, userPw, userEmail, selectMail, ...rest } = req.body;
   const email = userEmail + selectMail;
   const deployed = await getDeployed();
@@ -91,7 +91,7 @@ router.post("/regist", async (req, res) => {
   const userInfo = {
     ...rest,
     email,
-    gender: "남자다 이색기야",
+    gender: '남자다 이색기야',
   };
 
   const address = process.env.ADDRESS;
@@ -110,7 +110,7 @@ router.post("/regist", async (req, res) => {
   res.json({ regist: true });
 });
 
-router.post("/viewProfile", async (req, res) => {
+router.post('/viewProfile', async (req, res) => {
   const sql = `Select * from user where userid='asdf'`;
 
   // const asdf = await deployed.contract.methods
@@ -122,12 +122,12 @@ router.post("/viewProfile", async (req, res) => {
   res.json({ result });
 });
 
-router.post("/userInfoCheck", async (req, res) => {
+router.post('/userInfoCheck', async (req, res) => {
   const { userId, userPw } = req.body;
   // name, birth, emali 컨트랙트에서 가져오기
-  const name = "오승주";
-  const birth = "930429";
-  const email = "seungju121@naver.com";
+  const name = '오승주';
+  const birth = '930429';
+  const email = 'seungju121@naver.com';
   const userInfo = { userId, name, birth, email };
 
   // 쿠키에서 구한 아이디와 비번 해쉬한값을 컨트랙트에 있는지 조회함,
@@ -135,7 +135,7 @@ router.post("/userInfoCheck", async (req, res) => {
   res.json({ pwCheck: true, userInfo });
 });
 
-router.post("/userResign", async (req, res) => {
+router.post('/userResign', async (req, res) => {
   const { userId } = req.body;
 
   // const sql = `DELETE FROM user where userid=${userId}`;
@@ -144,12 +144,12 @@ router.post("/userResign", async (req, res) => {
   res.json({ pwCheck: true });
 });
 
-router.post("/sendToken", (req, res) => {
+router.post('/sendToken', (req, res) => {
   // console.log("ㄲㄲㄱ", req.body);
 
   try {
     // todo : jwt 디코딩해서 json으로 보내기
-    const result = { idx: 1, userId: "seungju" };
+    const result = { idx: 1, userId: 'seungju' };
     res.json(result);
   } catch (e) {
     console.log(e.message);
@@ -157,7 +157,7 @@ router.post("/sendToken", (req, res) => {
   }
 });
 
-router.post("/connectionsInfo", (req, res) => {
+router.post('/connectionsInfo', (req, res) => {
   console.log(req.body);
   // 여기서 유저가 커넥ㅌ되어있는 페이지 보여주기
   // 연결끊기까지 ?!
