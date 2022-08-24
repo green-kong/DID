@@ -25,13 +25,11 @@ const MyProfile = () => {
   const [resignModal, setResignModal] = useState<boolean>(false);
   const [userPw, setUserPw] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<boolean>(false);
+  const [pwWrongMessage, setPwWrongMessage] = useState<string>('');
   const [userInfo, setUserInfo] = useState<IUserInfo | undefined>();
 
-  const [cookies, setCookie, removeCookie] = useCookies();
-
-  const { userData, isLogin, setIsLogin, setUserToken } = useContext(Global);
-
-  const userId = cookies.token;
+  const [, , removeCookie] = useCookies();
+  const { userData, setIsLogin } = useContext(Global);
 
   const closePwCheckModalCancel = () => {
     Router.push('/');
@@ -39,82 +37,88 @@ const MyProfile = () => {
   };
 
   const closePwCheckModalSubmit = async () => {
-    const response = await axios.post('http://localhost:4000/userInfoCheck', {
-      userId: userData?.userId,
-      userPw,
-    });
+    const response = await axios.post(
+      'http://localhost:4000/user/userInfoCheck',
+      {
+        userId: userData?.userId,
+        userPw,
+      },
+    );
+    console.log(response.data);
     if (response.data.pwCheck === true) {
       setPwCheckModal(false);
       setUserInfo(response.data.userInfo);
       setPasswordCheck(true);
-      // userinfo는 프론트에 뿌려줄 유저정보들이다. [ { userid: asdf, }] 등등
+      setUserPw('');
     } else if (response.data.pwCheck === false) {
       setPwCheckModal(true);
-      // 비번틀린거 알려주자.
+      setPwWrongMessage('비번 틀려요');
     }
-
-    // setPwCheckModal(false);
   };
 
   const openRejoinModal = () => {
     setRejoinModal(true);
+    setUserPw('');
   };
 
   const closeRejoinModalCancel = () => {
     setRejoinModal(false);
+    setUserPw('');
   };
 
   const closeRejoinModalSubmit = async () => {
-    // 또 비번확인창 나오면서 비번치고 맞으면 /user/regist로 이동
-
-    const response = await axios.post('http://localhost:4000/userInfoCheck', {
-      userId,
+    const response = await axios.post('http://localhost:4000/user/userResign', {
+      userId: userData?.userId,
       userPw,
     });
-    console.log(response.data.pwCheck);
-    removeCookie('token');
 
-    // if (response.data.pwCheck) {
-    //   await axios.post('http://localhost:4000/userResign', userId);
-    //   Router.push('/user/regist');
-    //   setRejoinModal(false);
-    // } else if (response.data.pwCheck) {
-    //   setRejoinModal(true);
-    //   // 비번 다시확인하세요 메세지 ㄱㄱ
-    // }
-
-    console.log('리조인모달 서밋');
+    if (response.data.pwCheck === true) {
+      // db에 유저정보 삭제하기, contract에 유저정보 삭제하기
+      if (setIsLogin === undefined) return;
+      setRejoinModal(false);
+      setUserInfo(response.data.userInfo);
+      setPasswordCheck(true);
+      setUserPw('');
+      removeCookie('DID_Token');
+      setIsLogin(false);
+      Router.push('/user/regist');
+    } else if (response.data.pwCheck === false) {
+      setRejoinModal(true);
+      setPwWrongMessage('비번 틀려요');
+    }
   };
 
   const openResignModal = () => {
     setResignModal(true);
+    setUserPw('');
   };
 
   const closeResignModalCancel = () => {
     setResignModal(false);
+    setUserPw('');
   };
 
   const closeResignModalSubmit = async () => {
-    const response = await axios.post('http://localhost:4000/userInfoCheck', {
-      userId,
+    const response = await axios.post('http://localhost:4000/user/userResign', {
+      userId: userData?.userId,
       userPw,
     });
 
-    // if (response.data.pwCheck) {
-    //   await axios.post('http://localhost:4000/userResign', null);
-    //   Router.push('/');
-    //   setRejoinModal(false);
-    //   alert('회원탈퇴됐슴다');
-    // } else if (response.data.pwCheck) {
-    //   setRejoinModal(true);
-    //   // 비번 다시확인하세요 메세지 ㄱㄱ
-    // }
-
-    console.log('회원탈퇴 완료했습니다.');
+    if (response.data.pwCheck === true) {
+      if (setIsLogin === undefined) return;
+      setResignModal(false);
+      setUserInfo(response.data.userInfo);
+      setPasswordCheck(true);
+      setUserPw('');
+      removeCookie('DID_Token');
+      setIsLogin(false);
+      Router.push('/');
+    } else if (response.data.pwCheck === false) {
+      setResignModal(true);
+      setPwWrongMessage('비번 틀려요');
+    }
   };
 
-  // if (userInfo.length === 0) return <></>;
-  // console.log(userInfo[0]);
   return (
     <>
       <SignUpTitle>
@@ -182,6 +186,7 @@ const MyProfile = () => {
             setUserPw,
           }}
           msg="비밀번호 입력"
+          pwWrongMessage={pwWrongMessage}
         />
       )}
       {rejoinModal && (
@@ -192,6 +197,7 @@ const MyProfile = () => {
             setUserPw,
           }}
           msg="비밀번호 입력"
+          pwWrongMessage={pwWrongMessage}
         />
       )}
       {resignModal && (
@@ -202,6 +208,7 @@ const MyProfile = () => {
             setUserPw,
           }}
           msg="비밀번호 입력"
+          pwWrongMessage={pwWrongMessage}
         />
       )}
     </>

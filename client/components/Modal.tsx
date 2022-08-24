@@ -8,6 +8,7 @@ import {
   ModalBtn,
   ModalInput,
   ModalContent,
+  ModalDiv,
 } from '../styles/Modal';
 
 interface IQuitModal {
@@ -19,7 +20,7 @@ interface IQuitModal {
       | Dispatch<SetStateAction<string>>;
   };
   msg?: string;
-  link?: string;
+  pwWrongMessage?: string;
 }
 
 const Modal = (props: IQuitModal) => {
@@ -42,6 +43,7 @@ const Modal = (props: IQuitModal) => {
               className="pwInput"
               type="password"
             />
+            <ModalDiv>{props.pwWrongMessage}</ModalDiv>
           </ModalContent>
           <ModalBtnCon>
             <ModalBtn onClick={props.modal?.cancel}>취소</ModalBtn>
