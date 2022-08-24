@@ -25,7 +25,6 @@ const Login = () => {
     if (loginCheck === true) {
       if (setUserToken === undefined || setIsLogin === undefined) return;
       setUserToken(token);
-      setIsLogin(true);
       setCookie('DID_Token', token);
       // Router.push('/user/connections');
     } else if (loginCheck === false) {
