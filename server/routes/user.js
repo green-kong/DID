@@ -153,6 +153,7 @@ router.post('/sendToken', (req, res) => {
 });
 
 router.post('/connectionsInfo', (req, res) => {
+  const { idx, userId } = req.body;
   // console.log(req.body);
   // 여기서 유저가 커넥ㅌ되어있는 페이지 보여주기
   // 연결끊기까지 ?!
