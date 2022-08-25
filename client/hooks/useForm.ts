@@ -59,7 +59,7 @@ const useForm = (
 
       if (!userData) return;
 
-      formData.append('idx', userData.idx);
+      formData.append('u_idx', userData.idx);
       formData.append('file', imgFile);
       formData.append('name', values.name);
       formData.append('desc', values.desc);
