@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const { pool } = require('../db.js');
 const getDeployed = require('../web3.js');
 const generateHash = require('../util/hashGenerator.js');
+const userCheck = require('../middleware/index.js');
 
 router.post('/login', async (req, res) => {
   const { id, pw } = req.body;
@@ -22,7 +23,7 @@ router.post('/login', async (req, res) => {
     const [[result]] = await pool.execute(sql);
     const { idx, userId } = result;
     const userInfo = { idx, userId };
-    const secretKey = 'helpless';
+    const secretKey = process.env.SALT;
     const options = { expiresIn: '7d' };
 
     jwt.sign(userInfo, secretKey, options, (err, token) => {
@@ -110,55 +111,50 @@ router.post('/regist', async (req, res) => {
   res.json({ regist: true });
 });
 
-router.post('/viewProfile', async (req, res) => {
-  const sql = `Select * from user where userid='asdf'`;
-
-  // const asdf = await deployed.contract.methods
-  //   .getUserInfo(hash)
-  //   .call({ from: address });
-  // console.log(asdf);
-
-  const [result] = await pool.execute(sql);
-  res.json({ result });
-});
-
-router.post('/userInfoCheck', async (req, res) => {
+router.post('/userInfoCheck', userCheck, async (req, res) => {
   const { userId, userPw } = req.body;
-  // name, birth, emali 컨트랙트에서 가져오기
-  const name = '오승주';
-  const birth = '930429';
-  const email = 'seungju121@naver.com';
+  const { deployed, hash, address } = res.locals.utils;
+  const data = await deployed.contract.methods
+    .getUserInfo(hash)
+    .call({ from: address });
+  const { name, birth, email } = data;
   const userInfo = { userId, name, birth, email };
-
-  // 쿠키에서 구한 아이디와 비번 해쉬한값을 컨트랙트에 있는지 조회함,
-  // 있으면 true, 없으면 false res.json  ㄱ ㄱ
   res.json({ pwCheck: true, userInfo });
 });
 
-router.post('/userResign', async (req, res) => {
-  const { userId } = req.body;
+router.post('/userResign', userCheck, async (req, res) => {
+  const { userId, userPw } = req.body;
+  const { deployed, hash, address } = res.locals.utils;
+  await deployed.contract.methods.withdrawUser(hash).send({ from: address });
 
-  // const sql = `DELETE FROM user where userid=${userId}`;
-  // await pool.execute(sql);
+  const check = await deployed.contract.methods
+    .isRegistered(hash)
+    .call({ from: address });
+
+  const sql = `DELETE FROM user where userId=${userId}`;
+  await pool.execute(sql);
 
   res.json({ pwCheck: true });
 });
 
 router.post('/sendToken', (req, res) => {
-  // console.log("ㄲㄲㄱ", req.body);
+  const { userToken: token } = req.body;
+  const secretKey = process.env.SALT;
 
-  try {
-    // todo : jwt 디코딩해서 json으로 보내기
-    const result = { idx: 1, userId: 'seungju' };
-    res.json(result);
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500).send(false);
-  }
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      console.log('에러에요');
+      res.sendStatus(500).send(false);
+    } else {
+      const { idx, userId } = decoded;
+      const result = { idx, userId };
+      res.json(result);
+    }
+  });
 });
 
 router.post('/connectionsInfo', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // 여기서 유저가 커넥ㅌ되어있는 페이지 보여주기
   // 연결끊기까지 ?!
   res.json({ a: 333 });

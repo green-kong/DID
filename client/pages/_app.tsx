@@ -46,7 +46,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const [userToken, setUserToken] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [userData, setUserData] = useState<IUserData>({});
-  const [cookies] = useCookies();
+  const [cookies, , removeCookie] = useCookies();
 
   const globalState = {
     userToken,
@@ -60,15 +60,20 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     if (userToken === '') return;
     (async () => {
       try {
-        const response = await axios.post('http://localhost:4000/sendToken', {
-          userToken,
-        });
+        const response = await axios.post(
+          'http://localhost:4000/user/sendToken',
+          {
+            userToken,
+          },
+        );
         const result = response.data;
         setIsLogin(true);
         setUserData(result);
       } catch (e) {
         console.log(e);
         setIsLogin(false);
+        removeCookie('DID_Token');
+        setUserToken('');
       }
     })();
   }, [userToken]);

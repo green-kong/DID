@@ -78,7 +78,7 @@ const Regist = () => {
       gender: genderState.value,
     };
 
-    await axios.post('http://localhost:4000/regist', body);
+    await axios.post('http://localhost:4000/user/regist', body);
     alert('가입완료');
     Router.push('http://localhost:3000/user/myProfile');
   };
@@ -86,9 +86,12 @@ const Regist = () => {
   const idOverlap = async (e: any) => {
     if (e.target.value.length === 0) setIdCheck('');
     if (e.target.value.match(/^[A-Za-z|0-9|]{4,12}$/gi) !== null) {
-      const response = await axios.post('http://localhost:4000/overlap_Check', {
-        inputId: e.target.value,
-      });
+      const response = await axios.post(
+        'http://localhost:4000/user/overlap_Check',
+        {
+          inputId: e.target.value,
+        },
+      );
       if (response.data.idCheck) setIdCheck('true');
       else setIdCheck('false');
     } else {
@@ -125,9 +128,12 @@ const Regist = () => {
   const sendAuthNum = async () => {
     if (mailLength) {
       const userEmail = inputEmail + selectEmail;
-      const response = await axios.post('http://localhost:4000/sendAuthNum', {
-        userEmail,
-      });
+      const response = await axios.post(
+        'http://localhost:4000/user/sendAuthNum',
+        {
+          userEmail,
+        },
+      );
       const authString = response.data.authNum.join('');
 
       setAuthNum(authString);

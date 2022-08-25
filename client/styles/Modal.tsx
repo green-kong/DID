@@ -56,6 +56,11 @@ export const ModalInput = styled.input`
   }
 `;
 
+export const ModalDiv = styled.div`
+  margin-top: 10px;
+  color: red;
+`;
+
 export const ModalBtnCon = styled.div`
   display: flex;
   justify-content: space-between;
