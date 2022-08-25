@@ -111,19 +111,7 @@ router.post('/regist', async (req, res) => {
   res.json({ regist: true });
 });
 
-// router.post('/viewProfile', async (req, res) => {
-//   const sql = `Select * from user where userid='asdf'`;
-
-//   // const asdf = await deployed.contract.methods
-//   //   .getUserInfo(hash)
-//   //   .call({ from: address });
-//   // console.log(asdf);
-
-//   const [result] = await pool.execute(sql);
-//   res.json({ result });
-// });
-
-router.post('/user/userInfoCheck', userCheck, async (req, res) => {
+router.post('/userInfoCheck', userCheck, async (req, res) => {
   const { userId, userPw } = req.body;
   const { deployed, hash, address } = res.locals.utils;
   const data = await deployed.contract.methods
@@ -131,19 +119,20 @@ router.post('/user/userInfoCheck', userCheck, async (req, res) => {
     .call({ from: address });
   const { name, birth, email } = data;
   const userInfo = { userId, name, birth, email };
-  console.log('aksjdf');
   res.json({ pwCheck: true, userInfo });
 });
 
-router.post('/user/userResign', userCheck, async (req, res) => {
+router.post('/userResign', userCheck, async (req, res) => {
   const { userId, userPw } = req.body;
-  // const { deployed, hash, address } = res.locals.utils;
-  // const data = await deployed.contract.methods
-  //   .삭제하는컨트랙트(hash)
-  //   .call({ from: address });
+  const { deployed, hash, address } = res.locals.utils;
+  await deployed.contract.methods.withdrawUser(hash).send({ from: address });
 
-  // const sql = `DELETE FROM user where userid=${userId}`;
-  // await pool.execute(sql);
+  const check = await deployed.contract.methods
+    .isRegistered(hash)
+    .call({ from: address });
+
+  const sql = `DELETE FROM user where userId=${userId}`;
+  await pool.execute(sql);
 
   res.json({ pwCheck: true });
 });

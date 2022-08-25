@@ -37,23 +37,26 @@ const MyProfile = () => {
   };
 
   const closePwCheckModalSubmit = async () => {
-    const response = await axios.post(
-      'http://localhost:4000/user/userInfoCheck',
-      {
-        userId: userData?.userId,
-        userPw,
-      },
-    );
-    console.log(response.data);
-    if (response.data.pwCheck === true) {
+    setPwWrongMessage('로딩중');
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/user/userInfoCheck',
+        {
+          userId: userData?.userId,
+          userPw,
+        },
+      );
+
       setPwCheckModal(false);
       setUserInfo(response.data.userInfo);
       setPasswordCheck(true);
       setUserPw('');
-    } else if (response.data.pwCheck === false) {
+    } catch (e) {
+      console.log(e);
       setPwCheckModal(true);
       setPwWrongMessage('비번 틀려요');
     }
+    setPwWrongMessage('');
   };
 
   const openRejoinModal = () => {
@@ -67,13 +70,13 @@ const MyProfile = () => {
   };
 
   const closeRejoinModalSubmit = async () => {
+    setPwWrongMessage('로딩중');
     const response = await axios.post('http://localhost:4000/user/userResign', {
       userId: userData?.userId,
       userPw,
     });
 
-    if (response.data.pwCheck === true) {
-      // db에 유저정보 삭제하기, contract에 유저정보 삭제하기
+    try {
       if (setIsLogin === undefined) return;
       setRejoinModal(false);
       setUserInfo(response.data.userInfo);
@@ -82,10 +85,13 @@ const MyProfile = () => {
       removeCookie('DID_Token');
       setIsLogin(false);
       Router.push('/user/regist');
-    } else if (response.data.pwCheck === false) {
+    } catch (e) {
+      console.log(e);
       setRejoinModal(true);
       setPwWrongMessage('비번 틀려요');
     }
+
+    setPwWrongMessage('');
   };
 
   const openResignModal = () => {
@@ -99,12 +105,13 @@ const MyProfile = () => {
   };
 
   const closeResignModalSubmit = async () => {
+    setPwWrongMessage('로딩중');
     const response = await axios.post('http://localhost:4000/user/userResign', {
       userId: userData?.userId,
       userPw,
     });
 
-    if (response.data.pwCheck === true) {
+    try {
       if (setIsLogin === undefined) return;
       setResignModal(false);
       setUserInfo(response.data.userInfo);
@@ -113,10 +120,11 @@ const MyProfile = () => {
       removeCookie('DID_Token');
       setIsLogin(false);
       Router.push('/');
-    } else if (response.data.pwCheck === false) {
+    } catch (e) {
       setResignModal(true);
       setPwWrongMessage('비번 틀려요');
     }
+    setPwWrongMessage('');
   };
 
   return (

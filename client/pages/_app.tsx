@@ -60,9 +60,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     if (userToken === '') return;
     (async () => {
       try {
-        const response = await axios.post('http://localhost:4000/sendToken', {
-          userToken,
-        });
+        const response = await axios.post(
+          'http://localhost:4000/user/sendToken',
+          {
+            userToken,
+          },
+        );
         const result = response.data;
         setIsLogin(true);
         setUserData(result);

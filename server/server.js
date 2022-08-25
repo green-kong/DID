@@ -15,10 +15,10 @@ app.use(
   cors({
     origin: ['http://localhost:3000'],
     credentials: true,
-  })
+  }),
 );
 
-app.use(userRouter);
+app.use('/user', userRouter);
 app.use('/dev', devRouter);
 
 app.listen(4000, () => {
