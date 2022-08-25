@@ -2,12 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Router from 'next/router';
+import SelOpt from '../../components/selOpt';
 import {
   SignUpTitle,
   SignUpFrm,
   EmailContainer,
   SignUpBtn,
 } from '../../styles/registStyle';
+
+interface IOptions {
+  key: string;
+  value: string;
+}
 
 const Regist = () => {
   const [inputPw, setInputPw] = useState('');
@@ -21,6 +27,21 @@ const Regist = () => {
   const [emailCheck, setEmailCheck] = useState('');
   const [sendEmail, setSendEmail] = useState(false);
   const [mailLength, setMailLength] = useState(false);
+  const [selectIsOpend, SetselectIsOpend] = useState<boolean>(false);
+  const [genderState, setGenderState] = useState<IOptions>({
+    key: '남자',
+    value: 'male',
+  });
+
+  const handleGenderState = (value: IOptions) => () => {
+    console.log(value);
+    setGenderState(value);
+    SetselectIsOpend(!selectIsOpend);
+  };
+
+  const openOrCloseSelect = () => {
+    SetselectIsOpend(!selectIsOpend);
+  };
 
   const submitHandle = async (e: any) => {
     e.preventDefault();
@@ -38,7 +59,6 @@ const Regist = () => {
       alert('이메일 인증을 해주세요.');
       return;
     }
-
     const {
       userId: { value: userId },
       userPw: { value: userPw },
@@ -55,6 +75,7 @@ const Regist = () => {
       birth,
       userEmail,
       selectMail,
+      gender: genderState.value,
     };
 
     await axios.post('http://localhost:4000/regist', body);
@@ -199,6 +220,19 @@ const Regist = () => {
           <li>
             <label htmlFor="birth">생년월일</label>
             <input type="text" name="birth" />
+          </li>
+          <li>
+            <label htmlFor="gender">성별</label>
+            <SelOpt
+              isOpend={selectIsOpend}
+              openOrCloseSelect={openOrCloseSelect}
+              options={[
+                { key: '남자', value: 'male' },
+                { key: '여자', value: 'female' },
+              ]}
+              setGenderState={handleGenderState}
+              genderState={genderState}
+            />
           </li>
           <li>
             <label htmlFor="email">이메일</label>
