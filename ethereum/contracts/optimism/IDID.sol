@@ -16,8 +16,6 @@ interface IDID {
 
     function withdrawUser(string memory _identifier) external;
 
-    function updateUser(string memory _identifier, UserInfo memory _userData) external;
-
     function isRegistered(string memory _identifier) external view returns (bool);
 
     function getUserInfo(string memory _identifier) external view returns (UserInfo memory);

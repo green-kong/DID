@@ -2,9 +2,9 @@
 pragma solidity ^0.8.15;
 
 import './IDID.sol';
-import '../../node_modules/openzeppelin-solidity/contracts/access/Ownable.sol';
+import '../../node_modules/@openzeppelin/contracts/access/Ownable.sol';
 
-contract DID is IDID, Ownable { 
+contract DID is IDID, Ownable {
 
     // identifier => UserInfo
     mapping(string => UserInfo) private user;
@@ -33,19 +33,6 @@ contract DID is IDID, Ownable {
 
         delete user[_identifier];
         isRegisteredUser[_identifier] = false;
-    }
-
-    function updateUser(string memory _identifier, UserInfo memory _userData) public override {
-        require(isRegisteredUser[_identifier]);
-
-        UserInfo memory userInfo;
-
-        userInfo.name = _userData.name;
-        userInfo.birth = _userData.birth;
-        userInfo.gender = _userData.gender;
-        userInfo.email = _userData.email;
-
-        user[_identifier] = userInfo;
     }
 
     function isRegistered(string memory _identifier) public view override returns (bool) {
