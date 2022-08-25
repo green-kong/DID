@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import FormData from 'form-data';
 import Router from 'next/router';
 
@@ -6,6 +6,7 @@ import { IAppInfo } from '../types/appInfo';
 import validation from '../utils/validation';
 import addAppRequest from '../api/dev/addApp';
 import updateApp from '../api/dev/updateApp';
+import { Global } from '../pages/_app';
 
 interface IUseFormReturn {
   values: IAppInfo;
@@ -28,6 +29,8 @@ const useForm = (
   const [values, setValues] = useState<IAppInfo>(initialValues);
   const [errors, setErrors] = useState<IAppInfo>({});
   const [submit, setSubmit] = useState<boolean>(false);
+
+  const { userData } = useContext(Global);
 
   const formData = new FormData();
 
@@ -54,6 +57,9 @@ const useForm = (
 
       if (Object.keys(errors).length) return;
 
+      if (!userData) return;
+
+      formData.append('u_idx', userData.idx);
       formData.append('file', imgFile);
       formData.append('name', values.name);
       formData.append('desc', values.desc);

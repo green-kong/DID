@@ -4,11 +4,11 @@ const { pool } = require('../../db.js');
 const service = require('./dev.service.js');
 
 const addApp = async (req, res) => {
-  const { name, desc, host, redirect } = req.body;
+  const { u_idx, name, desc, host, redirect } = req.body;
   const APIkey = uuid.v4().split('-').join('');
   try {
     const sql = `INSERT INTO application (name, u_idx, APIkey, host, redirectURI) 
-    VALUES("${name}",1,"${APIkey}","${host}","${redirect}")`;
+    VALUES("${name}","${u_idx}","${APIkey}","${host}","${redirect}")`;
     const a = await pool.query(sql);
     if (desc) {
       const descSql = `INSERT INTO appDesc (a_idx,appDesc) 
