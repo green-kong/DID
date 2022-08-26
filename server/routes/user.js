@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const { v4: uuid } = require('uuid');
 const { pool } = require('../db.js');
 const getDeployed = require('../web3.js');
 const generateHash = require('../util/hashGenerator.js');
@@ -84,15 +85,18 @@ router.post('/sendAuthNum', async (req, res) => {
 });
 
 router.post('/regist', async (req, res) => {
-  const { userId, userPw, userEmail, selectMail, ...rest } = req.body;
+  const { userId, userPw, userEmail, selectMail, gender, ...rest } = req.body;
   const email = userEmail + selectMail;
   const deployed = await getDeployed();
+  const userCode = uuid();
+  console.log(userCode);
 
   const hash = generateHash(userId, userPw);
   const userInfo = {
     ...rest,
     email,
-    gender: '남자다 이색기야',
+    gender,
+    userCode,
   };
 
   const address = process.env.ADDRESS;
@@ -100,11 +104,6 @@ router.post('/regist', async (req, res) => {
   await deployed.contract.methods
     .registerUser(hash, userInfo)
     .send({ from: address });
-
-  // const a = await deployed.contract.methods
-  //   .isRegistered(hash)
-  //   .call({ from: address });
-  // console.log(a);
 
   const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
   await pool.execute(sql);
@@ -117,8 +116,8 @@ router.post('/userInfoCheck', userCheck, async (req, res) => {
   const data = await deployed.contract.methods
     .getUserInfo(hash)
     .call({ from: address });
-  const { name, birth, email } = data;
-  const userInfo = { userId, name, birth, email };
+  const { name, birth, email, gender } = data;
+  const userInfo = { userId, name, birth, email, gender };
   res.json({ pwCheck: true, userInfo });
 });
 
@@ -154,6 +153,7 @@ router.post('/sendToken', (req, res) => {
 });
 
 router.post('/connectionsInfo', (req, res) => {
+  const { idx, userId } = req.body;
   // console.log(req.body);
   // 여기서 유저가 커넥ㅌ되어있는 페이지 보여주기
   // 연결끊기까지 ?!

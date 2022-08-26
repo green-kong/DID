@@ -24,13 +24,13 @@ const Connections = () => {
       Router.push('/user/connections');
       console.log('이즈로그인 트루');
     }
-    // (async () => {
-    //   const response = await axios.post(
-    //     'http://localhost:4000/connectionsInfo',
-    //     { userData },
-    //   );
-    //   // console.log(response.data);
-    // })();
+    (async () => {
+      const response = await axios.post(
+        'http://localhost:4000/user/connectionsInfo',
+        userData,
+      );
+      console.log(response.data);
+    })();
   }, [isLogin]);
 
   return (

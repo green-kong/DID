@@ -17,6 +17,7 @@ interface IUserInfo {
   name: string;
   birth: string;
   email: string;
+  gender: string;
 }
 
 const MyProfile = () => {
@@ -159,6 +160,15 @@ const MyProfile = () => {
               type="text"
               name="birth"
               value={passwordCheck ? userInfo?.birth : ''}
+              readOnly
+            />
+          </li>
+          <li>
+            <label htmlFor="birth">성별</label>
+            <input
+              type="text"
+              name="gender"
+              value={passwordCheck ? userInfo?.gender : ''}
               readOnly
             />
           </li>

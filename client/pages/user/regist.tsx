@@ -34,7 +34,6 @@ const Regist = () => {
   });
 
   const handleGenderState = (value: IOptions) => () => {
-    console.log(value);
     setGenderState(value);
     SetselectIsOpend(!selectIsOpend);
   };
