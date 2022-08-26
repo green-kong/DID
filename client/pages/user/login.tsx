@@ -24,8 +24,6 @@ const Login = () => {
       });
       const { token, loginCheck } = response.data;
 
-      console.log('로그인체크', loginCheck);
-
       if (loginCheck === true) {
         if (setUserToken === undefined || setIsLogin === undefined) return;
         setUserToken(token);

@@ -165,12 +165,20 @@ router.post('/sendToken', (req, res) => {
   });
 });
 
-router.post('/connectionsInfo', (req, res) => {
+router.post('/connectionsInfo', async (req, res) => {
   const { idx, userId } = req.body;
-  // console.log(req.body);
-  // 여기서 유저가 커넥ㅌ되어있는 페이지 보여주기
+  const sql = `
+              select application.idx, name, appDesc, imgUrl 
+              from connected
+              join application on connected.a_idx=application.idx 
+              join appDesc on connected.a_idx=appDesc.a_idx 
+              join appImg on connected.a_idx=appImg.a_idx 
+              where connected.u_idx=${idx};
+  `;
+  const [result] = await pool.execute(sql);
+
   // 연결끊기까지 ?!
-  res.json({ a: 333 });
+  res.json({ connectionInfo: result });
 });
 
 module.exports = router;

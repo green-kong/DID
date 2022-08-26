@@ -185,7 +185,7 @@ const Regist = () => {
       setPwCheck('wrongPw');
     }
 
-    if (authNum.length === 6 && authNum2.length === 6) {
+    if (authNum.length >= 6 && authNum2.length >= 6) {
       if (authNum === authNum2) {
         setEmailCheck('true');
       } else {
