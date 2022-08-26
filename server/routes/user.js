@@ -10,16 +10,10 @@ const getDeployed = require('../web3.js');
 const generateHash = require('../util/hashGenerator.js');
 const userCheck = require('../middleware/index.js');
 
-router.post('/login', async (req, res) => {
-  const { id, pw } = req.body;
-  const hash = generateHash(id, pw);
-  const deployed = await getDeployed();
-  const address = process.env.ADDRESS;
-  const loginCheck = await deployed.contract.methods
-    .isRegistered(hash)
-    .call({ from: address });
+router.post('/login', userCheck, async (req, res) => {
+  const { userId: id } = req.body;
 
-  if (loginCheck) {
+  try {
     const sql = `SELECT * FROM user WHERE userId='${id}'`;
     const [[result]] = await pool.execute(sql);
     const { idx, userId } = result;
@@ -31,17 +25,23 @@ router.post('/login', async (req, res) => {
       if (err) console.log(err);
       else res.json({ loginCheck: true, token });
     });
-  } else {
+  } catch (e) {
+    console.log(e);
     res.json({ loginCheck: false });
   }
 });
 
-router.post('/overlap_Check', async (req, res) => {
+router.post('/idOverlap_Check', async (req, res) => {
   const { inputId } = req.body;
-  const sql = `Select * from user where userid='${inputId}'`;
-  const [result] = await pool.execute(sql);
-  if (result.length == 0) res.json({ idCheck: true });
-  else res.json({ idCheck: false });
+  try {
+    const sql = `Select * from user where userId='${inputId}'`;
+    const [result] = await pool.execute(sql);
+    if (result.length == 0) res.json({ idCheck: true });
+    else res.json({ idCheck: false });
+  } catch (e) {
+    console.log(e);
+    res.json({ idCheck: false });
+  }
 });
 
 router.post('/sendAuthNum', async (req, res) => {
@@ -88,8 +88,7 @@ router.post('/regist', async (req, res) => {
   const { userId, userPw, userEmail, selectMail, gender, ...rest } = req.body;
   const email = userEmail + selectMail;
   const deployed = await getDeployed();
-  const userCode = uuid();
-  console.log(userCode);
+  const userCode = uuid().split('-').join('');
 
   const hash = generateHash(userId, userPw);
   const userInfo = {
@@ -101,39 +100,53 @@ router.post('/regist', async (req, res) => {
 
   const address = process.env.ADDRESS;
 
-  await deployed.contract.methods
-    .registerUser(hash, userInfo)
-    .send({ from: address });
+  try {
+    await deployed.contract.methods
+      .registerUser(hash, userInfo)
+      .send({ from: address });
 
-  const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
-  await pool.execute(sql);
-  res.json({ regist: true });
+    const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
+    await pool.execute(sql);
+    res.json({ regist: true });
+  } catch (e) {
+    console.log(e);
+    console.log('유저정보 안들어감');
+    res.json({ regist: false });
+  }
 });
 
 router.post('/userInfoCheck', userCheck, async (req, res) => {
-  const { userId, userPw } = req.body;
-  const { deployed, hash, address } = res.locals.utils;
-  const data = await deployed.contract.methods
-    .getUserInfo(hash)
-    .call({ from: address });
-  const { name, birth, email, gender } = data;
-  const userInfo = { userId, name, birth, email, gender };
-  res.json({ pwCheck: true, userInfo });
+  const { userId } = req.body;
+  try {
+    const { deployed, hash, address } = res.locals.utils;
+    const data = await deployed.contract.methods
+      .getUserInfo(hash)
+      .call({ from: address });
+    const { name, birth, email, gender } = data;
+    const userInfo = { userId, name, birth, email, gender };
+    res.json({ pwCheck: true, userInfo });
+  } catch (e) {
+    console.log(e);
+    console.log('userInfoCheck Error');
+    res.json({ pwCheck: true, userInfo });
+  }
 });
 
 router.post('/userResign', userCheck, async (req, res) => {
-  const { userId, userPw } = req.body;
-  const { deployed, hash, address } = res.locals.utils;
-  await deployed.contract.methods.withdrawUser(hash).send({ from: address });
+  const { userId } = req.body;
+  try {
+    const { deployed, hash, address } = res.locals.utils;
+    await deployed.contract.methods.withdrawUser(hash).send({ from: address });
 
-  const check = await deployed.contract.methods
-    .isRegistered(hash)
-    .call({ from: address });
+    const sql = `DELETE FROM user where userId='${userId}'`;
+    await pool.execute(sql);
 
-  const sql = `DELETE FROM user where userId=${userId}`;
-  await pool.execute(sql);
-
-  res.json({ pwCheck: true });
+    res.json({ pwCheck: true });
+  } catch (e) {
+    console.log(e);
+    console.log(`can't remove userInfo at DB or contract`);
+    res.json({ pwCheck: false });
+  }
 });
 
 router.post('/sendToken', (req, res) => {

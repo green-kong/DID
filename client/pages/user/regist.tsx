@@ -25,7 +25,7 @@ const Regist = () => {
   const [authNum, setAuthNum] = useState('');
   const [authNum2, setAuthNum2] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
-  const [sendEmail, setSendEmail] = useState(false);
+  const [sendEmail, setSendEmail] = useState('false');
   const [mailLength, setMailLength] = useState(false);
   const [selectIsOpend, SetselectIsOpend] = useState<boolean>(false);
   const [genderState, setGenderState] = useState<IOptions>({
@@ -76,23 +76,36 @@ const Regist = () => {
       selectMail,
       gender: genderState.value,
     };
-
-    await axios.post('http://localhost:4000/user/regist', body);
-    alert('가입완료');
-    Router.push('http://localhost:3000/user/myProfile');
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/user/regist',
+        body,
+      );
+      if (response.data.regist === false) throw new Error();
+      alert('가입완료');
+      Router.push('/');
+    } catch (e) {
+      console.log(e);
+      alert('가입 에러남');
+    }
   };
 
   const idOverlap = async (e: any) => {
     if (e.target.value.length === 0) setIdCheck('');
     if (e.target.value.match(/^[A-Za-z|0-9|]{4,12}$/gi) !== null) {
-      const response = await axios.post(
-        'http://localhost:4000/user/overlap_Check',
-        {
-          inputId: e.target.value,
-        },
-      );
-      if (response.data.idCheck) setIdCheck('true');
-      else setIdCheck('false');
+      try {
+        const response = await axios.post(
+          'http://localhost:4000/user/idOverlap_Check',
+          {
+            inputId: e.target.value,
+          },
+        );
+        if (response.data.idCheck) setIdCheck('true');
+        else setIdCheck('false');
+      } catch (e) {
+        console.log(e);
+        setIdCheck('false');
+      }
     } else {
       setIdCheck('false');
     }
@@ -125,7 +138,9 @@ const Regist = () => {
   };
 
   const sendAuthNum = async () => {
-    if (mailLength) {
+    if (!mailLength) return;
+    setSendEmail('lodding');
+    try {
       const userEmail = inputEmail + selectEmail;
       const response = await axios.post(
         'http://localhost:4000/user/sendAuthNum',
@@ -136,7 +151,10 @@ const Regist = () => {
       const authString = response.data.authNum.join('');
 
       setAuthNum(authString);
-      setSendEmail(true);
+      setSendEmail('true');
+      alert('이메일이 전송되었습니다.');
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -260,11 +278,15 @@ const Regist = () => {
             </EmailContainer>
           </li>
           <li>
-            {sendEmail ? (
+            {sendEmail === 'true' ? (
               <span className="true">인증코드 전송되었습니다.</span>
-            ) : (
+            ) : null}
+            {sendEmail === 'false' ? (
               <span className="false">코드전송 해주세요.</span>
-            )}
+            ) : null}
+            {sendEmail === 'lodding' ? (
+              <span className="false">메일 전송하는 중</span>
+            ) : null}
           </li>
           <li>
             <label htmlFor="email_code">이메일 인증코드</label>

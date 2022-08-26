@@ -9,35 +9,42 @@ import { ContentTitle, Title, TitleIcon } from '../../styles/title';
 import { Border, LoginBtn, LoginFrm, SignUpBtn } from '../../styles/login';
 
 const Login = () => {
-  const [id, setId] = useState<string>('');
-  const [pw, setPw] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
+  const [userPw, setUserPw] = useState<string>('');
   const [, setCookie] = useCookies();
 
   const { isLogin, setIsLogin, setUserToken } = useContext(Global);
 
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:4000/user/login', {
-      id,
-      pw,
-    });
-    const { token, loginCheck } = response.data;
-    if (loginCheck === true) {
-      if (setUserToken === undefined || setIsLogin === undefined) return;
-      setUserToken(token);
-      setCookie('DID_Token', token);
-      // Router.push('/user/connections');
-    } else if (loginCheck === false) {
-      alert('회원정보가 다릅니다.');
+    try {
+      const response = await axios.post('http://localhost:4000/user/login', {
+        userId,
+        userPw,
+      });
+      const { token, loginCheck } = response.data;
+
+      console.log('로그인체크', loginCheck);
+
+      if (loginCheck === true) {
+        if (setUserToken === undefined || setIsLogin === undefined) return;
+        setUserToken(token);
+        setCookie('DID_Token', token);
+      } else if (loginCheck === false) {
+        alert('회원정보가 다릅니다.');
+      }
+    } catch (e) {
+      console.log(e);
+      console.log('로그인 에러');
     }
   };
 
   const inputId = (e: ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
+    setUserId(e.target.value);
   };
 
   const inputPw = (e: ChangeEvent<HTMLInputElement>) => {
-    setPw(e.target.value);
+    setUserPw(e.target.value);
   };
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const Login = () => {
           </li>
           <LoginBtn type="submit">Log in</LoginBtn>
           <Border />
-          <Link href="/user/regist2">
+          <Link href="/user/regist">
             <SignUpBtn>Sign up</SignUpBtn>
           </Link>
         </ul>

@@ -15,8 +15,7 @@ const userCheck = async (req, res, next) => {
     res.locals.utils = { deployed, hash, address };
     next();
   } else {
-    res.status(500).send(false);
-    // res.json({ pwCheck: false });
+    res.json({ pwCheck: false, loginCheck: false });
   }
 };
 

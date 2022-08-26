@@ -47,7 +47,6 @@ const MyProfile = () => {
           userPw,
         },
       );
-
       setPwCheckModal(false);
       setUserInfo(response.data.userInfo);
       setPasswordCheck(true);
@@ -57,7 +56,6 @@ const MyProfile = () => {
       setPwCheckModal(true);
       setPwWrongMessage('비번 틀려요');
     }
-    setPwWrongMessage('');
   };
 
   const openRejoinModal = () => {
@@ -67,17 +65,22 @@ const MyProfile = () => {
 
   const closeRejoinModalCancel = () => {
     setRejoinModal(false);
+    setPwWrongMessage('');
     setUserPw('');
   };
 
   const closeRejoinModalSubmit = async () => {
     setPwWrongMessage('로딩중');
-    const response = await axios.post('http://localhost:4000/user/userResign', {
-      userId: userData?.userId,
-      userPw,
-    });
 
     try {
+      const response = await axios.post(
+        'http://localhost:4000/user/userResign',
+        {
+          userId: userData?.userId,
+          userPw,
+        },
+      );
+
       if (setIsLogin === undefined) return;
       setRejoinModal(false);
       setUserInfo(response.data.userInfo);
@@ -87,12 +90,9 @@ const MyProfile = () => {
       setIsLogin(false);
       Router.push('/user/regist');
     } catch (e) {
-      console.log(e);
       setRejoinModal(true);
       setPwWrongMessage('비번 틀려요');
     }
-
-    setPwWrongMessage('');
   };
 
   const openResignModal = () => {
@@ -102,6 +102,7 @@ const MyProfile = () => {
 
   const closeResignModalCancel = () => {
     setResignModal(false);
+    setPwWrongMessage('');
     setUserPw('');
   };
 
@@ -125,7 +126,6 @@ const MyProfile = () => {
       setResignModal(true);
       setPwWrongMessage('비번 틀려요');
     }
-    setPwWrongMessage('');
   };
 
   return (
