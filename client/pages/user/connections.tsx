@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { Global } from '../_app';
@@ -11,8 +11,42 @@ import {
   ConnectionInfo,
 } from '../../styles/connections';
 
+import { IAppListData } from '../../types/appList';
+
 const Connections = () => {
   const { isLogin, userData } = useContext(Global);
+  const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
+  // if (connectionsInfo.length === 0) return;
+
+  const viewConnections = () => {
+    return connectionsInfo.map((v, k) => {
+      return (
+        <ConnectedDiv key={k}>
+          <ConnectionImg>
+            <Image
+              loader={() => {
+                return v.imgUrl
+                  ? `http://localhost:4000/${v.imgUrl}`
+                  : '/no_img.png';
+              }}
+              src={
+                v.imgUrl ? `http://localhost:4000/${v.imgUrl}` : '/no_img.png'
+              }
+              alt="어플로고"
+              width={100}
+              height={100}
+              objectFit="contain"
+            ></Image>
+          </ConnectionImg>
+          <ConnectionInfo>
+            <p className="connection_name">{v.name}</p>
+            <p className="connection_desc">{v.appDesc}</p>
+            <button className="disconnect_btn">연결끊기</button>
+          </ConnectionInfo>
+        </ConnectedDiv>
+      );
+    });
+  };
 
   useEffect(() => {
     if (isLogin === false) {
@@ -22,14 +56,13 @@ const Connections = () => {
 
     if (isLogin === true) {
       Router.push('/user/connections');
-      console.log('이즈로그인 트루');
     }
     (async () => {
       const response = await axios.post(
         'http://localhost:4000/user/connectionsInfo',
         userData,
       );
-      console.log(response.data);
+      setConnectionsInfo(response.data.connectionInfo);
     })();
   }, [isLogin]);
 
@@ -40,98 +73,7 @@ const Connections = () => {
         <Title>Connections</Title>
       </ContentTitle>
 
-      <ConnectionsWrap>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-        <ConnectedDiv>
-          <ConnectionImg>
-            <Image
-              src="/carrot_market.png"
-              alt="어플로고"
-              width={100}
-              height={100}
-              objectFit="contain"
-            ></Image>
-          </ConnectionImg>
-          <ConnectionInfo>
-            <p className="connection_name">당근마켓</p>
-            <p className="connection_desc">
-              수수료 없는, 개인간의 중고 직거래 어플
-            </p>
-            <button className="disconnect_btn">연결끊기</button>
-          </ConnectionInfo>
-        </ConnectedDiv>
-      </ConnectionsWrap>
+      <ConnectionsWrap>{viewConnections()}</ConnectionsWrap>
     </>
   );
 };
