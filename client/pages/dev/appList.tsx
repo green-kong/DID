@@ -17,12 +17,13 @@ const AppList = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(userData);
-      if (!userData) {
-        alert('로그인 후 사용 가능 합니다.');
+      if (!userData) return;
+
+      if (!Object.keys(userData).length) {
+        alert('로그인 후 이용 가능합니다.');
         Router.push('/user/login');
-        return;
       }
+
       const { idx } = userData;
       if (!idx) return;
       const appList = await getAppList(idx);
