@@ -9,13 +9,21 @@ import { Logo, Nav, StyledHeader } from '../styles/header';
 const Header = () => {
   const [, , removeCookie] = useCookies();
 
-  const { isLogin, setIsLogin, setUserToken } = useContext(Global);
+  const { isLogin, setIsLogin, setUserToken, setUserData } = useContext(Global);
 
   const logout = () => {
     removeCookie('DID_Token');
-    if (setIsLogin === undefined || setUserToken === undefined) return;
+    if (
+      setIsLogin === undefined ||
+      setUserToken === undefined ||
+      setUserData === undefined
+    ) {
+      return;
+    }
+
     setUserToken('');
     setIsLogin(false);
+    setUserData({});
     alert('로그아웃 되었습니다.');
     Router.push('/');
   };
