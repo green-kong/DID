@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Router from 'next/router';
+import LoadingModal from '../components/loading';
 import { IndexMenu, MenuIcon, MenuWrap } from '../styles/main';
 
 const Home: NextPage = () => {
@@ -12,16 +13,18 @@ const Home: NextPage = () => {
   };
 
   return (
-    <MenuWrap>
-      <IndexMenu onClick={user}>
-        <MenuIcon imageUrl="/user_menu_icon.png" />
-        <p>개인회원</p>
-      </IndexMenu>
-      <IndexMenu onClick={admin}>
-        <MenuIcon imageUrl="/dev_menu_icon.png" />
-        <p>Developer</p>
-      </IndexMenu>
-    </MenuWrap>
+    <>
+      <MenuWrap>
+        <IndexMenu onClick={user}>
+          <MenuIcon imageUrl="/user_menu_icon.png" />
+          <p>개인회원</p>
+        </IndexMenu>
+        <IndexMenu onClick={admin}>
+          <MenuIcon imageUrl="/dev_menu_icon.png" />
+          <p>Developer</p>
+        </IndexMenu>
+      </MenuWrap>
+    </>
   );
 };
 
