@@ -116,13 +116,14 @@ const AddApp = () => {
                   type="text"
                   readOnly
                   value={
-                    fileName ||
-                    (appInfo.imgUrl as string)
-                      .split('/')
-                      .at(-1)
-                      ?.split('-')
-                      .filter((_, i) => i !== 0)
-                      .join('')
+                    fileName || appInfo.imgUrl
+                      ? (appInfo.imgUrl as string)
+                          .split('/')
+                          .at(-1)
+                          ?.split('-')
+                          .filter((_, i) => i !== 0)
+                          .join('')
+                      : ''
                   }
                 />
                 <FileSearchBtn htmlFor="app_logo">파일 찾기</FileSearchBtn>
