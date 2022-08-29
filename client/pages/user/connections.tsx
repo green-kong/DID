@@ -16,8 +16,6 @@ import { IAppListData } from '../../types/appList';
 const Connections = () => {
   const { isLogin, userData } = useContext(Global);
   const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
-  // if (connectionsInfo.length === 0) return;
-
   const viewConnections = () => {
     return connectionsInfo.map((v, k) => {
       return (

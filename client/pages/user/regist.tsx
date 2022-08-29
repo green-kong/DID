@@ -83,7 +83,7 @@ const Regist = () => {
       );
       if (response.data.regist === false) throw new Error();
       alert('가입완료');
-      Router.push('/');
+      Router.push('/user/login');
     } catch (e) {
       console.log(e);
       alert('가입 에러남');
