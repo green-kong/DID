@@ -31,7 +31,6 @@ const MyProfile = () => {
 
   const [, , removeCookie] = useCookies();
   const { userData, setIsLogin } = useContext(Global);
-
   const closePwCheckModalCancel = () => {
     Router.push('/');
     setPwCheckModal(false);
@@ -47,14 +46,18 @@ const MyProfile = () => {
           userPw,
         },
       );
-      setPwCheckModal(false);
-      setUserInfo(response.data.userInfo);
-      setPasswordCheck(true);
-      setUserPw('');
+      if (response.data.pwCheck === true) {
+        setPwCheckModal(false);
+        setUserInfo(response.data.userInfo);
+        setPasswordCheck(true);
+        setUserPw('');
+        setPwWrongMessage('');
+      } else {
+        setPwCheckModal(true);
+        setPwWrongMessage('비번 틀려요');
+      }
     } catch (e) {
       console.log(e);
-      setPwCheckModal(true);
-      setPwWrongMessage('비번 틀려요');
     }
   };
 
@@ -71,27 +74,29 @@ const MyProfile = () => {
 
   const closeRejoinModalSubmit = async () => {
     setPwWrongMessage('로딩중');
+    const response = await axios.post('http://localhost:4000/user/userResign', {
+      userIdx: userData?.idx,
+      userId: userData?.userId,
+      userPw,
+    });
 
     try {
-      const response = await axios.post(
-        'http://localhost:4000/user/userResign',
-        {
-          userId: userData?.userId,
-          userPw,
-        },
-      );
-
       if (setIsLogin === undefined) return;
-      setRejoinModal(false);
-      setUserInfo(response.data.userInfo);
-      setPasswordCheck(true);
-      setUserPw('');
-      removeCookie('DID_Token');
-      setIsLogin(false);
-      Router.push('/user/regist');
+      if (response.data.pwCheck === true) {
+        setRejoinModal(false);
+        setUserInfo(response.data.userInfo);
+        setPasswordCheck(true);
+        setUserPw('');
+        removeCookie('DID_Token');
+        setIsLogin(false);
+        setPwWrongMessage('');
+        Router.push('/user/regist');
+      } else {
+        setRejoinModal(true);
+        setPwWrongMessage('비번 틀려요');
+      }
     } catch (e) {
-      setRejoinModal(true);
-      setPwWrongMessage('비번 틀려요');
+      console.log(e);
     }
   };
 
@@ -115,16 +120,21 @@ const MyProfile = () => {
 
     try {
       if (setIsLogin === undefined) return;
-      setResignModal(false);
-      setUserInfo(response.data.userInfo);
-      setPasswordCheck(true);
-      setUserPw('');
-      removeCookie('DID_Token');
-      setIsLogin(false);
-      Router.push('/');
+      if (response.data.pwCheck) {
+        setResignModal(false);
+        setUserInfo(response.data.userInfo);
+        setPasswordCheck(true);
+        setUserPw('');
+        removeCookie('DID_Token');
+        setIsLogin(false);
+        setPwWrongMessage('');
+        Router.push('/');
+      } else {
+        setResignModal(true);
+        setPwWrongMessage('비번 틀려요');
+      }
     } catch (e) {
-      setResignModal(true);
-      setPwWrongMessage('비번 틀려요');
+      console.log(e);
     }
   };
 

@@ -38,6 +38,7 @@ interface IGlobal {
   isLogin?: boolean;
   setIsLogin?: Dispatch<SetStateAction<boolean>>;
   userData?: IUserData;
+  setUserData?: Dispatch<SetStateAction<IUserData>>;
 }
 
 export const Global = createContext<IGlobal>({});
@@ -54,6 +55,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     isLogin,
     setIsLogin,
     userData,
+    setUserData,
   };
 
   useEffect(() => {
