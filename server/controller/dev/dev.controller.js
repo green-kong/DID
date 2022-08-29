@@ -1,6 +1,7 @@
 const uuid = require('uuid');
 
 const { pool } = require('../../db.js');
+const uploadS3 = require('../../util/s3Uploader.js');
 const service = require('./dev.service.js');
 
 const addApp = async (req, res) => {
@@ -16,8 +17,10 @@ const addApp = async (req, res) => {
       await pool.query(descSql);
     }
     if (req.file) {
+      const result = await uploadS3(req.file);
+      // console.log(result);
       const imgSql = `INSERT INTO appImg (a_idx, imgUrl) 
-      VALUES("${a[0].insertId}", "${req.file.filename}")`;
+      VALUES("${a[0].insertId}", "${result.Location}")`;
       await pool.query(imgSql);
     }
     res.json({ idx: a[0].insertId });
