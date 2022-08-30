@@ -11,6 +11,7 @@ import {
 } from '../../styles/registStyle';
 import Modal from '../../components/Modal';
 import { Global } from '../_app';
+import LoadingModal from '../../components/loading';
 
 interface IUserInfo {
   userId: string;
@@ -21,6 +22,7 @@ interface IUserInfo {
 }
 
 const MyProfile = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pwCheckModal, setPwCheckModal] = useState<boolean>(true);
   const [rejoinModal, setRejoinModal] = useState<boolean>(false);
   const [resignModal, setResignModal] = useState<boolean>(false);
@@ -37,6 +39,7 @@ const MyProfile = () => {
   };
 
   const closePwCheckModalSubmit = async () => {
+    setIsLoading(true);
     setPwWrongMessage('로딩중');
     try {
       const response = await axios.post(
@@ -59,6 +62,8 @@ const MyProfile = () => {
     } catch (e) {
       console.log(e);
     }
+
+    setIsLoading(false);
   };
 
   const openRejoinModal = () => {
@@ -73,6 +78,7 @@ const MyProfile = () => {
   };
 
   const closeRejoinModalSubmit = async () => {
+    setIsLoading(true);
     setPwWrongMessage('로딩중');
     const response = await axios.post('http://localhost:4000/user/userResign', {
       userIdx: userData?.idx,
@@ -98,6 +104,7 @@ const MyProfile = () => {
     } catch (e) {
       console.log(e);
     }
+    setIsLoading(false);
   };
 
   const openResignModal = () => {
@@ -112,6 +119,7 @@ const MyProfile = () => {
   };
 
   const closeResignModalSubmit = async () => {
+    setIsLoading(true);
     setPwWrongMessage('로딩중');
     const response = await axios.post('http://localhost:4000/user/userResign', {
       userId: userData?.userId,
@@ -136,6 +144,7 @@ const MyProfile = () => {
     } catch (e) {
       console.log(e);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -239,6 +248,7 @@ const MyProfile = () => {
           pwWrongMessage={pwWrongMessage}
         />
       )}
+      {isLoading && <LoadingModal />}
     </>
   );
 };

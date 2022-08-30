@@ -9,6 +9,7 @@ import {
   EmailContainer,
   SignUpBtn,
 } from '../../styles/registStyle';
+import LoadingModal from '../../components/loading';
 
 interface IOptions {
   key: string;
@@ -16,6 +17,7 @@ interface IOptions {
 }
 
 const Regist = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputPw, setInputPw] = useState('');
   const [inputPw2, setInputPw2] = useState('');
   const [idCheck, setIdCheck] = useState('');
@@ -44,6 +46,7 @@ const Regist = () => {
 
   const submitHandle = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     if (idCheck !== 'true') {
       alert('아이디를 확인해주세요.');
       return;
@@ -88,6 +91,7 @@ const Regist = () => {
       console.log(e);
       alert('가입 에러남');
     }
+    setIsLoading(false);
   };
 
   const idOverlap = async (e: any) => {
@@ -311,6 +315,7 @@ const Regist = () => {
         </ul>
         <SignUpBtn type="submit">회원가입</SignUpBtn>
       </SignUpFrm>
+      {isLoading && <LoadingModal />}
     </>
   );
 };

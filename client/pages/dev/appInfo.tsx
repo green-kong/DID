@@ -17,6 +17,7 @@ import useImgUpload from '../../hooks/useImgUpload';
 import useForm from '../../hooks/useForm';
 import delApp from '../../api/dev/delApp';
 import DelAppModal from '../../components/delAppModal';
+import LoadingModal from '../../components/loading';
 
 interface IAppDetailInfo {
   idx: number;
@@ -32,11 +33,16 @@ const AddApp = () => {
   const router = useRouter();
   const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
   const [appDelModal, setAppDelModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const loadingModalControll = () => {
+    setIsLoading(!isLoading);
+  };
   const src = appInfo?.imgUrl;
   const { imgChangeHandler, fileName, imgSrc, imgFile } = useImgUpload();
   const { values, handleChange, handleSubmit, errors, reset } = useForm(
     {},
     imgFile,
+    loadingModalControll,
     'updateApp',
   );
 
@@ -191,6 +197,7 @@ const AddApp = () => {
           delAppFromModal={delAppFromModal}
         />
       )}
+      {isLoading && <LoadingModal />}
     </>
   );
 };

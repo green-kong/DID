@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Router from 'next/router';
-import LoadingModal from '../components/loading';
 import { IndexMenu, MenuIcon, MenuWrap } from '../styles/main';
 
 const Home: NextPage = () => {

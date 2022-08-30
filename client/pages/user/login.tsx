@@ -5,10 +5,12 @@ import Router from 'next/router';
 import { useCookies } from 'react-cookie';
 import { Global } from '../_app';
 import { ContentTitle, Title, TitleIcon } from '../../styles/title';
+import LoadingModal from '../../components/loading';
 
 import { Border, LoginBtn, LoginFrm, SignUpBtn } from '../../styles/login';
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>('');
   const [userPw, setUserPw] = useState<string>('');
   const [, setCookie] = useCookies();
@@ -17,6 +19,7 @@ const Login = () => {
 
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await axios.post('http://localhost:4000/user/login', {
         userId,
@@ -31,6 +34,7 @@ const Login = () => {
       } else if (loginCheck === false) {
         alert('회원정보가 다릅니다.');
       }
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
       console.log('로그인 에러');
@@ -87,6 +91,7 @@ const Login = () => {
           </Link>
         </ul>
       </LoginFrm>
+      {isLoading && <LoadingModal />}
     </>
   );
 };
