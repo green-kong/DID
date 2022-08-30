@@ -54,10 +54,10 @@ const Regist = () => {
       return;
     }
 
-    if (emailCheck !== 'true') {
-      alert('이메일 인증을 해주세요.');
-      return;
-    }
+    // if (emailCheck !== 'true') {
+    //   alert('이메일 인증을 해주세요.');
+    //   return;
+    // }
     const {
       userId: { value: userId },
       userPw: { value: userPw },
@@ -203,7 +203,12 @@ const Regist = () => {
         <ul>
           <li>
             <label htmlFor="userId">아이디</label>
-            <input type="text" name="userId" onChange={idOverlap} />
+            <input
+              type="text"
+              name="userId"
+              onChange={idOverlap}
+              autoComplete="off"
+            />
             {idCheck === '' ? (
               <span className="false">알파벳과 영어만 가능합니다.</span>
             ) : null}
@@ -238,11 +243,11 @@ const Regist = () => {
           </li>
           <li>
             <label htmlFor="userName">이름</label>
-            <input type="text" name="userName" />
+            <input type="text" name="userName" autoComplete="off" />
           </li>
           <li>
             <label htmlFor="birth">생년월일</label>
-            <input type="text" name="birth" />
+            <input type="text" name="birth" autoComplete="off" />
           </li>
           <li>
             <label htmlFor="gender">성별</label>
@@ -266,6 +271,7 @@ const Regist = () => {
                 minLength={4}
                 maxLength={20}
                 onChange={emailOverlap}
+                autoComplete="off"
               />
               <select name="selectMail" onChange={selectMail}>
                 <option>@gmail.com</option>
@@ -296,6 +302,7 @@ const Regist = () => {
                 type="text"
                 name="email_code"
                 onChange={inputAuthNum}
+                autoComplete="off"
               />
             </EmailContainer>
           </li>

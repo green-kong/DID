@@ -13,13 +13,22 @@ import {
 
 import { IAppListData } from '../../types/appList';
 
+const asdf = (k: any) => {
+  console.log('인덱스번호로 이동하기~', k);
+};
+
 const Connections = () => {
   const { isLogin, userData } = useContext(Global);
   const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
   const viewConnections = () => {
     return connectionsInfo.map((v, k) => {
       return (
-        <ConnectedDiv key={k}>
+        <ConnectedDiv
+          onClick={() => {
+            asdf(k);
+          }}
+          key={k}
+        >
           <ConnectionImg>
             <Image
               loader={() => {
@@ -38,7 +47,11 @@ const Connections = () => {
           </ConnectionImg>
           <ConnectionInfo>
             <p className="connection_name">{v.name}</p>
-            <p className="connection_desc">{v.appDesc}</p>
+            <p className="connection_desc">
+              {v.appDesc !== 'undefined'
+                ? v.appDesc
+                : 'no description about this app'}
+            </p>
             <button className="disconnect_btn">연결끊기</button>
           </ConnectionInfo>
         </ConnectedDiv>
@@ -50,18 +63,16 @@ const Connections = () => {
     if (isLogin === false) {
       alert('로그인하고 이용하세요.');
       Router.push('/user/login');
-    }
-
-    if (isLogin === true) {
+    } else {
+      (async () => {
+        const response = await axios.post(
+          'http://localhost:4000/user/connectionsInfo',
+          userData,
+        );
+        setConnectionsInfo(response.data.connectionInfo);
+      })();
       Router.push('/user/connections');
     }
-    (async () => {
-      const response = await axios.post(
-        'http://localhost:4000/user/connectionsInfo',
-        userData,
-      );
-      setConnectionsInfo(response.data.connectionInfo);
-    })();
   }, [isLogin]);
 
   return (

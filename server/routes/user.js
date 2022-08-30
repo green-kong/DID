@@ -140,17 +140,21 @@ router.post('/userResign', userCheck, async (req, res) => {
 
     const sqlConnectIdx = `SELECT idx FROM application WHERE u_idx='${u_idx}'`;
     const [result] = await pool.execute(sqlConnectIdx);
+    let app_idx = [];
+    result.forEach((v) => {
+      app_idx.push(`a_idx='${v.idx}'`);
+    });
+    const where = 'WHERE ' + app_idx.join(' or ');
 
-    for (let i = 0; i < result.length; i++) {
-      const sqlDeleteDesc = `DELETE FROM appDesc WHERE a_idx='${result[i].idx}' `;
-      await pool.execute(sqlDeleteDesc);
+    const sqlDeleteDesc = `DELETE FROM appDesc ${where} `;
+    await pool.execute(sqlDeleteDesc);
 
-      const sqlDeleteImg = `DELETE FROM appImg WHERE a_idx='${result[i].idx}' `;
-      await pool.execute(sqlDeleteImg);
+    const sqlDeleteImg = `DELETE FROM appImg ${where} `;
+    await pool.execute(sqlDeleteImg);
 
-      const sqlDeleteConnect = `DELETE FROM connected WHERE a_idx='${result[i].idx}'`;
-      await pool.execute(sqlDeleteConnect);
-    }
+    const sqlDeleteConnect = `DELETE FROM connected ${where}`;
+    await pool.execute(sqlDeleteConnect);
+
     const sqlDeleteApp = `DELETE FROM application WHERE u_idx='${u_idx}' `;
     await pool.execute(sqlDeleteApp);
 
@@ -190,19 +194,23 @@ router.post('/sendToken', (req, res) => {
 });
 
 router.post('/connectionsInfo', async (req, res) => {
-  const { idx, userId } = req.body;
-  const sql = `
-              select application.idx, name, appDesc, imgUrl 
-              from connected
-              join application on connected.a_idx=application.idx 
-              join appDesc on connected.a_idx=appDesc.a_idx 
-              join appImg on connected.a_idx=appImg.a_idx 
-              where connected.u_idx=${idx};
-  `;
-  const [result] = await pool.execute(sql);
+  try {
+    const { idx: u_idx } = req.body;
+    const sql = `
+        SELECT application.idx, name, appDesc, imgUrl
+        FROM connected
+        JOIN application ON connected.a_idx=application.idx
+        LEFT JOIN appDesc ON connected.a_idx=appDesc.a_idx
+        LEFT JOIN appImg ON connected.a_idx=appImg.a_idx
+        WHERE connected.u_idx=${u_idx};
+    `;
 
-  // 연결끊기까지 ?!
-  res.json({ connectionInfo: result });
+    const [connectionInfo] = await pool.execute(sql);
+    // 연결끊기까지 ?!
+    res.json({ connectionInfo });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 module.exports = router;
