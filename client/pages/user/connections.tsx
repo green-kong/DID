@@ -13,22 +13,52 @@ import {
 
 import { IAppListData } from '../../types/appList';
 
-const asdf = (k: any) => {
-  console.log('인덱스번호로 이동하기~', k);
-};
-
 const Connections = () => {
   const { isLogin, userData } = useContext(Global);
   const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
+
+  const controlApp = (k: any) => async (e: any) => {
+    try {
+      if (e.target.classList[0] === 'disconnect_btn') {
+        const disconnectResponse = await axios.post(
+          'http://localhost:4000/user/disconnected',
+          {
+            userData,
+            k,
+          },
+        );
+        if (disconnectResponse.data.delete) {
+          const connectedResponse = await axios.post(
+            'http://localhost:4000/user/connectionsInfo',
+            userData,
+          );
+          setConnectionsInfo(connectedResponse.data.connectionInfo);
+        } else {
+          alert('삭제 안됨');
+        }
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+      console.log('failed disconnect app');
+    }
+
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/user/moveURL',
+        userData,
+      );
+      window.open(`${response.data.host[k]}`);
+    } catch (e) {
+      console.log(e);
+      console.log('failed move to hostURL');
+    }
+  };
+
   const viewConnections = () => {
     return connectionsInfo.map((v, k) => {
       return (
-        <ConnectedDiv
-          onClick={() => {
-            asdf(k);
-          }}
-          key={k}
-        >
+        <ConnectedDiv onClick={controlApp(k)} key={k}>
           <ConnectionImg>
             <Image
               loader={() => {
