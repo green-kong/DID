@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');

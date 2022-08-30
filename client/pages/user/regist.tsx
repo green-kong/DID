@@ -54,10 +54,10 @@ const Regist = () => {
       return;
     }
 
-    // if (emailCheck !== 'true') {
-    //   alert('이메일 인증을 해주세요.');
-    //   return;
-    // }
+    if (emailCheck !== 'true') {
+      alert('이메일 인증을 해주세요.');
+      return;
+    }
     const {
       userId: { value: userId },
       userPw: { value: userPw },
@@ -133,6 +133,7 @@ const Regist = () => {
       setInputEmail(e.target.value);
     }
   };
+
   const selectMail = (e: any) => {
     setSelectEmail(e.target.value);
   };
@@ -193,6 +194,7 @@ const Regist = () => {
       }
     }
   }, [inputPw, inputPw2, authNum, authNum2]);
+
   return (
     <>
       <SignUpTitle>
