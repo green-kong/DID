@@ -16,10 +16,49 @@ import { IAppListData } from '../../types/appList';
 const Connections = () => {
   const { isLogin, userData } = useContext(Global);
   const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
+
+  const controlApp = (k: any) => async (e: any) => {
+    try {
+      if (e.target.classList[0] === 'disconnect_btn') {
+        const disconnectResponse = await axios.post(
+          'http://localhost:4000/user/disconnected',
+          {
+            userData,
+            k,
+          },
+        );
+        if (disconnectResponse.data.delete) {
+          const connectedResponse = await axios.post(
+            'http://localhost:4000/user/connectionsInfo',
+            userData,
+          );
+          setConnectionsInfo(connectedResponse.data.connectionInfo);
+        } else {
+          alert('삭제 안됨');
+        }
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+      console.log('failed disconnect app');
+    }
+
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/user/moveURL',
+        userData,
+      );
+      window.open(`${response.data.host[k]}`);
+    } catch (e) {
+      console.log(e);
+      console.log('failed move to hostURL');
+    }
+  };
+
   const viewConnections = () => {
     return connectionsInfo.map((v, k) => {
       return (
-        <ConnectedDiv key={k}>
+        <ConnectedDiv onClick={controlApp(k)} key={k}>
           <ConnectionImg>
             <Image
               loader={() => {
@@ -38,7 +77,11 @@ const Connections = () => {
           </ConnectionImg>
           <ConnectionInfo>
             <p className="connection_name">{v.name}</p>
-            <p className="connection_desc">{v.appDesc}</p>
+            <p className="connection_desc">
+              {v.appDesc !== 'undefined'
+                ? v.appDesc
+                : 'no description about this app'}
+            </p>
             <button className="disconnect_btn">연결끊기</button>
           </ConnectionInfo>
         </ConnectedDiv>
@@ -50,18 +93,16 @@ const Connections = () => {
     if (isLogin === false) {
       alert('로그인하고 이용하세요.');
       Router.push('/user/login');
-    }
-
-    if (isLogin === true) {
+    } else {
+      (async () => {
+        const response = await axios.post(
+          'http://localhost:4000/user/connectionsInfo',
+          userData,
+        );
+        setConnectionsInfo(response.data.connectionInfo);
+      })();
       Router.push('/user/connections');
     }
-    (async () => {
-      const response = await axios.post(
-        'http://localhost:4000/user/connectionsInfo',
-        userData,
-      );
-      setConnectionsInfo(response.data.connectionInfo);
-    })();
   }, [isLogin]);
 
   return (

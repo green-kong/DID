@@ -30,7 +30,6 @@ const MyProfile = () => {
   const [passwordCheck, setPasswordCheck] = useState<boolean>(false);
   const [pwWrongMessage, setPwWrongMessage] = useState<string>('');
   const [userInfo, setUserInfo] = useState<IUserInfo | undefined>();
-
   const [, , removeCookie] = useCookies();
   const { userData, setIsLogin } = useContext(Global);
   const closePwCheckModalCancel = () => {
@@ -97,9 +96,9 @@ const MyProfile = () => {
         setIsLogin(false);
         setPwWrongMessage('');
         Router.push('/user/regist');
-      } else {
-        setRejoinModal(true);
+      } else if (response.data.pwCheck === false) {
         setPwWrongMessage('비번 틀려요');
+        setRejoinModal(true);
       }
     } catch (e) {
       console.log(e);
@@ -122,10 +121,10 @@ const MyProfile = () => {
     setIsLoading(true);
     setPwWrongMessage('로딩중');
     const response = await axios.post('http://localhost:4000/user/userResign', {
+      userIdx: userData?.idx,
       userId: userData?.userId,
       userPw,
     });
-
     try {
       if (setIsLogin === undefined) return;
       if (response.data.pwCheck) {

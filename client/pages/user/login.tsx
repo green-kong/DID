@@ -74,6 +74,7 @@ const Login = () => {
               name="userId"
               type="text"
               placeholder="Id"
+              autoComplete="off"
             />
           </li>
           <li>
@@ -82,6 +83,7 @@ const Login = () => {
               name="userPw"
               type="password"
               placeholder="Password"
+              autoComplete="off"
             />
           </li>
           <LoginBtn type="submit">Log in</LoginBtn>
