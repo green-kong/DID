@@ -3,4 +3,5 @@ export interface IAppListData {
   name: string;
   appDesc: string;
   imgUrl: string;
+  host?: number;
 }

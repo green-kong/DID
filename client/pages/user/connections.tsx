@@ -17,7 +17,7 @@ const Connections = () => {
   const { isLogin, userData } = useContext(Global);
   const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
 
-  const controlApp = (v: any, k: any) => async (e: any) => {
+  const controlApp = (v: IAppListData, k: number) => async (e: any) => {
     try {
       if (e.target.classList[0] === 'disconnect_btn') {
         const disconnectResponse = await axios.post(
