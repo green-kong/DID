@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
+import Router from 'next/router';
 
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import { ConnectionsWrap } from '../../styles/connections';
@@ -15,11 +16,14 @@ const AppList = () => {
   const { userData } = useContext(Global);
 
   useEffect(() => {
-    // TODO(승짱) 로그인 기능 구현 완료되면 로그인 여부랑 유저정보 전역상태로 집어넣어야 될듯 함
-    // 일단은 그냥 구현함
-
     (async () => {
       if (!userData) return;
+
+      if (!Object.keys(userData).length) {
+        alert('로그인 후 이용 가능합니다.');
+        Router.push('/user/login');
+      }
+
       const { idx } = userData;
       if (!idx) return;
       const appList = await getAppList(idx);

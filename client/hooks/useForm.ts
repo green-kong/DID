@@ -24,6 +24,7 @@ interface IUseFormReturn {
 const useForm = (
   initialValues: IAppInfo,
   imgFile: File | undefined,
+  LoadingModalControll: () => void,
   type = 'addApp',
 ): IUseFormReturn => {
   const [values, setValues] = useState<IAppInfo>(initialValues);
@@ -58,7 +59,7 @@ const useForm = (
       if (Object.keys(errors).length) return;
 
       if (!userData) return;
-
+      LoadingModalControll();
       formData.append('u_idx', userData.idx);
       formData.append('file', imgFile);
       formData.append('name', values.name);
@@ -84,8 +85,11 @@ const useForm = (
       }
 
       if (response) {
+        LoadingModalControll();
         Router.push('/dev/appList');
+        return;
       }
+      LoadingModalControll();
     })();
   }, [errors]);
 

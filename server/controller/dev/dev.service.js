@@ -1,4 +1,5 @@
 const { pool } = require('../../db.js');
+const uploadS3 = require('../../util/s3Uploader.js');
 
 const appList = async (u_id) => {
   try {
@@ -57,7 +58,8 @@ const updateApp = async (body, file) => {
   if (!file) return true;
 
   try {
-    const sql = `UPDATE appImg SET imgUrl="${file.filename}"`;
+    const result = await uploadS3(file);
+    const sql = `UPDATE appImg SET imgUrl="${result.Location}" WHERE a_idx="${idx}"`;
     await pool.query(sql);
     return true;
   } catch (error) {
