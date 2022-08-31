@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { MouseEvent, useContext, useEffect, useState } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { Global } from '../_app';
@@ -17,42 +17,38 @@ const Connections = () => {
   const { isLogin, userData } = useContext(Global);
   const [connectionsInfo, setConnectionsInfo] = useState<IAppListData[]>([]);
 
-  const controlApp = (v: IAppListData, k: number) => async (e: any) => {
-    try {
-      if (e.target.classList[0] === 'disconnect_btn') {
-        const disconnectResponse = await axios.post(
-          'http://localhost:4000/user/disconnected',
-          {
-            userData,
-            k,
-            v,
-          },
-        );
-        if (disconnectResponse.data.delete) {
-          const connectedResponse = await axios.post(
-            'http://localhost:4000/user/connectionsInfo',
-            userData,
+  const controlApp =
+    (v: IAppListData, k: number) => async (e: MouseEvent<HTMLDivElement>) => {
+      try {
+        if ((e.target as Element).classList[0] === 'disconnect_btn') {
+          const disconnectResponse = await axios.post(
+            'http://localhost:4000/user/disconnected',
+            {
+              userData,
+              k,
+              v,
+            },
           );
-          if (connectedResponse.data.check) {
-            setConnectionsInfo(connectedResponse.data.connectionInfo);
+          if (disconnectResponse.data.delete) {
+            const newConnectionInfo = connectionsInfo.filter((value) => {
+              return value.idx !== v.idx;
+            });
+            setConnectionsInfo(newConnectionInfo);
           } else {
-            console.log('connectionsInfo 못가져옴');
+            alert('삭제 안됨');
           }
-        } else {
-          alert('삭제 안됨');
+          return;
         }
-        return;
+      } catch (e) {
+        console.log(e);
+        console.log('failed disconnect app');
       }
-    } catch (e) {
-      console.log(e);
-      console.log('failed disconnect app');
-    }
 
-    window.open(`http://${v.host}`);
-  };
+      window.open(`http://${v.host}`);
+    };
 
-  const viewConnections = () => {
-    return connectionsInfo.map((v, k) => {
+  const viewConnections = () =>
+    connectionsInfo.map((v, k) => {
       return (
         <ConnectedDiv onClick={controlApp(v, k)} key={k}>
           <ConnectionImg>
@@ -83,7 +79,6 @@ const Connections = () => {
         </ConnectedDiv>
       );
     });
-  };
 
   useEffect(() => {
     if (isLogin === false) {
