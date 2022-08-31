@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 
 const devRouter = require('./routers/dev.router.js');
-const userRouter = require('./routes/user.js');
+const userRouter = require('./routers/user.router.js');
 
 app.use(express.static(path.join(__dirname, './upload')));
 app.use(express.urlencoded({ extended: true }));

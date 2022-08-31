@@ -196,7 +196,7 @@ router.post('/connectionsInfo', async (req, res) => {
   try {
     const { idx: u_idx } = req.body;
     const sql = `
-        SELECT application.idx, name, appDesc, imgUrl
+        SELECT application.idx, name, appDesc, imgUrl, host
         FROM connected
         JOIN application ON connected.a_idx=application.idx
         LEFT JOIN appDesc ON connected.a_idx=appDesc.a_idx
@@ -205,50 +205,25 @@ router.post('/connectionsInfo', async (req, res) => {
     `;
 
     const [connectionInfo] = await pool.execute(sql);
-    res.json({ connectionInfo });
+    res.json({ check: true, connectionInfo });
   } catch (e) {
     console.log(e);
-  }
-});
-
-router.post('/moveURL', async (req, res) => {
-  try {
-    const { idx, userId } = req.body;
-    const sql = `
-      select * from connected
-      join application
-      on connected.a_idx=application.idx
-      where connected.u_idx=${idx}
-    `;
-    const [result] = await pool.execute(sql);
-    const host = result.map((v) => {
-      return v.host;
-    });
-    res.json({ host });
-  } catch (e) {
-    console.log(e);
-    console.log('failed move to hostURL');
-    res.json({ host: false });
+    console.log('no connectionsInfo');
+    res.json({ check: false });
   }
 });
 
 router.post('/disconnected', async (req, res) => {
-  // const { idx: u_idx } = req.body;
   try {
     const {
       userData: { idx: u_idx },
-      k: c_idx,
+      v: { idx: a_idx },
     } = req.body;
 
-    const sql = `select a_idx from connected where u_idx=${u_idx} `;
-    const [result] = await pool.execute(sql);
-    let a_idx = [];
-    result.forEach((v) => {
-      a_idx.push(v.a_idx);
-    });
-    const deleteA_idx = a_idx[c_idx];
-
-    const sqlDeleteConnect = `delete from connected where a_idx=${deleteA_idx} and u_idx=${u_idx}`;
+    const sqlDeleteConnect = `
+      delete from connected
+      where a_idx=${a_idx} and u_idx=${u_idx}
+    `;
     await pool.execute(sqlDeleteConnect);
 
     res.json({ delete: true });
