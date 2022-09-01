@@ -41,7 +41,12 @@ const AddApp = () => {
           <ul>
             <li>
               <label htmlFor="app_name">이름</label>
-              <input type="text" name="name" onChange={handleChange} />
+              <input
+                type="text"
+                name="name"
+                onChange={handleChange}
+                placeholder="최대 20글자까지 입력가능합니다."
+              />
               {errors.name && <span>{errors.name}</span>}
             </li>
             <li>
@@ -50,16 +55,26 @@ const AddApp = () => {
                 id="app_desc"
                 name="desc"
                 onChange={handleChange}
+                placeholder="최대 200글자 까지 입력가능합니다."
               ></textarea>
               {errors.desc && <span>{errors.desc}</span>}
             </li>
             <li>
               <label htmlFor="app_logo">로고</label>
               <UploadInputCon>
-                <FileNameInput type="text" readOnly value={fileName} />
+                <FileNameInput
+                  type="text"
+                  readOnly
+                  value={fileName || 'jpg, jpeg, png 만 업로드 가능합니다.'}
+                />
                 <FileSearchBtn htmlFor="app_logo">파일 찾기</FileSearchBtn>
               </UploadInputCon>
-              <ImgInput type="file" id="app_logo" onChange={imgChangeHandler} />
+              <ImgInput
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                id="app_logo"
+                onChange={imgChangeHandler}
+              />
             </li>
             <li>
               <label>이미지 미리보기</label>
@@ -77,12 +92,22 @@ const AddApp = () => {
             </li>
             <li>
               <label htmlFor="host">사이트 주소</label>
-              <input type="text" name="host" onChange={handleChange} />
+              <input
+                type="text"
+                name="host"
+                onChange={handleChange}
+                placeholder="http or https://example.com/"
+              />
               {errors.host && <span>{errors.host}</span>}
             </li>
             <li>
               <label htmlFor="redirect_uri">redirect URI</label>
-              <input type="text" name="redirectURI" onChange={handleChange} />
+              <input
+                type="text"
+                name="redirectURI"
+                onChange={handleChange}
+                placeholder="https://example.com/redirect"
+              />
               {errors.redirectURI && <span>{errors.redirectURI}</span>}
             </li>
           </ul>
