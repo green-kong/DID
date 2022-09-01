@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Router from 'next/router';
@@ -44,7 +44,7 @@ const Regist = () => {
     SetselectIsOpend(!selectIsOpend);
   };
 
-  const submitHandle = async (e: any) => {
+  const submitHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     if (idCheck !== 'true') {
@@ -61,6 +61,20 @@ const Regist = () => {
       alert('이메일 인증을 해주세요.');
       return;
     }
+
+    interface IValues {
+      value: string;
+    }
+
+    interface ITarget {
+      userId: IValues;
+      userPw: IValues;
+      userName: IValues;
+      birth: IValues;
+      email: IValues;
+      selectMail: IValues;
+    }
+
     const {
       userId: { value: userId },
       userPw: { value: userPw },
@@ -68,7 +82,7 @@ const Regist = () => {
       birth: { value: birth },
       email: { value: userEmail },
       selectMail: { value: selectMail },
-    } = e.target;
+    } = e.target as unknown as ITarget;
 
     const body = {
       userId,
@@ -94,7 +108,7 @@ const Regist = () => {
     setIsLoading(false);
   };
 
-  const idOverlap = async (e: any) => {
+  const idOverlap = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length === 0) setIdCheck('');
     if (e.target.value.match(/^[A-Za-z|0-9|]{4,12}$/gi) !== null) {
       try {
@@ -116,20 +130,20 @@ const Regist = () => {
     if (e.target.value.length === 0) setIdCheck('');
   };
 
-  const pwOverlap = (e: any) => {
+  const pwOverlap = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     setPwCheck('');
     setInputPw(e.target.value);
   };
 
-  const pwOverlap2 = (e: any) => {
+  const pwOverlap2 = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPwCheck('');
     setInputPw2(e.target.value);
   };
 
-  const emailOverlap = (e: any) => {
+  const emailOverlap = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length === 0) {
       setMailLength(false);
     } else {
@@ -138,7 +152,7 @@ const Regist = () => {
     }
   };
 
-  const selectMail = (e: any) => {
+  const selectMail = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectEmail(e.target.value);
   };
 
@@ -163,7 +177,7 @@ const Regist = () => {
     }
   };
 
-  const inputAuthNum = (e: any) => {
+  const inputAuthNum = (e: ChangeEvent<HTMLInputElement>) => {
     setAuthNum2(e.target.value);
     setEmailCheck('false');
   };
