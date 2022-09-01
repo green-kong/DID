@@ -86,6 +86,8 @@ const AddApp = () => {
   }, [appInfo]);
 
   if (!appInfo) return false;
+
+  console.log(fileName);
   return (
     <>
       <div id="content_wrap">
@@ -102,6 +104,7 @@ const AddApp = () => {
                 value={values.name || ''}
                 onChange={handleChange}
                 name="name"
+                placeholder="최대 20글자까지 입력가능합니다."
               />
               {errors.name && <span>{errors.name}</span>}
             </li>
@@ -112,6 +115,7 @@ const AddApp = () => {
                 name="desc"
                 onChange={handleChange}
                 value={values.desc || ''}
+                placeholder="최대 200글자 까지 입력가능합니다."
               ></textarea>
               {errors.desc && <span>{errors.desc}</span>}
             </li>
@@ -122,19 +126,24 @@ const AddApp = () => {
                   type="text"
                   readOnly
                   value={
-                    fileName || appInfo.imgUrl
-                      ? (appInfo.imgUrl as string)
-                          .split('/')
-                          .at(-1)
-                          ?.split('-')
-                          .filter((_, i) => i !== 0)
-                          .join('')
-                      : ''
+                    fileName ||
+                    appInfo.imgUrl
+                      ?.split('/')
+                      .at(-1)
+                      ?.split('-')
+                      .filter((_, i) => i !== 0)
+                      .join('') ||
+                    ''
                   }
                 />
                 <FileSearchBtn htmlFor="app_logo">파일 찾기</FileSearchBtn>
               </UploadInputCon>
-              <ImgInput type="file" id="app_logo" onChange={imgChangeHandler} />
+              <ImgInput
+                type="file"
+                id="app_logo"
+                accept=".jpg, .jpeg, .png"
+                onChange={imgChangeHandler}
+              />
             </li>
             <li>
               <label>이미지 미리보기</label>
@@ -158,6 +167,7 @@ const AddApp = () => {
                 name="host"
                 value={values.host || ''}
                 onChange={handleChange}
+                placeholder="http or https://example.com/"
               />
               {errors.host && <span>{errors.host}</span>}
             </li>
@@ -168,6 +178,7 @@ const AddApp = () => {
                 name="redirectURI"
                 value={values.redirectURI || ''}
                 onChange={handleChange}
+                placeholder="https://example.com/redirect"
               />
               {errors.redirectURI && <span>{errors.redirectURI}</span>}
             </li>
