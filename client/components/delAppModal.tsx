@@ -12,7 +12,7 @@ import LoadingModal from './loading';
 
 interface IDelAppModal {
   closeDelModal: () => void;
-  appName: string;
+  appName: string | undefined;
   delAppFromModal: () => void;
 }
 
