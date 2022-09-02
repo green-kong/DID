@@ -56,7 +56,7 @@ const DelAppModal = (props: IDelAppModal) => {
               color="white"
               onClick={handleDelBtn}
             >
-              탈퇴
+              삭제
             </ModalBtn>
           </ModalBtnCon>
         </ModalAlert>
