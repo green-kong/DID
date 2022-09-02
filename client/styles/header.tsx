@@ -15,6 +15,7 @@ export const Logo = styled.h1`
   height: 80px;
   background-image: url('/logo.png');
   background-size: 80px;
+  cursor: pointer;
 `;
 
 export const Nav = styled.ul`

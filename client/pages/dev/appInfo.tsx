@@ -87,7 +87,6 @@ const AddApp = () => {
 
   if (!appInfo) return false;
 
-  console.log(fileName);
   return (
     <>
       <div id="content_wrap">

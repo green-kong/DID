@@ -58,41 +58,52 @@ const Login = () => {
 
   return (
     <>
-      <ContentTitle>
-        <TitleIcon imageUrl="/login_title_icon.png" />
-        <Title>Login to DID</Title>
-      </ContentTitle>
-      <LoginFrm
-        onSubmit={loginHandler}
-        action="http://localhost:3000/authorizor/auth"
-        method="POST"
+      <div
+        style={{
+          height: 'calc(100vh - 100px - 45px)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          position: 'relative',
+          bottom: '60px',
+        }}
       >
-        <ul>
-          <li>
-            <input
-              onChange={inputId}
-              name="userId"
-              type="text"
-              placeholder="Id"
-              autoComplete="off"
-            />
-          </li>
-          <li>
-            <input
-              onChange={inputPw}
-              name="userPw"
-              type="password"
-              placeholder="Password"
-              autoComplete="off"
-            />
-          </li>
-          <LoginBtn type="submit">Log in</LoginBtn>
-          <Border />
-          <Link href="/user/regist">
-            <SignUpBtn>Sign up</SignUpBtn>
-          </Link>
-        </ul>
-      </LoginFrm>
+        <ContentTitle>
+          <TitleIcon imageUrl="/login_title_icon.png" />
+          <Title>Login to DID</Title>
+        </ContentTitle>
+        <LoginFrm
+          onSubmit={loginHandler}
+          action="http://localhost:3000/authorizor/auth"
+          method="POST"
+        >
+          <ul>
+            <li>
+              <input
+                onChange={inputId}
+                name="userId"
+                type="text"
+                placeholder="Id"
+                autoComplete="off"
+              />
+            </li>
+            <li>
+              <input
+                onChange={inputPw}
+                name="userPw"
+                type="password"
+                placeholder="Password"
+                autoComplete="off"
+              />
+            </li>
+            <LoginBtn type="submit">Log in</LoginBtn>
+            <Border />
+            <Link href="/user/regist">
+              <SignUpBtn>Sign up</SignUpBtn>
+            </Link>
+          </ul>
+        </LoginFrm>
+      </div>
       {isLoading && <LoadingModal />}
     </>
   );

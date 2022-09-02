@@ -43,7 +43,7 @@ const AppList = () => {
         <Link href="/dev/addApp">
           <AddAppBtn>
             <div className="plus_icon">+</div>
-            <div className="plus_text">앱 연결하기</div>
+            <div className="plus_text">앱 등록하기</div>
           </AddAppBtn>
         </Link>
       </ConnectionsWrap>

@@ -12,7 +12,7 @@ import LoadingModal from './loading';
 
 interface IDelAppModal {
   closeDelModal: () => void;
-  appName: string;
+  appName: string | undefined;
   delAppFromModal: () => void;
 }
 
@@ -56,7 +56,7 @@ const DelAppModal = (props: IDelAppModal) => {
               color="white"
               onClick={handleDelBtn}
             >
-              탈퇴
+              삭제
             </ModalBtn>
           </ModalBtnCon>
         </ModalAlert>
