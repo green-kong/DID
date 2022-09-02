@@ -57,7 +57,16 @@ const Login = () => {
   }, [isLogin]);
 
   return (
-    <>
+    <div
+      style={{
+        height: 'calc(100vh - 100px - 45px)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        position: 'relative',
+        bottom: '60px',
+      }}
+    >
       <ContentTitle>
         <TitleIcon imageUrl="/login_title_icon.png" />
         <Title>Login to DID</Title>
@@ -94,7 +103,7 @@ const Login = () => {
         </ul>
       </LoginFrm>
       {isLoading && <LoadingModal />}
-    </>
+    </div>
   );
 };
 
