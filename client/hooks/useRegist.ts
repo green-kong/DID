@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import Router from 'next/router';
-import { FormEvent, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 interface IValues {
   userId?: string;
@@ -25,7 +31,11 @@ const initialState = {
   email_code: '',
 };
 
-const useRegist = (gender: string, authNum: string) => {
+const useRegist = (
+  gender: string,
+  authNum: string,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
+) => {
   const [values, setValues] = useState<IValues>(initialState);
   const [errors, setErrors] = useState<IValues>({});
   const [submits, setSubmits] = useState<boolean>(false);
@@ -96,6 +106,14 @@ const useRegist = (gender: string, authNum: string) => {
       error.birth = '6자리 숫자로 입력해주세요.';
     }
 
+    if (
+      birth?.match(
+        /^([0-9]{2})(0[0-9]|1[0-2])(0[0-9]|1[0-9]|2[0-9]|3[0-1])/g,
+      ) === null
+    ) {
+      error.birth = '생년월일이 올바르지 않습니다.';
+    }
+
     const month = birth?.substring(2, 4);
 
     if (month === '02') {
@@ -140,7 +158,9 @@ const useRegist = (gender: string, authNum: string) => {
   useEffect(() => {
     if (!submits) return;
     if (Object.keys(errors).length) return;
+
     const submitHandler = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.post('http://localhost:4000/user/regist', {
           ...values,
@@ -156,11 +176,12 @@ const useRegist = (gender: string, authNum: string) => {
         console.log(e);
         console.log('유저정보 안들어가짐');
       }
+      setIsLoading(false);
     };
     submitHandler();
   }, [errors]);
 
-  return { values, setValue, setSubmit, errors };
+  return { values, setValue, setSubmit, errors, setErrors };
 };
 
 export default useRegist;

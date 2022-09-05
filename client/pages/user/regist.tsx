@@ -24,9 +24,10 @@ const Regist = () => {
     key: '남자',
     value: 'male',
   });
-  const { values, setValue, setSubmit, errors } = useRegist(
+  const { values, setValue, setSubmit, errors, setErrors } = useRegist(
     genderState.value,
     authNum,
+    setIsLoading,
   );
 
   const handleGenderState = (value: IOptions) => () => {
@@ -37,11 +38,11 @@ const Regist = () => {
   const openOrCloseSelect = () => {
     SetselectIsOpend(!selectIsOpend);
   };
-
   const sendAuthNum = async () => {
     const { email, selectMail } = values;
     try {
       if (email?.length === 0) throw new Error('이메일너무 짧아욜');
+
       if (email === undefined || selectMail === undefined) return;
       const userEmail = email + selectMail;
       const response = await axios.post(
@@ -51,8 +52,8 @@ const Regist = () => {
         },
       );
       const authString = response.data.authNum.join('');
-
       setAuthNum(authString);
+      setErrors({ ...errors, email: '' });
       alert('이메일이 전송되었습니다.');
     } catch (e) {
       alert('이메일을 다시 확인해주세요.');
