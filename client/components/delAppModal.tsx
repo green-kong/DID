@@ -8,14 +8,16 @@ import {
   ModalBtn,
   ModalInput,
 } from '../styles/quitModal';
+import LoadingModal from './loading';
 
 interface IDelAppModal {
   closeDelModal: () => void;
-  appName: string;
+  appName: string | undefined;
   delAppFromModal: () => void;
 }
 
 const DelAppModal = (props: IDelAppModal) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appName, setAppName] = useState<string>('');
   const [error, setError] = useState<string>('');
 
@@ -24,11 +26,13 @@ const DelAppModal = (props: IDelAppModal) => {
   };
 
   const handleDelBtn = () => {
+    setIsLoading(true);
     if (appName === props.appName) {
       props.delAppFromModal();
     } else {
       setError('앱 이름이 일치하지 않습니다.');
     }
+    setIsLoading(false);
   };
 
   return (
@@ -52,11 +56,12 @@ const DelAppModal = (props: IDelAppModal) => {
               color="white"
               onClick={handleDelBtn}
             >
-              탈퇴
+              삭제
             </ModalBtn>
           </ModalBtnCon>
         </ModalAlert>
       </ModalBg>
+      {isLoading && <LoadingModal />}
     </>
   );
 };

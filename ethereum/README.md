@@ -12,4 +12,6 @@ $ truffle console --network goerli --config truffle-config.js
 
 ```sh
 $ truffle console --network optimism-goerli --config truffle-config.ovm.js
+
+$ DID.deployed().then(inst => it = inst)
 ```

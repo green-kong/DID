@@ -65,6 +65,7 @@ export const SignUpBtn = styled.a`
   box-sizing: border-box;
   line-height: 40px;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 // .sign_up_btn {

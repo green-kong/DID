@@ -17,6 +17,7 @@ import useImgUpload from '../../hooks/useImgUpload';
 import useForm from '../../hooks/useForm';
 import delApp from '../../api/dev/delApp';
 import DelAppModal from '../../components/delAppModal';
+import LoadingModal from '../../components/loading';
 
 interface IAppDetailInfo {
   idx: number;
@@ -32,11 +33,16 @@ const AddApp = () => {
   const router = useRouter();
   const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
   const [appDelModal, setAppDelModal] = useState<boolean>(false);
-  const src = `http://localhost:4000/${appInfo?.imgUrl}`;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const loadingModalControll = () => {
+    setIsLoading(!isLoading);
+  };
+  const src = appInfo?.imgUrl;
   const { imgChangeHandler, fileName, imgSrc, imgFile } = useImgUpload();
   const { values, handleChange, handleSubmit, errors, reset } = useForm(
     {},
     imgFile,
+    loadingModalControll,
     'updateApp',
   );
 
@@ -80,6 +86,7 @@ const AddApp = () => {
   }, [appInfo]);
 
   if (!appInfo) return false;
+
   return (
     <>
       <div id="content_wrap">
@@ -96,6 +103,7 @@ const AddApp = () => {
                 value={values.name || ''}
                 onChange={handleChange}
                 name="name"
+                placeholder="최대 20글자까지 입력가능합니다."
               />
               {errors.name && <span>{errors.name}</span>}
             </li>
@@ -106,6 +114,7 @@ const AddApp = () => {
                 name="desc"
                 onChange={handleChange}
                 value={values.desc || ''}
+                placeholder="최대 200글자 까지 입력가능합니다."
               ></textarea>
               {errors.desc && <span>{errors.desc}</span>}
             </li>
@@ -115,19 +124,33 @@ const AddApp = () => {
                 <FileNameInput
                   type="text"
                   readOnly
-                  value={fileName || (appInfo.imgUrl as string)}
+                  value={
+                    fileName ||
+                    appInfo.imgUrl
+                      ?.split('/')
+                      .at(-1)
+                      ?.split('-')
+                      .filter((_, i) => i !== 0)
+                      .join('') ||
+                    ''
+                  }
                 />
                 <FileSearchBtn htmlFor="app_logo">파일 찾기</FileSearchBtn>
               </UploadInputCon>
-              <ImgInput type="file" id="app_logo" onChange={imgChangeHandler} />
+              <ImgInput
+                type="file"
+                id="app_logo"
+                accept=".jpg, .jpeg, .png"
+                onChange={imgChangeHandler}
+              />
             </li>
             <li>
               <label>이미지 미리보기</label>
               <ImagePreviewCon>
                 {appInfo.imgUrl && (
                   <Image
-                    loader={() => src}
-                    src={imgSrc || src}
+                    loader={() => src || ''}
+                    src={imgSrc || src || ''}
                     width={100}
                     height={100}
                     alt="앱로고"
@@ -143,6 +166,7 @@ const AddApp = () => {
                 name="host"
                 value={values.host || ''}
                 onChange={handleChange}
+                placeholder="http or https://example.com/"
               />
               {errors.host && <span>{errors.host}</span>}
             </li>
@@ -153,6 +177,7 @@ const AddApp = () => {
                 name="redirectURI"
                 value={values.redirectURI || ''}
                 onChange={handleChange}
+                placeholder="https://example.com/redirect"
               />
               {errors.redirectURI && <span>{errors.redirectURI}</span>}
             </li>
@@ -182,6 +207,7 @@ const AddApp = () => {
           delAppFromModal={delAppFromModal}
         />
       )}
+      {isLoading && <LoadingModal />}
     </>
   );
 };

@@ -47,9 +47,9 @@ export const OptionWrap = styled.div`
   width: 100%;
   height: 80px;
   transition: 300ms all ease-in;
-  opacity: ${(props: OptionWrapProps) => (props.isOpend ? 0 : 1)};
+  opacity: ${(props: OptionWrapProps) => (props.isOpend ? 1 : 0)};
   position: absolute;
-  top: ${(props: OptionWrapProps) => (props.isOpend ? '0px' : '50px')};
+  top: ${(props: OptionWrapProps) => (props.isOpend ? '50px' : '0px')};
   z-index: 1;
 `;
 

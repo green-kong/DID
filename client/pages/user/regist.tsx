@@ -9,6 +9,7 @@ import {
   SignUpBtn,
 } from '../../styles/registStyle';
 import useRegist from '../../hooks/useRegist';
+import LoadingModal from '../../components/loading';
 
 export interface IOptions {
   key: string;
@@ -16,6 +17,7 @@ export interface IOptions {
 }
 
 const Regist = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [authNum, setAuthNum] = useState('');
   const [selectIsOpend, SetselectIsOpend] = useState<boolean>(false);
   const [genderState, setGenderState] = useState<IOptions>({
@@ -157,6 +159,7 @@ const Regist = () => {
         </ul>
         <SignUpBtn type="submit">회원가입</SignUpBtn>
       </SignUpFrm>
+      {isLoading && <LoadingModal />}
     </>
   );
 };
