@@ -75,7 +75,8 @@ router.post('/sendAuthNum', async (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     // 이메일 발송
     if (error) {
-      console.log(error); // 실패(에러)
+      console.log(error);
+      console.log('이메일발송 실패');
     } else {
       console.log('이메일 전송함: ' + info.response); // 성공
     }
@@ -84,19 +85,27 @@ router.post('/sendAuthNum', async (req, res) => {
 });
 
 router.post('/regist', async (req, res) => {
-  const { userId, userPw, userEmail, selectMail, gender, ...rest } = req.body;
-  const email = userEmail + selectMail;
+  const {
+    userId,
+    userPw,
+    userName: name,
+    birth,
+    email: inputMail,
+    selectMail,
+    gender,
+  } = req.body;
+  const email = inputMail + selectMail;
   const deployed = await getDeployed();
   const userCode = uuid().split('-').join('');
 
   const hash = generateHash(userId, userPw);
   const userInfo = {
-    ...rest,
-    email,
-    gender,
     userCode,
+    name,
+    birth,
+    gender,
+    email,
   };
-
   const address = process.env.ADDRESS;
 
   try {
@@ -104,7 +113,12 @@ router.post('/regist', async (req, res) => {
       .registerUser(hash, userInfo)
       .send({ from: address });
 
-    const sql = `INSERT INTO USER(USERID) VALUES('${userId}')`;
+    const check = await deployed.contract.methods
+      .isRegistered(hash)
+      .call({ from: address });
+    console.log('컨트랙에 들어갔니?', check);
+
+    const sql = `INSERT INTO USER(userId) VALUES('${userId}')`;
     await pool.execute(sql);
     res.json({ regist: true });
   } catch (e) {
