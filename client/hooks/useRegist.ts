@@ -96,6 +96,14 @@ const useRegist = (gender: string, authNum: string) => {
       error.birth = '6자리 숫자로 입력해주세요.';
     }
 
+    if (
+      birth?.match(
+        /^([0-9]{2})(0[0-9]|1[0-2])(0[0-9]|1[0-9]|2[0-9]|3[0-1])/g,
+      ) === null
+    ) {
+      error.birth = '생년월일이 올바르지 않습니다.';
+    }
+
     const month = birth?.substring(2, 4);
 
     if (month === '02') {
@@ -160,7 +168,7 @@ const useRegist = (gender: string, authNum: string) => {
     submitHandler();
   }, [errors]);
 
-  return { values, setValue, setSubmit, errors };
+  return { values, setValue, setSubmit, errors, setErrors };
 };
 
 export default useRegist;
