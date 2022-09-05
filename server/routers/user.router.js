@@ -113,11 +113,6 @@ router.post('/regist', async (req, res) => {
       .registerUser(hash, userInfo)
       .send({ from: address });
 
-    const check = await deployed.contract.methods
-      .isRegistered(hash)
-      .call({ from: address });
-    console.log('컨트랙에 들어갔니?', check);
-
     const sql = `INSERT INTO USER(userId) VALUES('${userId}')`;
     await pool.execute(sql);
     res.json({ regist: true });

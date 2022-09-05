@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import Router from 'next/router';
-import { FormEvent, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 interface IValues {
   userId?: string;
@@ -25,7 +31,11 @@ const initialState = {
   email_code: '',
 };
 
-const useRegist = (gender: string, authNum: string) => {
+const useRegist = (
+  gender: string,
+  authNum: string,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
+) => {
   const [values, setValues] = useState<IValues>(initialState);
   const [errors, setErrors] = useState<IValues>({});
   const [submits, setSubmits] = useState<boolean>(false);
@@ -148,7 +158,9 @@ const useRegist = (gender: string, authNum: string) => {
   useEffect(() => {
     if (!submits) return;
     if (Object.keys(errors).length) return;
+
     const submitHandler = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.post('http://localhost:4000/user/regist', {
           ...values,
@@ -164,6 +176,7 @@ const useRegist = (gender: string, authNum: string) => {
         console.log(e);
         console.log('유저정보 안들어가짐');
       }
+      setIsLoading(false);
     };
     submitHandler();
   }, [errors]);

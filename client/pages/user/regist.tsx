@@ -27,6 +27,7 @@ const Regist = () => {
   const { values, setValue, setSubmit, errors, setErrors } = useRegist(
     genderState.value,
     authNum,
+    setIsLoading,
   );
 
   const handleGenderState = (value: IOptions) => () => {
