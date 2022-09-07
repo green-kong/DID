@@ -243,4 +243,26 @@ router.post('/disconnected', async (req, res) => {
   }
 });
 
+router.post('/disconnectFromApp', async (req, res) => {
+  const { userCode, clientId } = req.body;
+
+  const deleteSql = `
+  DELETE connected
+  FROM connected 
+  LEFT JOIN application
+  ON application.idx = connected.a_idx
+  LEFT JOIN user
+  ON user.idx = connected.u_idx
+  WHERE application.APIKey='${clientId}'
+  AND user.userCode='${userCode}'
+  `;
+
+  try {
+    await pool.query(deleteSql);
+    res.send(true);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
