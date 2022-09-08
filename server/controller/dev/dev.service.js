@@ -24,9 +24,11 @@ const appList = async (u_id) => {
  */
 const getAppInfo = async (idx) => {
   try {
-    const sql = `SELECT name,APIkey,host,redirectURI,appDesc,imgUrl FROM application
+    const sql = `SELECT name,APIkey,host,redirectURI,appDesc,imgUrl, usePoint, pointRouter, pointUseRouter 
+                FROM application
                 LEFT JOIN appDesc ON application.idx=appDesc.a_idx
                 LEFT JOIN appImg ON application.idx=appImg.a_idx
+                LEFT JOIN pointRouters ON application.idx=pointRouters.a_idx
                 WHERE application.idx="${idx}"`;
     const [[result]] = await pool.query(sql);
     return result;
