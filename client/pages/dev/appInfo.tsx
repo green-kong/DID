@@ -27,12 +27,15 @@ interface IAppDetailInfo {
   redirectURI: string;
   imgUrl: string | undefined | null;
   APIkey: string;
+  usePoint: boolean;
+  pointRouter: string | null;
+  pointUseRouter: string | null;
 }
 
 const AddApp = () => {
   const router = useRouter();
-  const [usePoint, setUsePoint] = useState<boolean>(false);
   const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
+  const [usePoint, setUsePoint] = useState<boolean>(false);
   const [appDelModal, setAppDelModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const loadingModalControll = () => {
@@ -71,6 +74,7 @@ const AddApp = () => {
       if (typeof idx === 'string') {
         const data = await getAppInfo({ idx });
         setAppInfo(data);
+        setUsePoint(!!data.usePoint);
       }
     })();
   }, []);
@@ -83,6 +87,8 @@ const AddApp = () => {
       desc: appInfo.appDesc as string,
       host: appInfo.host,
       redirectURI: appInfo.redirectURI,
+      pointRouter: appInfo.pointRouter as string,
+      pointUseRouter: appInfo.pointUseRouter as string,
     };
     reset(initial);
   }, [appInfo]);
@@ -199,6 +205,7 @@ const AddApp = () => {
                     onChange={() => {
                       setUsePoint(true);
                     }}
+                    checked={usePoint === true}
                   />
                 </div>
                 <div className="checkboxWrap">
@@ -224,6 +231,7 @@ const AddApp = () => {
                     id="pointRouter"
                     name="pointRouter"
                     placeholder="http://example.com/point"
+                    value={values.pointRouter}
                     onChange={handleChange}
                   />
                   {errors.pointRouter && <span>{errors.pointRouter}</span>}
@@ -235,6 +243,7 @@ const AddApp = () => {
                     id="pointUseRouter"
                     name="pointUseRouter"
                     placeholder="http://example.com/pointUse"
+                    value={values.pointUseRouter}
                     onChange={handleChange}
                   />
                   {errors.pointUseRouter && (

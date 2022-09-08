@@ -15,12 +15,11 @@ const addApp = async (req, res) => {
     pointRouter,
     pointUseRouter,
   } = req.body;
-
   const APIkey = uuid.v4().split('-').join('');
   try {
     const sql = `INSERT INTO application (name, u_idx, APIkey, host, redirectURI,usePoint) 
     VALUES("${name}","${u_idx}","${APIkey}","${host}","${redirect}",${
-      usePoint ? 1 : 0
+      usePoint === 'true' ? 1 : 0
     })`;
     const a = await pool.query(sql);
     if (desc) {
@@ -29,7 +28,7 @@ const addApp = async (req, res) => {
       await pool.query(descSql);
     }
 
-    if (usePoint) {
+    if (usePoint === 'true') {
       const pointRouterSql = `
       INSERT INTO pointRouters (a_idx, pointRouter, pointUseRouter)
       VALUES ("${a[0].insertId}", "${pointRouter}" , "${pointUseRouter}")

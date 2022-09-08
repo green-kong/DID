@@ -44,14 +44,43 @@ const getAppInfo = async (idx) => {
  * @param {req.file} file
  */
 const updateApp = async (body, file) => {
-  const { idx, name, desc, host, redirect } = body;
+  const {
+    idx,
+    name,
+    desc,
+    host,
+    redirect,
+    usePoint,
+    pointRouter,
+    pointUseRouter,
+  } = body;
+
   try {
     const sql = `UPDATE application 
                 LEFT JOIN appDesc
                 ON application.idx=appDesc.a_idx
-                SET name="${name}", appDesc="${desc}", host="${host}", redirectURI="${redirect}"
+                SET name="${name}", appDesc="${desc}", host="${host}", redirectURI="${redirect}", usePoint="${
+      usePoint === 'true' ? 1 : 0
+    }"
                 WHERE application.idx="${idx}"`;
     await pool.query(sql);
+
+    if (usePoint === 'true') {
+      const selectSql = `SELECT * FROM pointRouters WHERE a_idx="${idx}"`;
+      const [[selectResult]] = await pool.query(selectSql);
+      if (selectResult) {
+        const updateSql = `UPDATE pointRouters SET pointRouter="${pointRouter}", pointUseRouter="${pointUseRouter}" WHERE a_idx="${idx}"`;
+        await pool.query(updateSql);
+      } else {
+        const insertSql = `INSERT INTO pointRouters (a_idx,pointRouter,pointUseRouter) VALUES ("${idx}","${pointRouter}","${pointUseRouter}")`;
+        await pool.query(insertSql);
+      }
+    } else {
+      const delSql = `
+      DELETE FROM pointRouters WHERE a_idx="${idx}"
+      `;
+      await pool.query(delSql);
+    }
   } catch (error) {
     console.log(error);
     return false;
@@ -93,6 +122,14 @@ const delApp = async (idx) => {
 
   try {
     const sql = `DELETE FROM appImg WHERE a_idx="${idx}"`;
+    await pool.query(sql);
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+
+  try {
+    const sql = `DELETE FROM pointRouters WHERE a_idx="${idx}"`;
     await pool.query(sql);
   } catch (error) {
     console.log(error);
