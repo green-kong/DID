@@ -51,6 +51,20 @@ export const AddAppFrm = styled.form`
       margin-top: 5px;
       color: red;
     }
+    & > .radioWrap {
+      width: 100%;
+      padding-right: 20px;
+      padding-left: 20px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+
+      & > .checkboxWrap {
+        & > label {
+          margin-right: 20px;
+        }
+      }
+    }
   }
 `;
 

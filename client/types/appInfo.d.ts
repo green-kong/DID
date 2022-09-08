@@ -5,4 +5,6 @@ export interface IAppInfo {
   host?: string;
   redirectURI?: string;
   APIkey?: string;
+  pointRouter?: string;
+  pointUseRouter?: string;
 }

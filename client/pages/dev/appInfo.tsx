@@ -31,6 +31,7 @@ interface IAppDetailInfo {
 
 const AddApp = () => {
   const router = useRouter();
+  const [usePoint, setUsePoint] = useState<boolean>(false);
   const [appInfo, setAppInfo] = useState<IAppDetailInfo>();
   const [appDelModal, setAppDelModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -43,6 +44,7 @@ const AddApp = () => {
     {},
     imgFile,
     loadingModalControll,
+    usePoint,
     'updateApp',
   );
 
@@ -185,6 +187,62 @@ const AddApp = () => {
               <label htmlFor="redirect_uri">API key</label>
               <input type="text" value={appInfo.APIkey || ''} readOnly />
             </li>
+            <li>
+              <label htmlFor="">포인트 사용 여부</label>
+              <div className="radioWrap">
+                <div className="checkboxWrap">
+                  <label htmlFor="true">사용</label>
+                  <input
+                    type="radio"
+                    id="true"
+                    name="pointCheck"
+                    onChange={() => {
+                      setUsePoint(true);
+                    }}
+                  />
+                </div>
+                <div className="checkboxWrap">
+                  <label htmlFor="false">미사용</label>
+                  <input
+                    type="radio"
+                    id="false"
+                    name="pointCheck"
+                    onChange={() => {
+                      setUsePoint(false);
+                    }}
+                    checked={usePoint === false}
+                  />
+                </div>
+              </div>
+            </li>
+            {usePoint && (
+              <>
+                <li>
+                  <label htmlFor="pointRouter">포인트 조회 라우터</label>
+                  <input
+                    type="text"
+                    id="pointRouter"
+                    name="pointRouter"
+                    placeholder="http://example.com/point"
+                    onChange={handleChange}
+                  />
+                  {errors.pointRouter && <span>{errors.pointRouter}</span>}
+                </li>
+                <li>
+                  <label htmlFor="pointUseRouter">포인트 사용 라우터</label>
+                  <input
+                    type="text"
+                    id="pointUseRouter"
+                    name="pointUseRouter"
+                    placeholder="http://example.com/pointUse"
+                    onChange={handleChange}
+                  />
+                  {errors.pointUseRouter && (
+                    <span>{errors.pointUseRouter}</span>
+                  )}
+                </li>
+              </>
+            )}
           </ul>
           <SignUpBtn type="submit" mb="10px">
             수정
