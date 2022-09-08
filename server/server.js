@@ -21,6 +21,7 @@ app.use(
 
 app.use('/user', userRouter);
 app.use('/dev', devRouter);
+app.use('/app', appRouter);
 
 app.listen(4000, () => {
   console.log('back server port 4000');
