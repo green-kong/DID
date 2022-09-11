@@ -25,6 +25,7 @@ const useForm = (
   initialValues: IAppInfo,
   imgFile: File | undefined,
   LoadingModalControll: () => void,
+  usePoint: boolean,
   type = 'addApp',
 ): IUseFormReturn => {
   const [values, setValues] = useState<IAppInfo>(initialValues);
@@ -49,7 +50,7 @@ const useForm = (
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setSubmit(true);
     e.preventDefault();
-    setErrors(validation(values));
+    setErrors(validation({ values, usePoint }));
   };
 
   useEffect(() => {
@@ -66,6 +67,11 @@ const useForm = (
       formData.append('desc', values.desc);
       formData.append('host', values.host);
       formData.append('redirect', values.redirectURI);
+      formData.append('usePoint', usePoint);
+      if (usePoint) {
+        formData.append('pointRouter', values.pointRouter);
+        formData.append('pointUseRouter', values.pointUseRouter);
+      }
 
       let response;
       switch (type) {

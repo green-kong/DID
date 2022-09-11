@@ -5,20 +5,39 @@ const uploadS3 = require('../../util/s3Uploader.js');
 const service = require('./dev.service.js');
 
 const addApp = async (req, res) => {
-  const { u_idx, name, desc, host, redirect } = req.body;
+  const {
+    u_idx,
+    name,
+    desc,
+    host,
+    redirect,
+    usePoint,
+    pointRouter,
+    pointUseRouter,
+  } = req.body;
   const APIkey = uuid.v4().split('-').join('');
   try {
-    const sql = `INSERT INTO application (name, u_idx, APIkey, host, redirectURI) 
-    VALUES("${name}","${u_idx}","${APIkey}","${host}","${redirect}")`;
+    const sql = `INSERT INTO application (name, u_idx, APIkey, host, redirectURI,usePoint) 
+    VALUES("${name}","${u_idx}","${APIkey}","${host}","${redirect}",${
+      usePoint === 'true' ? 1 : 0
+    })`;
     const a = await pool.query(sql);
     if (desc) {
       const descSql = `INSERT INTO appDesc (a_idx,appDesc) 
                       VALUES("${a[0].insertId}", "${desc}")`;
       await pool.query(descSql);
     }
+
+    if (usePoint === 'true') {
+      const pointRouterSql = `
+      INSERT INTO pointRouters (a_idx, pointRouter, pointUseRouter)
+      VALUES ("${a[0].insertId}", "${pointRouter}" , "${pointUseRouter}")
+      `;
+      await pool.query(pointRouterSql);
+    }
+
     if (req.file) {
       const result = await uploadS3(req.file);
-      // console.log(result);
       const imgSql = `INSERT INTO appImg (a_idx, imgUrl) 
       VALUES("${a[0].insertId}", "${result.Location}")`;
       await pool.query(imgSql);
