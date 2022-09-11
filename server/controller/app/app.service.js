@@ -24,7 +24,6 @@ const getPoint = async (userCode, clientId) => {
       result[i].pt = point;
       delete result[i].pointRouter;
     });
-    console.log(result);
     return result;
   } catch (error) {
     console.log(error);
@@ -32,4 +31,27 @@ const getPoint = async (userCode, clientId) => {
   }
 };
 
-module.exports = { getPoint };
+const usePoint = async (userCode, points) => {
+  const idxList = Object.keys(points);
+
+  const sql = `
+  SELECT pointUseRouter 
+  FROM pointRouters
+  WHERE a_idx IN (${idxList.map((v) => JSON.stringify(v)).join()})`;
+  try {
+    const [result] = await pool.query(sql);
+    const routers = result.map((v) => v.pointUseRouter);
+    for await (const [i, router] of routers.entries()) {
+      await axios.post(router, {
+        userCode,
+        point: points[idxList[i]],
+      });
+    }
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+module.exports = { getPoint, usePoint };
