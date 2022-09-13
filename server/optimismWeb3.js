@@ -2,7 +2,7 @@ require('dotenv').config();
 const Web3 = require('web3');
 const ethers = require('ethers');
 const sdk = require('@eth-optimism/sdk');
-const DID_L2_JSON = require('./DID_L2.json');
+const DID_L2_JSON = require('./contract/DID_L2.json');
 
 const infuraKey = process.env.INFURA_KEY;
 const privKey = process.env.CONTRACT_DEPLOYER_PK;
