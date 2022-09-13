@@ -1,4 +1,3 @@
-const { servicesVersion } = require('typescript');
 const service = require('./app.service.js');
 
 const checkPoint = async (req, res) => {
