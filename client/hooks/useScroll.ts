@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 function useScroll() {
   const [scrollY, setScrollY] = useState<number>(0);
 
-  const listener = () => {
+  const listener = (e: Event) => {
     setScrollY(window.scrollY);
   };
 

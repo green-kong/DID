@@ -17,17 +17,33 @@ export const MainTitle = styled.div`
   font-size: 50px;
   font-weight: 700;
   text-align: center;
+  background: -webkit-linear-gradient(
+    128deg,
+    rgba(164, 69, 212, 1) 40%,
+    rgba(250, 199, 161, 1) 60%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
+
+interface IMainVisual {
+  widthPercent: number;
+}
 
 export const MainVisual = styled.div`
   position: relative;
-  width: 700px;
-  height: 700px;
+  width: ${({ widthPercent }: IMainVisual) =>
+    widthPercent ? `${widthPercent * 700}px` : '700px'};
+  height: ${({ widthPercent }: IMainVisual) =>
+    widthPercent ? `${widthPercent * 700}px` : '700px'};
 `;
 
 export const MainVisualIconWrap = styled.div`
-  width: 280px;
-  height: 280px;
+  width: ${({ widthPercent }: IMainVisual) =>
+    widthPercent ? `${widthPercent * 280}px` : '280px'};
+  height: ${({ widthPercent }: IMainVisual) =>
+    widthPercent ? `${widthPercent * 280}px` : '280px'};
   position: absolute;
   top: 50%;
   left: 50%;
@@ -37,9 +53,23 @@ export const MainVisualIconWrap = styled.div`
   align-items: center;
 `;
 
+export const MainVisualText = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  font-weight: 700;
+  position: absolute;
+  opacity: ${({ widthPercent }: IMainVisual) =>
+    widthPercent ? (1 - widthPercent) * 2 : 0};
+`;
+
 interface IMainVisualIcon {
   w: string;
   percent: number;
+  widthPercent: number;
 }
 
 export const MainVisualIcon = styled.div`
@@ -47,9 +77,12 @@ export const MainVisualIcon = styled.div`
   height: 50%;
   display: flex;
   justify-content: space-between;
+  opacity: ${({ widthPercent }: IMainVisual) =>
+    widthPercent ? 1 - (1 - widthPercent) * 2 : 1};
 
   & > .icon {
-    width: 70px;
+    width: ${({ widthPercent }: IMainVisualIcon) =>
+      widthPercent ? `${widthPercent * 70}px` : '70px'};
     height: auto;
   }
 

@@ -23,16 +23,22 @@ import {
   MainVisual,
   MainVisualIcon,
   MainVisualIconWrap,
+  MainVisualText,
   MainWrap,
 } from '../styles/mainPage';
 import { Global } from './_app';
 
-const imgList = ['/regist_img.png'];
+const imgList = [
+  '/regist_img.png',
+  '/login_example.png',
+  '/point_exchange.png',
+];
 
 const Home: NextPage = () => {
   const { isLogin } = useContext(Global);
   const { scrollY } = useScroll();
-  const [percent, setPercent] = useState<number>(800);
+  const [percent, setPercent] = useState<number>(0);
+  const [widthPercent, setWidthPercent] = useState<number>(0);
   const [featuerNum, setFeatureNum] = useState<number>(0);
 
   useEffect(() => {
@@ -42,8 +48,14 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    if (scrollY === 0) {
+      setWidthPercent(0);
+    }
     if (scrollY > 450) {
       setPercent(0);
+      const tmp = 1 - (scrollY - 450) / 200;
+      const newWidthPercent = tmp > 0.5 ? tmp : 0.5;
+      setWidthPercent(newWidthPercent);
       return;
     }
     const newPercent = scrollY / 450 - 1;
@@ -53,6 +65,7 @@ const Home: NextPage = () => {
   const navClickHandler = (num: number) => () => {
     setFeatureNum(num);
   };
+
   return (
     <MainWrap>
       <MainTitle>
@@ -61,14 +74,23 @@ const Home: NextPage = () => {
         안전하게 관리하세요.
         <br />
       </MainTitle>
-      <MainVisual>
+      <MainVisual widthPercent={widthPercent}>
         <Image alt="logo_image" src="/emptyLogo.png" layout="fill"></Image>
-        <MainVisualIconWrap>
-          <MainVisualIcon w={'66%'} percent={percent}>
+        <MainVisualIconWrap widthPercent={widthPercent}>
+          <MainVisualText widthPercent={widthPercent}>DID</MainVisualText>
+          <MainVisualIcon
+            w={'66%'}
+            percent={percent}
+            widthPercent={widthPercent}
+          >
             <FontAwesomeIcon icon={faPassport} className="icon passport" />
             <FontAwesomeIcon icon={faIdCard} className="icon idCard" />
           </MainVisualIcon>
-          <MainVisualIcon w="100%" percent={percent}>
+          <MainVisualIcon
+            w="100%"
+            percent={percent}
+            widthPercent={widthPercent}
+          >
             <FontAwesomeIcon
               icon={faFingerprint}
               className="icon fingerPrint"
@@ -107,10 +129,11 @@ const Home: NextPage = () => {
           >
             <p>간편한 회원가입</p>
             <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-              voluptatem repellat soluta modi, accusantium aspernatur quos minus
-              sapiente dolores. Amet voluptates soluta rem, sed laborum
-              asperiores repellat cumque animi id.
+              탈중앙화, 분산원장, 블록체인.
+              <br />
+              이런 어려운 개념들을 모르셔도 괜찮습니다.
+              <br />
+              간편하게 등록하고 사용하세요!
             </div>
           </MainFeatureNavList>
           <MainFeatureNavList
@@ -119,10 +142,11 @@ const Home: NextPage = () => {
           >
             <p>쉬운 본인인증</p>
             <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-              voluptatem repellat soluta modi, accusantium aspernatur quos minus
-              sapiente dolores. Amet voluptates soluta rem, sed laborum
-              asperiores repellat cumque animi id.
+              새로운 서비스에 가입할 때 마다 이뤄졌던,
+              <br />
+              번거로운 본인인증
+              <br />
+              이젠 Helpless DID가 새로운 패러다임을 제시합니다.
             </div>
           </MainFeatureNavList>
           <MainFeatureNavList
@@ -131,10 +155,13 @@ const Home: NextPage = () => {
           >
             <p>편리한 포인트 연동</p>
             <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-              voluptatem repellat soluta modi, accusantium aspernatur quos minus
-              sapiente dolores. Amet voluptates soluta rem, sed laborum
-              asperiores repellat cumque animi id.
+              &ldquo;언젠가는 쓰겠지?&rdquo; 하고 묵혀뒀던 포인트와 마일리지!
+              <br />
+              지금 바로 Helpless DID와 연동하고 사용하세요!
+              <br />
+              다른 사이트들의 포인트를
+              <br />
+              자사의 서비스를 통해 사용가능합니다.
             </div>
           </MainFeatureNavList>
         </MainFeatureNav>
