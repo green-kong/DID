@@ -51,5 +51,6 @@ module.exports = {
     'no-undef': 'off',
     'object-curly-newline': 'off',
     'react-hooks/exhaustive-deps': 'off',
+    'no-confusing-arrow': 'off',
   },
 };

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 import {
   ModalBg,
   ModalAlert,
@@ -24,9 +24,9 @@ interface IQuitModal {
 }
 
 const Modal = (props: IQuitModal) => {
-  const inputChange = (e: any) => {
+  const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const setUserPw = props.modal?.setUserPw as Dispatch<
-      SetStateAction<boolean>
+      SetStateAction<string>
     >;
     setUserPw(e.target.value);
   };
