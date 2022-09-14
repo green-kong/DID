@@ -113,7 +113,7 @@ router.post('/regist', async (req, res) => {
       .registerUser(hash, userInfo)
       .send({ from: address });
 
-    const sql = `INSERT INTO USER(userId,userCode) VALUES('${userId}','${userCode}')`;
+    const sql = `INSERT INTO user(userId,userCode) VALUES('${userId}','${userCode}')`;
     await pool.execute(sql);
     res.json({ regist: true });
   } catch (e) {
