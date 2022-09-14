@@ -9,14 +9,13 @@ exports.modules = {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2167);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3023);
 
 
 const delApp = async idx => {
   try {
-    const url = 'http://localhost:4000/dev/delApp';
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(url, {
+    const url = '/dev/delApp';
+    const response = await _index__WEBPACK_IMPORTED_MODULE_0__/* ["default"].post */ .Z.post(url, {
       idx
     });
     return response.data;

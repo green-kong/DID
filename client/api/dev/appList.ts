@@ -1,9 +1,9 @@
-import axios from 'axios';
+import Https from '../index';
 
 const getAppList = async (userIdx: string) => {
-  const url = 'http://localhost:4000/dev/appList';
+  const url = '/dev/appList';
   const body = { _id: userIdx };
-  const response = await axios.post(url, body);
+  const response = await Https.post(url, body);
 
   return response.data;
 };

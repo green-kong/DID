@@ -80,9 +80,8 @@ const validation = ({
 };
 
 /* harmony default export */ const utils_validation = (validation);
-// EXTERNAL MODULE: external "axios"
-var external_axios_ = __webpack_require__(2167);
-var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_);
+// EXTERNAL MODULE: ./api/index.ts
+var api = __webpack_require__(3023);
 ;// CONCATENATED MODULE: ./api/dev/addApp.ts
 
 
@@ -93,7 +92,7 @@ const addAppRequest = async formData => {
     },
     withCredentials: true
   };
-  const response = await external_axios_default().post('http://localhost:4000/dev/addApp', formData, config);
+  const response = await api/* default.post */.Z.post('/dev/addApp', formData, config);
 
   if (response.status !== 200) {
     return false;
@@ -113,7 +112,7 @@ const updateApp = async formData => {
     },
     withCredentials: true
   };
-  const response = await external_axios_default().post('http://localhost:4000/dev/updateApp', formData, config);
+  const response = await api/* default.post */.Z.post('/dev/updateApp', formData, config);
 
   if (response.status !== 200) {
     return false;
