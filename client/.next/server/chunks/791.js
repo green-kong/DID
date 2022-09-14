@@ -100,7 +100,7 @@ const Header = () => {
     children: /*#__PURE__*/(0,jsx_runtime_.jsxs)(StyledHeader, {
       id: "header",
       children: [/*#__PURE__*/jsx_runtime_.jsx((link_default()), {
-        href: "http://localhost:3000",
+        href: "/",
         children: /*#__PURE__*/jsx_runtime_.jsx(Logo, {
           id: "logo"
         })
