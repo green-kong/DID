@@ -53,7 +53,7 @@ const updateL1 = async () => {
   //   );
   //   const txHash = result.transactionHash;
   const instance = new web3.eth.Contract(abi, CA);
-  const txHash = await instance.methods.sendToL1().send({
+  const { transactionHash: txHash } = await instance.methods.sendToL1().send({
     from: EOA,
   });
 
