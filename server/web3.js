@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const Provider = require('@truffle/hdwallet-provider');
-const contract = require('./contract/DID.json');
+const contract = require('./contract/DID_L2.json');
 require('dotenv').config();
 
 let instance;
