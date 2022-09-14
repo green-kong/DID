@@ -144,7 +144,7 @@ router.post('/userResign', userCheck, async (req, res) => {
   const { userIdx: u_idx, userId } = req.body;
   try {
     const { deployed, hash, address } = res.locals.utils;
-    await deployed.contract.methods.withdrawUser(hash).send({ from: address });
+    // await deployed.contract.methods.withdrawUser(hash).send({ from: address });
 
     const sqlConnectIdx = `SELECT idx FROM application WHERE u_idx='${u_idx}'`;
     const [result] = await pool.execute(sqlConnectIdx);
@@ -154,15 +154,16 @@ router.post('/userResign', userCheck, async (req, res) => {
     });
     const where = 'WHERE ' + app_idx.join(' or ');
 
-    const sqlDeleteDesc = `DELETE FROM appDesc ${where} `;
-    await pool.execute(sqlDeleteDesc);
+    if (app_idx.length !== 0) {
+      const sqlDeleteDesc = `DELETE FROM appDesc ${where} `;
+      await pool.execute(sqlDeleteDesc);
 
-    const sqlDeleteImg = `DELETE FROM appImg ${where} `;
-    await pool.execute(sqlDeleteImg);
+      const sqlDeleteImg = `DELETE FROM appImg ${where} `;
+      await pool.execute(sqlDeleteImg);
 
-    const sqlDeleteConnect = `DELETE FROM connected ${where}`;
-    await pool.execute(sqlDeleteConnect);
-
+      const sqlDeleteConnect = `DELETE FROM connected ${where}`;
+      await pool.execute(sqlDeleteConnect);
+    }
     const sqlDeleteApp = `DELETE FROM application WHERE u_idx='${u_idx}' `;
     await pool.execute(sqlDeleteApp);
 
@@ -171,11 +172,6 @@ router.post('/userResign', userCheck, async (req, res) => {
 
     const sqlDeleteConnect_u_idx = `DELETE FROM connected WHERE u_idx='${u_idx}'`;
     await pool.execute(sqlDeleteConnect_u_idx);
-
-    // const check = await deployed.contract.methods
-    //   .isRegistered(hash)
-    //   .call({ from: address });
-    // console.log('유저리자인', check);
 
     res.json({ pwCheck: true });
   } catch (e) {
