@@ -6,7 +6,7 @@ require('dotenv').config();
 // let instance;
 class Instance {
   constructor(URL) {
-    if (instance) return instance;
+    // if (instance) return instance;
     const privateKey = process.env.CONTRACT_DEPLOYER_PK;
     const provider = new Provider(privateKey, URL);
     this.web3 = new Web3(provider);
