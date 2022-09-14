@@ -61,12 +61,11 @@ const Login = () => {
     <>
       <div
         style={{
-          height: 'calc(100vh - 100px - 45px)',
+          height: 'calc(100vh - 100px - 170px)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           position: 'relative',
-          bottom: '60px',
         }}
       >
         <ContentTitle>
