@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { useState, useContext, useEffect, ChangeEvent, FormEvent } from 'react';
-import axios from 'axios';
 import Router from 'next/router';
 import { useCookies } from 'react-cookie';
 import { Global } from '../_app';
 import { ContentTitle, Title, TitleIcon } from '../../styles/title';
 import LoadingModal from '../../components/loading';
+
+import Https from '../../api/index';
 
 import { Border, LoginBtn, LoginFrm, SignUpBtn } from '../../styles/login';
 
@@ -21,7 +22,7 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:4000/user/login', {
+      const response = await Https.post('/user/login', {
         userId,
         userPw,
       });
