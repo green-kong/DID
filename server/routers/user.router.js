@@ -130,8 +130,8 @@ router.post('/userInfoCheck', userCheck, async (req, res) => {
     const data = await deployed.contract.methods
       .getUserInfo(hash)
       .call({ from: address });
-    const { name, birth, email, gender } = data;
-    const userInfo = { userId, name, birth, email, gender };
+    const { name, birth, email, gender, userCode } = data;
+    const userInfo = { userId, name, birth, email, gender, userCode };
     res.json({ pwCheck: true, userInfo });
   } catch (e) {
     console.log(e);
