@@ -16,10 +16,10 @@ app.use(express.static('./public'));
 app.use(
   cors({
     origin: [
-      'http://helpless-did.shop/',
-      'https://helpless-did.shop/',
-      'http://13.124.38.134/',
-      'https://13.124.38.134/',
+      'http://helpless-did.shop',
+      'https://helpless-did.shop',
+      'http://13.124.38.134',
+      'https://13.124.38.134',
     ],
     credentials: true,
   }),
