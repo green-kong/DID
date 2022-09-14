@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const ethers = require('ethers');
 const sdk = require('@eth-optimism/sdk');
 const DID_L2_JSON = require('./contract/DID_L2.json');
-// const Provider = require('@truffle/hdwallet-provider');
+const Provider = require('@truffle/hdwallet-provider');
 
 const infuraKey = process.env.INFURA_KEY;
 const privKey = process.env.CONTRACT_DEPLOYER_PK;
@@ -17,8 +17,8 @@ const l2Web3 = new Web3(
   new Web3.providers.HttpProvider('https://goerli.optimism.io'),
 );
 
-// const provider = new Provider(privKey, 'https://goerli.optimism.io');
-// const web3 = new Web3(provider);
+const provider = new Provider(privKey, 'https://goerli.optimism.io');
+const web3 = new Web3(provider);
 
 const l1Provider = new ethers.providers.Web3Provider(l1Web3.currentProvider);
 const l2Provider = new ethers.providers.Web3Provider(l2Web3.currentProvider);
@@ -32,30 +32,30 @@ const updateL1 = async () => {
   const abi = DID_L2_JSON.abi;
   const CA = DID_L2_JSON.networks[l2NetworkId].address;
 
-  const instance = new l2Web3.eth.Contract(abi, CA);
-  const txData = await instance.methods.sendToL1();
-  const encodeABI = txData.encodeABI();
+  //   const instance = new l2Web3.eth.Contract(abi, CA);
+  //   const txData = await instance.methods.sendToL1();
+  //   const encodeABI = txData.encodeABI();
 
-  const signedTx = await l2Web3.eth.accounts.signTransaction(
-    {
-      from: EOA,
-      to: instance.options.address,
-      data: encodeABI,
-      gas: 1000000,
-    },
-    privKey,
-  );
+  //   const signedTx = await l2Web3.eth.accounts.signTransaction(
+  //     {
+  //       from: EOA,
+  //       to: instance.options.address,
+  //       data: encodeABI,
+  //       gas: 1000000,
+  //     },
+  //     privKey,
+  //   );
 
-  console.log('Tx signed');
+  //   console.log('Tx signed');
 
-  const result = await l2Web3.eth.sendSignedTransaction(
-    signedTx.rawTransaction,
-  );
-  const txHash = result.transactionHash;
-  //   const instance = new web3.eth.Contract(abi, CA);
-  //   const { transactionHash: txHash } = await instance.methods.sendToL1().send({
-  //     from: EOA,
-  //   });
+  //   const result = await l2Web3.eth.sendSignedTransaction(
+  //     signedTx.rawTransaction,
+  //   );
+  //   const txHash = result.transactionHash;
+  const instance = new web3.eth.Contract(abi, CA);
+  const { transactionHash: txHash } = await instance.methods.sendToL1().send({
+    from: EOA,
+  });
 
   console.log('txHash : ', txHash);
 
