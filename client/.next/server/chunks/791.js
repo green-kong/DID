@@ -3,6 +3,21 @@ exports.id = 791;
 exports.ids = [791];
 exports.modules = {
 
+/***/ 3023:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2167);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+  baseURL:  true ? 'https://3.38.58.1:4000' : 0
+}));
+
+/***/ }),
+
 /***/ 1791:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -18,13 +33,12 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: external "styled-components"
 var external_styled_components_ = __webpack_require__(7518);
 var external_styled_components_default = /*#__PURE__*/__webpack_require__.n(external_styled_components_);
-// EXTERNAL MODULE: external "axios"
-var external_axios_ = __webpack_require__(2167);
-var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_);
 // EXTERNAL MODULE: external "react-cookie"
 var external_react_cookie_ = __webpack_require__(5515);
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__(6689);
+// EXTERNAL MODULE: ./api/index.ts
+var api = __webpack_require__(3023);
 // EXTERNAL MODULE: ./node_modules/next/link.js
 var next_link = __webpack_require__(1664);
 var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
@@ -222,7 +236,7 @@ const MyApp = ({
 
     (async () => {
       try {
-        const response = await external_axios_default().post('http://localhost:4000/user/sendToken', {
+        const response = await api/* default.post */.Z.post('/user/sendToken', {
           userToken
         });
         const result = response.data;

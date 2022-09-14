@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
+import Https from '../../api/index';
 import SelOpt from '../../components/selOpt';
 import {
   SignUpTitle,
@@ -45,12 +45,9 @@ const Regist = () => {
 
       if (email === undefined || selectMail === undefined) return;
       const userEmail = email + selectMail;
-      const response = await axios.post(
-        'http://localhost:4000/user/sendAuthNum',
-        {
-          userEmail,
-        },
-      );
+      const response = await Https.post('/user/sendAuthNum', {
+        userEmail,
+      });
       const authString = response.data.authNum.join('');
       setAuthNum(authString);
       setErrors({ ...errors, email: '' });

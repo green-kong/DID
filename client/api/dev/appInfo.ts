@@ -1,12 +1,12 @@
-import axios from 'axios';
+import Https from '../index';
 
 interface getAppInfoPayload {
   idx: string;
 }
 
 const getAppInfo = async (payload: getAppInfoPayload) => {
-  const url = 'http://localhost:4000/dev/appInfo';
-  const response = await axios.post(url, payload);
+  const url = '/dev/appInfo';
+  const response = await Https.post(url, payload);
   return response.data;
 };
 

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import axios from 'axios';
 import Router from 'next/router';
 import { useCookies } from 'react-cookie';
 import {
@@ -9,6 +8,7 @@ import {
   EmailContainer,
   SignUpBtn,
 } from '../../styles/registStyle';
+import Https from '../../api/index';
 import Modal from '../../components/Modal';
 import { Global } from '../_app';
 import LoadingModal from '../../components/loading';
@@ -42,13 +42,10 @@ const MyProfile = () => {
     setIsLoading(true);
     setPwWrongMessage('로딩중');
     try {
-      const response = await axios.post(
-        'http://localhost:4000/user/userInfoCheck',
-        {
-          userId: userData?.userId,
-          userPw,
-        },
-      );
+      const response = await Https.post('/user/userInfoCheck', {
+        userId: userData?.userId,
+        userPw,
+      });
       if (response.data.pwCheck === true) {
         setPwCheckModal(false);
         setUserInfo(response.data.userInfo);
@@ -80,7 +77,7 @@ const MyProfile = () => {
   const closeRejoinModalSubmit = async () => {
     setIsLoading(true);
     setPwWrongMessage('로딩중');
-    const response = await axios.post('http://localhost:4000/user/userResign', {
+    const response = await Https.post('/user/userResign', {
       userIdx: userData?.idx,
       userId: userData?.userId,
       userPw,
@@ -121,7 +118,7 @@ const MyProfile = () => {
   const closeResignModalSubmit = async () => {
     setIsLoading(true);
     setPwWrongMessage('로딩중');
-    const response = await axios.post('http://localhost:4000/user/userResign', {
+    const response = await Https.post('/user/userResign', {
       userIdx: userData?.idx,
       userId: userData?.userId,
       userPw,

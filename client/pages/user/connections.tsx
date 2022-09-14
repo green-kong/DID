@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { MouseEvent, useContext, useEffect, useState } from 'react';
 import Router from 'next/router';
-import axios from 'axios';
+import Https from '../../api/index';
 import { Global } from '../_app';
 import { ContentTitle, TitleIcon, Title } from '../../styles/title';
 import {
@@ -21,14 +21,11 @@ const Connections = () => {
     (v: IAppListData, k: number) => async (e: MouseEvent<HTMLDivElement>) => {
       try {
         if ((e.target as Element).classList[0] === 'disconnect_btn') {
-          const disconnectResponse = await axios.post(
-            'http://localhost:4000/user/disconnected',
-            {
-              userData,
-              k,
-              v,
-            },
-          );
+          const disconnectResponse = await Https.post('/user/disconnected', {
+            userData,
+            k,
+            v,
+          });
           if (disconnectResponse.data.delete) {
             const newConnectionInfo = connectionsInfo.filter((value) => {
               return value.idx !== v.idx;
@@ -86,10 +83,7 @@ const Connections = () => {
       Router.push('/user/login');
     } else {
       (async () => {
-        const response = await axios.post(
-          'http://localhost:4000/user/connectionsInfo',
-          userData,
-        );
+        const response = await Https.post('/user/connectionsInfo', userData);
         setConnectionsInfo(response.data.connectionInfo);
       })();
       Router.push('/user/connections');

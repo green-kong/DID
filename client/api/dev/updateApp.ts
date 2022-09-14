@@ -1,5 +1,5 @@
-import axios from 'axios';
 import FormData from 'form-data';
+import Https from '../index';
 
 const updateApp = async (formData: FormData) => {
   const config = {
@@ -9,11 +9,7 @@ const updateApp = async (formData: FormData) => {
     withCredentials: true,
   };
 
-  const response = await axios.post(
-    'http://localhost:4000/dev/updateApp',
-    formData,
-    config,
-  );
+  const response = await Https.post('/dev/updateApp', formData, config);
   if (response.status !== 200) {
     return false;
   } else {
