@@ -144,7 +144,7 @@ router.post('/userResign', userCheck, async (req, res) => {
   const { userIdx: u_idx, userId } = req.body;
   try {
     const { deployed, hash, address } = res.locals.utils;
-    // await deployed.contract.methods.withdrawUser(hash).send({ from: address });
+    await deployed.contract.methods.withdrawUser(hash).send({ from: address });
 
     const sqlConnectIdx = `SELECT idx FROM application WHERE u_idx='${u_idx}'`;
     const [result] = await pool.execute(sqlConnectIdx);
