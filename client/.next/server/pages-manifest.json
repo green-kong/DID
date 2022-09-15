@@ -1,5 +1,15 @@
 {
   "/_app": "pages/_app.js",
+  "/dev/appInfo": "pages/dev/appInfo.html",
+  "/dev/appList": "pages/dev/appList.html",
+  "/dev/addApp": "pages/dev/addApp.html",
+  "/": "pages/index.html",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js"
+  "/user/connections": "pages/user/connections.html",
+  "/main": "pages/main.html",
+  "/user/login": "pages/user/login.html",
+  "/user/regist": "pages/user/regist.html",
+  "/user/myProfile": "pages/user/myProfile.html",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
 }
