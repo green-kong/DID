@@ -13,7 +13,7 @@ exports.modules = {
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (axios__WEBPACK_IMPORTED_MODULE_0___default().create({
-  baseURL:  true ? 'http://3.38.58.1:4000' : 0
+  baseURL:  true ? 'https://3.38.58.1:4000' : 0
 }));
 
 /***/ }),
