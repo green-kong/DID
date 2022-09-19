@@ -41,7 +41,9 @@ const Regist = () => {
   const sendAuthNum = async () => {
     const { email, selectMail } = values;
     try {
-      if (email?.length === 0) throw new Error('이메일너무 짧아욜');
+      if (email?.length === 0) {
+        throw new Error('이메일너무 짧아욜');
+      }
 
       if (email === undefined || selectMail === undefined) return;
       const userEmail = email + selectMail;

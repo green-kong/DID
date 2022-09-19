@@ -143,6 +143,12 @@ const useRegist = (
         error.birth = '생년월일이 올바르지 않습니다.';
       }
     }
+
+    // email_code
+    if (values.email_code?.length === 0) {
+      error.email_code = '코드를 입력해주세요.';
+    }
+
     return error;
   };
 
