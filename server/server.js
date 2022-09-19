@@ -20,6 +20,7 @@ app.use(
       'https://helpless-did.shop',
       'http://13.124.38.134',
       'https://13.124.38.134',
+      'http://localhost:3000',
     ],
     credentials: true,
   }),
