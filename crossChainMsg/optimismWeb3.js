@@ -72,8 +72,9 @@ const updateL1 = async () => {
 
     console.log("📬 Message received! Finalizing...");
 
-    finalize = await crossChainMessenger.finalizeMessage(txHash);
+    await crossChainMessenger.finalizeMessage(txHash);
     console.log(`🎉 Message finalized.`);
+    process.exit();
   } catch (err) {
     console.log(err);
   }
