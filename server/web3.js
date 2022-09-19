@@ -3,14 +3,14 @@ const Provider = require('@truffle/hdwallet-provider');
 const contract = require('./contract/DID_L2.json');
 require('dotenv').config();
 
-// let instance;
+let instance;
 class Instance {
   constructor(URL) {
-    // if (instance) return instance;
+    if (instance) return instance;
     const privateKey = process.env.CONTRACT_DEPLOYER_PK;
     const provider = new Provider(privateKey, URL);
     this.web3 = new Web3(provider);
-    // instance = this;
+    instance = this;
   }
 }
 

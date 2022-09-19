@@ -26,6 +26,7 @@ module.exports = {
     "optimism-goerli": {
       provider: optimismGoerliProvider,
       network_id: 420,
+      disableConfirmationListener: true,
     },
 
     // development: {

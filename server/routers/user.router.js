@@ -109,9 +109,10 @@ router.post('/regist', async (req, res) => {
   const address = process.env.ADDRESS;
 
   try {
+    const txCount = await deployed.client.web3.eth.getTransactionCount(address);
     await deployed.contract.methods
       .registerUser(hash, userInfo)
-      .send({ from: address });
+      .send({ nonce: txCount, from: address });
 
     const sql = `INSERT INTO user(userId,userCode) VALUES('${userId}','${userCode}')`;
     await pool.execute(sql);
@@ -144,7 +145,10 @@ router.post('/userResign', userCheck, async (req, res) => {
   const { userIdx: u_idx, userId } = req.body;
   try {
     const { deployed, hash, address } = res.locals.utils;
-    await deployed.contract.methods.withdrawUser(hash).send({ from: address });
+    const txCount = await deployed.client.web3.eth.getTransactionCount(address);
+    await deployed.contract.methods
+      .withdrawUser(hash)
+      .send({ nonce: txCount, from: address });
 
     const sqlConnectIdx = `SELECT idx FROM application WHERE u_idx='${u_idx}'`;
     const [result] = await pool.execute(sqlConnectIdx);
