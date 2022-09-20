@@ -23,7 +23,7 @@ var _object_without_properties_loose = (__webpack_require__(7273)/* ["default"] 
 
 var _react = _interop_require_wildcard(__webpack_require__(6689));
 
-var _head = _interop_require_default(__webpack_require__(5429));
+var _head = _interop_require_default(__webpack_require__(4957));
 
 var _imageConfig = __webpack_require__(5843);
 
