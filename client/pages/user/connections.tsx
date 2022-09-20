@@ -41,7 +41,7 @@ const Connections = () => {
         console.log('failed disconnect app');
       }
 
-      window.open(`http://${v.host}`);
+      window.open(`${v.host}`);
     };
 
   const viewConnections = () =>
@@ -51,13 +51,9 @@ const Connections = () => {
           <ConnectionImg>
             <Image
               loader={() => {
-                return v.imgUrl
-                  ? `http://localhost:4000/${v.imgUrl}`
-                  : '/no_img.png';
+                return v.imgUrl ? `${v.imgUrl}` : '/no_img.png';
               }}
-              src={
-                v.imgUrl ? `http://localhost:4000/${v.imgUrl}` : '/no_img.png'
-              }
+              src={v.imgUrl ? `${v.imgUrl}` : '/no_img.png'}
               alt="어플로고"
               width={100}
               height={100}
