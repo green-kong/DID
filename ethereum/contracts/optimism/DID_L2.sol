@@ -8,7 +8,7 @@ import { ICrossDomainMessenger } from '../../node_modules/@eth-optimism/contract
 contract DID_L2 is Ownable, IDID_L2 {
 
     // identifier => UserInfo
-    mapping(string => UserInfo) private user;
+    mapping(string => UserData) private user;
 
     // L1 CA
     address private DID_L1_CA;
@@ -23,19 +23,16 @@ contract DID_L2 is Ownable, IDID_L2 {
         L2CrossDomainMessenger = ICrossDomainMessenger(0x4200000000000000000000000000000000000007);
     }
 
-    function registerUser(string memory _identifier, UserInfo memory _userData) public override {
+    function registerUser(string memory _identifier, UserData memory _userData) public override {
 
         require(!isRegisteredUser[_identifier]);
         
-        UserInfo memory userInfo;
+        UserData memory userData;
 
-        userInfo.userCode = _userData.userCode;
-        userInfo.name = _userData.name;
-        userInfo.birth = _userData.birth;
-        userInfo.gender = _userData.gender;
-        userInfo.email = _userData.email;
+        userData.userCode = _userData.userCode;
+        userData.userInfo = _userData.userInfo;
 
-        user[_identifier] = userInfo;
+        user[_identifier] = userData;
         isRegisteredUser[_identifier] = true;
         userCodeList.push(_userData.userCode);
     }
@@ -58,7 +55,7 @@ contract DID_L2 is Ownable, IDID_L2 {
         return isRegisteredUser[_identifier];
     }
 
-    function getUserInfo(string memory _identifier) public view override onlyOwner returns (UserInfo memory) {
+    function getUserInfo(string memory _identifier) public view override onlyOwner returns (UserData memory) {
         require(isRegisteredUser[_identifier]);
 
         return user[_identifier];
