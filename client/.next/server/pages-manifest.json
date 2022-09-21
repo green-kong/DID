@@ -1,9 +1,15 @@
 {
   "/_app": "pages/_app.js",
+  "/dev/addApp": "pages/dev/addApp.html",
+  "/dev/appInfo": "pages/dev/appInfo.html",
+  "/dev/appList": "pages/dev/appList.html",
+  "/main": "pages/main.html",
+  "/user/connections": "pages/user/connections.html",
+  "/user/myProfile": "pages/user/myProfile.html",
+  "/user/regist": "pages/user/regist.html",
+  "/": "pages/index.html",
+  "/user/login": "pages/user/login.html",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user/login": "pages/user/login.js",
-  "/main": "pages/main.js",
-  "/user/myProfile": "pages/user/myProfile.js",
-  "/": "pages/index.js"
+  "/404": "pages/404.html"
 }
