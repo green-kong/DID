@@ -45,7 +45,7 @@ const Home: NextPage = () => {
     if (isLogin) {
       Router.push('/main');
     }
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     if (scrollY === 0) {
