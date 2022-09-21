@@ -8,6 +8,7 @@ const { pool } = require('../db.js');
 const getDeployed = require('../web3.js');
 const generateHash = require('../util/hashGenerator.js');
 const userCheck = require('../middleware/index.js');
+const { encryptUserInfo, decryptUserInfo } = require('../util/crypto');
 
 router.post('/login', userCheck, async (req, res) => {
   const { userId: id } = req.body;
@@ -100,18 +101,26 @@ router.post('/regist', async (req, res) => {
 
   const hash = generateHash(userId, userPw);
   const userInfo = {
-    userCode,
     name,
     birth,
     gender,
     email,
   };
   const address = process.env.ADDRESS;
+  const cryptoSalt = process.env.CRYPTO_SALT;
+
+  const stringifiedUserInfo = JSON.stringify(userInfo);
+  const encoded = encryptUserInfo(stringifiedUserInfo, cryptoSalt);
+
+  const userData = {
+    userCode,
+    userInfo: encoded,
+  };
 
   try {
     const txCount = await deployed.client.web3.eth.getTransactionCount(address);
     await deployed.contract.methods
-      .registerUser(hash, userInfo)
+      .registerUser(hash, userData)
       .send({ nonce: txCount, from: address });
 
     const sql = `INSERT INTO user(userId,userCode) VALUES('${userId}','${userCode}')`;
@@ -131,13 +140,17 @@ router.post('/userInfoCheck', userCheck, async (req, res) => {
     const data = await deployed.contract.methods
       .getUserInfo(hash)
       .call({ from: address });
-    const { name, birth, email, gender, userCode } = data;
-    const userInfo = { userId, name, birth, email, gender, userCode };
-    res.json({ pwCheck: true, userInfo });
+    const { userCode, userInfo } = data;
+    const cryptoSalt = process.env.CRYPTO_SALT;
+    const decoded = decryptUserInfo(userInfo, cryptoSalt);
+
+    const userData = { userCode, ...decoded, userId };
+
+    res.json({ pwCheck: true, userInfo: userData });
   } catch (e) {
     console.log(e);
     console.log('userInfoCheck Error');
-    res.json({ pwCheck: false, userInfo });
+    res.json({ pwCheck: false, userInfo: userData });
   }
 });
 
