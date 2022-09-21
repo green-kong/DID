@@ -1,33 +1,33 @@
 const crypto = require('crypto');
 
-// 암호화
-const cipher = (_userInfo, _key) => {
-  const encrypt = crypto.createCipher('des', _key); // des알고리즘
-  const encryptResult =
-    encrypt.update(_userInfo, 'utf8', 'base64') + encrypt.final('base64'); // 암호화
-  return encryptResult;
+const encryptUserInfo = (_stringifiedUserInfo, _key) => {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(_key), iv);
+
+  const encrypted = cipher.update(_stringifiedUserInfo);
+
+  return `${iv.toString('hex')}:${Buffer.concat([
+    encrypted,
+    cipher.final(),
+  ]).toString('hex')}`;
 };
 
-// 복호화
-const decipher = (_encoded, _key) => {
-  const decode = crypto.createDecipher('des', _key);
-  const decodeResult =
-    decode.update(_encoded, 'base64', 'utf8') + decode.final('utf8'); // 복호화
-  return decodeResult;
-};
+function decryptUserInfo(_encoded, _key) {
+  const textArr = _encoded.split(':');
+  const iv = Buffer.from(textArr.shift(), 'hex');
 
-const encryptUserInfo = (_stringifiedUserInfo, _salt) => {
-  const encodedResult = cipher(_stringifiedUserInfo, _salt);
+  const encryptedText = Buffer.from(textArr.join(''), 'hex');
 
-  return encodedResult;
-};
+  const decipher = crypto.createDecipheriv(
+    'aes-256-cbc',
+    Buffer.from(_key),
+    iv,
+  );
+  const decrypted = decipher.update(encryptedText);
+  const decodedResult = Buffer.concat([decrypted, decipher.final()]).toString();
 
-const decryptUserInfo = (_encoded, _salt) => {
-  const decodedResult = decipher(_encoded, _salt);
-  const result = JSON.parse(decodedResult);
-
-  return result;
-};
+  return JSON.parse(decodedResult);
+}
 
 module.exports = {
   encryptUserInfo,
