@@ -61,6 +61,7 @@ module.exports = {
     goerli: {
       provider: goerliProvider,
       network_id: 5,
+      disableConfirmationListener: true,
     },
 
     // development: {

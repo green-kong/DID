@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import axios from 'axios';
 import Router from 'next/router';
 import {
   Dispatch,
@@ -8,6 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import Https from '../api/index';
 
 interface IValues {
   userId?: string;
@@ -59,12 +59,9 @@ const useRegist = (
       error.userId = '알파벳과 숫자로 이루어진 4~12자만 가능합니다. ';
     } else {
       try {
-        const response = await axios.post(
-          'http://localhost:4000/user/idOverlap_Check',
-          {
-            inputId: userId,
-          },
-        );
+        const response = await Https.post('/user/idOverlap_Check', {
+          inputId: userId,
+        });
         if (!response.data.idCheck) {
           error.userId = '사용 불가능한 id 입니다.';
         }
@@ -146,6 +143,12 @@ const useRegist = (
         error.birth = '생년월일이 올바르지 않습니다.';
       }
     }
+
+    // email_code
+    if (values.email_code?.length === 0) {
+      error.email_code = '코드를 입력해주세요.';
+    }
+
     return error;
   };
 
@@ -162,7 +165,7 @@ const useRegist = (
     const submitHandler = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.post('http://localhost:4000/user/regist', {
+        const response = await Https.post('/user/regist', {
           ...values,
           gender,
         });

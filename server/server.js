@@ -15,7 +15,13 @@ app.use(express.json());
 app.use(express.static('./public'));
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: [
+      'http://helpless-did.shop',
+      'https://helpless-did.shop',
+      'http://13.124.38.134',
+      'https://13.124.38.134',
+      'http://localhost:3000',
+    ],
     credentials: true,
   }),
 );

@@ -31,7 +31,7 @@ const Header = () => {
   return (
     <>
       <StyledHeader id="header">
-        <Link href="http://localhost:3000">
+        <Link href="/">
           <Logo id="logo"></Logo>
         </Link>
         <Nav id="nav">

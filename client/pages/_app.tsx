@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import type { AppProps } from 'next/app';
-import axios from 'axios';
+
 import { useCookies } from 'react-cookie';
 import React, {
   createContext,
@@ -9,6 +9,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import Https from '../api/index';
 // eslint-disable-next-line import/no-cycle
 import Header from '../components/header';
 import '../styles/global.css';
@@ -62,12 +63,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     if (userToken === '') return;
     (async () => {
       try {
-        const response = await axios.post(
-          'http://localhost:4000/user/sendToken',
-          {
-            userToken,
-          },
-        );
+        const response = await Https.post('/user/sendToken', {
+          userToken,
+        });
         const result = response.data;
         setIsLogin(true);
         setUserData(result);
