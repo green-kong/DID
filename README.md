@@ -21,7 +21,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 ## 🎥 시연 영상
 
-[![carrot_world_thumb](https://user-images.githubusercontent.com/96301958/162624524-0d85d321-3c92-44f4-a8f4-b6e648c7edce.gif)](https://www.youtube.com/watch?v=TUSVB7_jibI)
+[![carrot_world_thumb](https://user-images.githubusercontent.com/96301958/193729101-fa6ad3fe-07d5-4975-8163-91836124dde2.gif)](https://www.youtube.com/watch?v=TUSVB7_jibI)
 
 위 이미지를 클릭하면 시연영상으로 이동합니다.
 
@@ -32,7 +32,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/69417234/162613313-ef0f71c7-709d-4104-b227-6ace0315a6cf.png">
+<img src="https://user-images.githubusercontent.com/96301958/193728542-5723d7e0-832f-43f7-a5ce-4b40b71d66cf.jpg">
 
 <br/>
 
@@ -40,7 +40,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/69417234/162579280-1b08698b-044d-4544-978e-24d77d37cb7b.png">
+<img src="https://user-images.githubusercontent.com/96301958/193728605-ec397732-b3d8-41d5-ab00-11201bd4e48d.png">
 
 <br/>
 
@@ -48,7 +48,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/69417234/162579280-1b08698b-044d-4544-978e-24d77d37cb7b.png">
+<img src="https://user-images.githubusercontent.com/96301958/193728661-9b061bea-2687-45df-95e2-2db237634c0c.png">
 
 <br/>
 
@@ -56,7 +56,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/69417234/162579280-1b08698b-044d-4544-978e-24d77d37cb7b.png">
+<img src="https://user-images.githubusercontent.com/96301958/193728707-fba84301-d2ce-4fe7-96ae-da72aacda035.png">
 
 <br/>
 
@@ -67,7 +67,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 최고의 정예멤버 3명이 모여 팀을 이뤘습니다 <br>
 각자 성격도 실력도 다르지만 팀장의 뛰어난 지휘 하에 팀원들 모두가 최고의 팀웍으로 프로젝트를 진행했습니다. <br>
 
-<img src="https://user-images.githubusercontent.com/69417234/162579280-1b08698b-044d-4544-978e-24d77d37cb7b.png">
+<img src="https://user-images.githubusercontent.com/96301958/193728345-2f9a395d-5bef-49f4-a556-11ee035e34ad.png">
 </br>
 
 <br>
@@ -77,7 +77,7 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 <br>
 
-<img src="https://user-images.githubusercontent.com/69417234/162579280-1b08698b-044d-4544-978e-24d77d37cb7b.png">
+<img src="https://user-images.githubusercontent.com/96301958/193728925-72db14b2-aaea-42b4-9233-ba71948491e9.jpg">
 </br>
 <br>
 <br>
