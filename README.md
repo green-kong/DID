@@ -79,16 +79,8 @@ DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능�
 
 <img src="https://user-images.githubusercontent.com/96301958/193728925-72db14b2-aaea-42b4-9233-ba71948491e9.jpg" width="80%">
 </br>
-<br>
-<br>
 
-## 📚 Wiki
 
-<br>
-
-### click ! 👉 [**Wiki Home**](https://github.com/bitkunst/DID/wiki)
-
-<br>
 <br>
 
 ![footer](https://capsule-render.vercel.app/api?type=wave&color=0:bebbf5,100:a82da8&height=200&section=footer&text=%F0%9F%8E%89%20thanks%20for%20watching%20%F0%9F%8E%89&fontSize=30&fontAlignY=80)
