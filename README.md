@@ -15,8 +15,10 @@
 
 Layer2 Optimism Contract에 사용자의 정보를 저장하는 DID 서비스와<br/>
 DID계정을 이용해 타사이트에서 회원가입 및 로그인이 가능한 SSO 구현.<br/>
-같은 DID 계정으로 인증한 사이트간 포인트공유.
+같은 DID 계정으로 인증한 사이트간 포인트공유.<br/>
 
+## Login Server Repository
+## ✈️ [바로 가기](https://github.com/green-kong/DID_login_server)
 <br/>
 
 ## 🎥 시연 영상
